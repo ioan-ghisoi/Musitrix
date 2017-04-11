@@ -99,15 +99,29 @@
             android:layout_height="wrap_content" >
 
 
-            <ImageView
-                android:id="@+id/user_picture"
-                android:layout_width="@dimen/main_screen_social_media_width"
-                android:layout_height="@dimen/main_screen_social_media_height"
-                android:layout_gravity="left"
-                android:layout_marginRight="170dp"
-                android:layout_marginBottom="5dp"
-                android:visibility="invisible"
-                android:src="@drawable/loginbutton" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="160dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/user_picture"
+                    android:layout_width="@dimen/main_screen_social_media_width"
+                    android:layout_height="@dimen/main_screen_social_media_height"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:textColor="@color/musitrix_white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="invisible" />
+
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/refresh_button"
@@ -116,8 +130,7 @@
                 android:layout_gravity="left"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
-                android:visibility="invisible"
-                android:src="@drawable/loginbutton" />
+                android:visibility="invisible"/>
 
             <ImageView
                 android:id="@+id/login_button"
@@ -125,7 +138,6 @@
                 android:layout_height="@dimen/main_screen_social_media_height"
                 android:layout_gravity="left"
                 android:layout_marginRight="10dp"
-                android:layout_marginBottom="5dp"
                 android:src="@drawable/loginbutton" />
         </LinearLayout>
 

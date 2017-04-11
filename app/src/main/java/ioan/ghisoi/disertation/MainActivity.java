@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -24,6 +25,11 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -61,8 +67,6 @@ public class MainActivity extends AppCompatActivity {
         mContinue.setTypeface(mFont);
         mRank.setTypeface(mFont);
 
-        rotateImage(mLogo);
-
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
@@ -98,7 +102,9 @@ public class MainActivity extends AppCompatActivity {
         mNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                stopBackgroundMusic();
+                Intent myIntent = new Intent(MainActivity.this, SelectWorld.class);
+                MainActivity.this.startActivity(myIntent);
             }
         });
 
@@ -175,6 +181,33 @@ public class MainActivity extends AppCompatActivity {
                 setImage(mUserPicture, String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()));
                 rotateImage(mUserPicture);
 
+
+
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference(auth.getCurrentUser().getUid());
+
+                myRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // This method is called once with the initial value and again
+                        // whenever data at this location is updated.
+                        try{
+                            String value = dataSnapshot.getValue(String.class);
+                            if(value == null) {
+                                initializeUser();
+                            }
+                        } catch (Exception e) {
+                            //initializeUser();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        // Failed to read value
+                        Toast.makeText(MainActivity.this,error+ "",Toast.LENGTH_SHORT).show();
+                    }
+                });
+
                 Toast.makeText(MainActivity.this, "Welcome " + auth.getCurrentUser().getDisplayName(), Toast.LENGTH_SHORT).show();
             } else {
 
@@ -229,5 +262,43 @@ public class MainActivity extends AppCompatActivity {
         mMediaPlayer = new MediaPlayer();
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         return mMediaPlayer;
+    }
+
+    public void stopBackgroundMusic() {
+        try {
+            mediaPlayer.stop();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void initializeUser() {
+
+        try {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef1 = database.getReference(auth.getCurrentUser().getUid() + "/total");
+            myRef1.setValue("0");
+            DatabaseReference myRef2 = database.getReference(auth.getCurrentUser().getUid() + "/world1");
+            myRef1.setValue("0");
+            DatabaseReference myRef3 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level1");
+            myRef3.setValue("0");
+            DatabaseReference myRef4 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level2");
+            myRef4.setValue("0");
+            DatabaseReference myRef5 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level3");
+            myRef5.setValue("0");
+
+            DatabaseReference myRef6 = database.getReference(auth.getCurrentUser().getUid() + "/world2");
+            myRef6.setValue("0");
+            DatabaseReference myRef7 = database.getReference(auth.getCurrentUser().getUid() + "/world2/level1");
+            myRef7.setValue("0");
+            DatabaseReference myRef8 = database.getReference(auth.getCurrentUser().getUid() + "/world2/level2");
+            myRef8.setValue("0");
+            DatabaseReference myRef9 = database.getReference(auth.getCurrentUser().getUid() + "/world2/level3");
+            myRef9.setValue("0");
+
+
+        } catch (Exception e) {
+
+        }
     }
 }

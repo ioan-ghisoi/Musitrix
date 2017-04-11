@@ -32,10 +32,8 @@ import java.util.HashMap;
 public class SelectWorld extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener{
 
     private SliderLayout mWorldSlider;
-    ProfilePictureView mUserPicture;
     ImageView mProfilePicture;
-    TextView mUsername;
-    String mUserId;
+    TextView mUsername, mProgresWorld;
     ImageButton backButton;
     FirebaseAuth auth = FirebaseAuth.getInstance();
     HashMap<String,Integer> file_maps;
@@ -47,6 +45,7 @@ public class SelectWorld extends AppCompatActivity implements BaseSliderView.OnS
 
         mProfilePicture = (ImageView) findViewById(R.id.user_picture);
         mUsername = (TextView) findViewById(R.id.user_name);
+        mProgresWorld = (TextView) findViewById(R.id.worldProgress);
 
         scrollingBackground();
 
@@ -60,6 +59,28 @@ public class SelectWorld extends AppCompatActivity implements BaseSliderView.OnS
         } catch (Exception e) {
 
         }
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference(auth.getCurrentUser().getUid() + "/total");
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String value = dataSnapshot.getValue(String.class);
+                try{
+                    mProgresWorld.setText(value);
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+
+            }
+        });
+
 
         mWorldSlider = (SliderLayout)findViewById(R.id.slider);
         backButton = (ImageButton)findViewById(R.id.backButton);
@@ -119,13 +140,8 @@ public class SelectWorld extends AppCompatActivity implements BaseSliderView.OnS
     @Override
     public void onSliderClick(BaseSliderView slider) {
         Toast.makeText(this,slider.getBundle().get("extra") + "" +slider.getBundle().get("jh") + "",Toast.LENGTH_SHORT).show();
-//        Intent myIntent = new Intent(SelectWorld.this, SelectLevel.class);
-//        try{
-//            myIntent.putExtra("token", mUserId);
-//        }catch (Exception e) {
-//
-//        }
-//        SelectWorld.this.startActivity(myIntent);
+        Intent myIntent = new Intent(SelectWorld.this, SelectLevel.class);
+        SelectWorld.this.startActivity(myIntent);
     }
 
 

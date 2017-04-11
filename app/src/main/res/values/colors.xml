@@ -3,4 +3,14 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="musitrix_green">#32b78f</color>
+    <color name="musitrix_white">#edeeef</color>
+    <color name="musitrix_dark_blue">#364750</color>
+    <color name="musitrix_grey">#3b3b3b</color>
+    <color name="musitrix_black">#222324</color>
+    <color name="colorAccentDark">#311B92</color>
+    <color name="colorAccentLight">#D1C4E9</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#212121</color>
+    <color name="colorGray">#727272</color>
 </resources>

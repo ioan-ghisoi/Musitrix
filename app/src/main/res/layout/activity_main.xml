@@ -1,18 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ioan.ghisoi.disertation.MainActivity">
+    android:background="@color/musitrix_grey">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</android.support.constraint.ConstraintLayout>
+        <ImageView
+            android:id="@+id/background_one"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/paralex2"/>
+
+        <ImageView
+            android:id="@+id/background_two"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/paralex2"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/main_screen_button_layout_margin_left"
+            android:layout_marginRight="@dimen/main_screen_button_layout_margin_right"
+            android:layout_marginBottom="@dimen/main_screen_button_layout_margin_bottom"
+            android:layout_gravity="center|center"
+            android:orientation="vertical"
+            android:weightSum="100">
+
+            <ImageView
+                android:id="@+id/main_screen_logo"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="50"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:layout_centerInParent="true"
+                android:src="@drawable/logo"/>
+
+            <TextView
+                android:id="@+id/main_screen_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/main_screen_title_height"
+                android:gravity="center"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/musitrix_green"
+                android:text="@string/app_title"/>
+
+            <Button
+                android:id="@+id/main_screen_new_game_button"
+                android:text="@string/bNewGame"
+                android:textSize="@dimen/main_screen_buttons_tet_size"
+                android:textColor="@color/musitrix_green"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="12"
+                android:layout_marginBottom="10dp"
+                android:background = "@drawable/roundedbutton" />
+            <Button
+                android:id="@+id/main_screen_continue_button"
+                android:text="@string/bContinue"
+                android:textSize="@dimen/main_screen_buttons_tet_size"
+                android:textColor="@color/musitrix_green"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="12"
+                android:layout_marginBottom="10dp"
+                android:background = "@drawable/roundedbutton" />
+            <Button
+                android:id="@+id/main_screen_rank_button"
+                android:text="@string/bRank"
+                android:textSize="@dimen/main_screen_buttons_tet_size"
+                android:textColor="@color/musitrix_green"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="12"
+                android:layout_marginBottom="10dp"
+                android:background = "@drawable/roundedbutton" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="2dp"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content" >
+
+
+            <ImageView
+                android:id="@+id/user_picture"
+                android:layout_width="@dimen/main_screen_social_media_width"
+                android:layout_height="@dimen/main_screen_social_media_height"
+                android:layout_gravity="left"
+                android:layout_marginRight="170dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="invisible"
+                android:src="@drawable/loginbutton" />
+
+            <ImageView
+                android:id="@+id/refresh_button"
+                android:layout_width="@dimen/main_screen_social_media_width"
+                android:layout_height="@dimen/main_screen_social_media_height"
+                android:layout_gravity="left"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="invisible"
+                android:src="@drawable/loginbutton" />
+
+            <ImageView
+                android:id="@+id/login_button"
+                android:layout_width="@dimen/main_screen_social_media_width"
+                android:layout_height="@dimen/main_screen_social_media_height"
+                android:layout_gravity="left"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/loginbutton" />
+        </LinearLayout>
+
+    </FrameLayout>
+</RelativeLayout>

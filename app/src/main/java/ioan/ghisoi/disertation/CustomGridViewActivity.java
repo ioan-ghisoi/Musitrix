@@ -12,18 +12,18 @@ import android.widget.TextView;
 
 public class CustomGridViewActivity extends BaseAdapter {
     private Context mContext;
-    private final String[] gridViewString;
+    private final int[] gridViewStarsId;
     private final int[] gridViewImageId;
 
-    public CustomGridViewActivity(Context context, String[] gridViewString, int[] gridViewImageId) {
+    public CustomGridViewActivity(Context context, int[] gridViewStarsId, int[] gridViewImageId) {
         mContext = context;
         this.gridViewImageId = gridViewImageId;
-        this.gridViewString = gridViewString;
+        this.gridViewStarsId = gridViewStarsId;
     }
 
     @Override
     public int getCount() {
-        return gridViewString.length;
+        return gridViewImageId.length;
     }
 
     @Override
@@ -47,9 +47,11 @@ public class CustomGridViewActivity extends BaseAdapter {
 
             gridViewAndroid = new View(mContext);
             gridViewAndroid = inflater.inflate(R.layout.grid_leve_view, null);
-            TextView textViewAndroid = (TextView) gridViewAndroid.findViewById(R.id.android_gridview_text);
+
+            ImageView start = (ImageView) gridViewAndroid.findViewById(R.id.android_gridview_stars);
             ImageView imageViewAndroid = (ImageView) gridViewAndroid.findViewById(R.id.android_gridview_image);
-            textViewAndroid.setText(gridViewString[i]);
+
+            start.setImageResource(gridViewStarsId[i]);
             imageViewAndroid.setImageResource(gridViewImageId[i]);
         } else {
             gridViewAndroid = (View) convertView;

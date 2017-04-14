@@ -13,7 +13,7 @@
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/longparalex"/>
+            android:src="@drawable/levelwp"/>
 
         <ImageView
             android:id="@+id/background_two"
@@ -21,7 +21,7 @@
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/longparalex"/>
+            android:src="@drawable/levelwp"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -32,42 +32,87 @@
 
 
             <RelativeLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:alpha="0.9"
                 android:layout_height="0dp"
+                android:layout_width="match_parent"
                 android:layout_weight="10">
 
-                <ImageButton
-                    android:id="@+id/b2"
-                    android:layout_width="35dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/hamburger"
-                    android:adjustViewBounds="true"
-                    android:cropToPadding="false"
-                    android:background="#00000000"
-                    android:scaleType="fitXY"
-                    android:layout_alignParentLeft="true"/>
+                <RelativeLayout
+                    android:orientation="horizontal"
+                    android:background="@color/musitrix_green"
+                    android:layout_width="match_parent"
+                    android:alpha="0.5"
+                    android:layout_height="match_parent">
 
 
-                <TextView
-                    android:id="@+id/user_name"
-                    android:textColor="@color/musitrix_white"
+
+                </RelativeLayout>
+
+                <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:visibility="invisible"
-                    android:textSize="40dp"
-                    android:layout_centerInParent="true"/>
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="13dp"
 
-                <ImageView
-                    android:id="@+id/user_picture"
-                    android:layout_width="@dimen/main_screen_social_media_width"
-                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true">
+
+                    <ImageButton
+                        android:id="@+id/imgFirst2"
+                        android:layout_width="105dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/life"
+                        android:adjustViewBounds="true"
+                        android:cropToPadding="false"
+                        android:layout_marginLeft="5dp"
+                        android:background="#00000000"
+                        android:scaleType="fitXY" />
+
+                    <TextView
+                        android:id="@+id/user_lifes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginLeft="13dp"
+                        android:text="..."
+                        android:textColor="@color/musitrix_white"
+                        android:src="@drawable/back"/>
+                </FrameLayout>
+
+
+
+                <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:visibility="invisible"
-                    android:layout_alignParentRight="true"/>
+                    android:layout_marginTop="13dp"
+                    android:layout_marginRight="50dp"
+                    android:layout_alignParentRight="true">
+
+                    <ImageButton
+                        android:id="@+id/imgFirst"
+                        android:layout_width="105dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="9dp"
+                        android:src="@drawable/coins"
+                        android:adjustViewBounds="true"
+                        android:cropToPadding="false"
+                        android:background="#00000000"
+                        android:scaleType="fitXY" />
+
+                    <TextView
+                        android:id="@+id/user_coins"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center"
+                        android:layout_marginBottom="14dp"
+                        android:layout_marginLeft="4dp"
+                        android:text="..."
+                        android:textColor="@color/musitrix_white"
+                        android:src="@drawable/back"/>
+                </FrameLayout>
+
+
 
             </RelativeLayout>
 
@@ -75,6 +120,7 @@
             <GridView
                 android:id="@+id/grid_view_image_text"
                 android:layout_width="match_parent"
+                android:layout_marginTop="30dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_height="0dp"
@@ -121,36 +167,39 @@
                         android:layout_width="wrap_content"
                         android:layout_height="fill_parent"
                         android:id="@+id/backButton"
-                        android:src="@drawable/back_button"
+                        android:src="@drawable/back"
                         android:layout_centerHorizontal="true"
-                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_gravity="left"
                         android:adjustViewBounds="true"
                         android:cropToPadding="false"
                         android:background="#00000000"
                         android:scaleType="fitXY" />
 
-                    <ImageButton
-                        android:id="@+id/specialAwards"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:src="@drawable/logo_shadow"
-                        android:layout_centerHorizontal="true"
-                        android:layout_gravity="center"
-                        android:adjustViewBounds="true"
-                        android:cropToPadding="false"
-                        android:background="#00000000"
-                        android:scaleType="fitXY" />
 
-                    <ImageButton
-                        android:id="@+id/shoppingButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:src="@drawable/shopping_cart"
-                        android:layout_centerHorizontal="true"
-                        android:adjustViewBounds="true"
-                        android:cropToPadding="false"
-                        android:background="#00000000"
-                        android:scaleType="fitXY" />
+                    <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+
+                        android:orientation="vertical"
+                        android:layout_alignParentRight="true">
+
+                        <ImageView
+                            android:id="@+id/user_picture"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_gravity="center" />
+
+                        <TextView
+                            android:id="@+id/user_name"
+                            android:layout_width="wrap_content"
+                            android:text="User"
+                            android:layout_gravity="center"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
 
 
                 </GridLayout>

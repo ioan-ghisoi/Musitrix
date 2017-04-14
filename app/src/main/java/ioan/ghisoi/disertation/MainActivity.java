@@ -276,10 +276,8 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference myRef1 = database.getReference(auth.getCurrentUser().getUid() + "/total");
-            myRef1.setValue("0");
             DatabaseReference myRef2 = database.getReference(auth.getCurrentUser().getUid() + "/world1");
-            myRef1.setValue("0");
+            myRef2.setValue("0");
             DatabaseReference myRef3 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level1");
             myRef3.setValue("0");
             DatabaseReference myRef4 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level2");
@@ -295,6 +293,15 @@ public class MainActivity extends AppCompatActivity {
             myRef8.setValue("0");
             DatabaseReference myRef9 = database.getReference(auth.getCurrentUser().getUid() + "/world2/level3");
             myRef9.setValue("0");
+            DatabaseReference myRef13 = database.getReference(auth.getCurrentUser().getUid() + "/world2/level3");
+            myRef13.setValue("0");
+
+            DatabaseReference myRef10 = database.getReference(auth.getCurrentUser().getUid() + "/lifes");
+            myRef10.setValue("5");
+            DatabaseReference myRef11 = database.getReference(auth.getCurrentUser().getUid() + "/coins");
+            myRef11.setValue("100");
+            DatabaseReference myRef12 = database.getReference(auth.getCurrentUser().getUid() + "/progress");
+            myRef12.setValue("0%");
 
 
         } catch (Exception e) {

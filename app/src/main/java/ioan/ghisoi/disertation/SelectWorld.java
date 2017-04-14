@@ -3,6 +3,7 @@ package ioan.ghisoi.disertation;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -27,13 +28,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.sql.SQLOutput;
 import java.util.HashMap;
 
 public class SelectWorld extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener{
 
     private SliderLayout mWorldSlider;
     ImageView mProfilePicture;
-    TextView mUsername, mProgresWorld;
+    TextView mUsername, mProgresWorld, mLifes, mCoins;
     ImageButton backButton;
     FirebaseAuth auth = FirebaseAuth.getInstance();
     HashMap<String,Integer> file_maps;
@@ -43,9 +45,12 @@ public class SelectWorld extends AppCompatActivity implements BaseSliderView.OnS
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_world);
 
+
         mProfilePicture = (ImageView) findViewById(R.id.user_picture);
         mUsername = (TextView) findViewById(R.id.user_name);
         mProgresWorld = (TextView) findViewById(R.id.worldProgress);
+        mLifes = (TextView) findViewById(R.id.user_lifes);
+        mCoins = (TextView) findViewById(R.id.user_coins);
 
         scrollingBackground();
 
@@ -57,11 +62,12 @@ public class SelectWorld extends AppCompatActivity implements BaseSliderView.OnS
                 setImage(mProfilePicture, String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()));
             }
         } catch (Exception e) {
+                Toast.makeText(SelectWorld.this,"" + e,Toast.LENGTH_LONG).show();
 
         }
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference(auth.getCurrentUser().getUid() + "/total");
+        DatabaseReference myRef = database.getReference(auth.getCurrentUser().getUid() + "/progress");
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -69,8 +75,13 @@ public class SelectWorld extends AppCompatActivity implements BaseSliderView.OnS
                 String value = dataSnapshot.getValue(String.class);
                 try{
                     mProgresWorld.setText(value);
-                } catch (Exception e) {
+                    mProfilePicture.setVisibility(View.VISIBLE);
+                    mUsername.setVisibility(View.VISIBLE);
+                    mUsername.setText(auth.getCurrentUser().getDisplayName());
+                    setImage(mProfilePicture, String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()));
 
+                } catch (Exception e) {
+                    System.out.println();
                 }
             }
 
@@ -81,6 +92,47 @@ public class SelectWorld extends AppCompatActivity implements BaseSliderView.OnS
             }
         });
 
+        DatabaseReference lifeWatcher = database.getReference(auth.getCurrentUser().getUid() + "/lifes");
+
+        lifeWatcher.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String value = dataSnapshot.getValue(String.class);
+                try{
+                    mLifes.setText(value);
+                    try {
+                        Typeface mFont = Typeface.createFromAsset(getAssets(), "fonts/johnny.ttf");
+                        mProgresWorld.setTypeface(mFont);
+                    } catch (Exception e) {
+
+                    }
+                } catch (Exception e) {
+                    System.out.println();
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+            }
+        });
+
+        DatabaseReference coinWatcher = database.getReference(auth.getCurrentUser().getUid() + "/coins");
+
+        coinWatcher.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String value = dataSnapshot.getValue(String.class);
+                try{
+                    mCoins.setText(value);
+                } catch (Exception e) {
+                    System.out.println();
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+            }
+        });
 
         mWorldSlider = (SliderLayout)findViewById(R.id.slider);
         backButton = (ImageButton)findViewById(R.id.backButton);
@@ -95,9 +147,9 @@ public class SelectWorld extends AppCompatActivity implements BaseSliderView.OnS
 
 
         file_maps = new HashMap<String, Integer>();
-        file_maps.put("Clasic",R.drawable.rock);
-        file_maps.put("Rock",R.drawable.classic);
-        file_maps.put("UpNext",R.drawable.logo_shadow);
+        file_maps.put("ROCK",R.drawable.rockslider);
+        file_maps.put("RAP",R.drawable.rapslider);
+        file_maps.put("POP",R.drawable.popslider);
 
         createSlider(file_maps);
 
@@ -110,7 +162,7 @@ public class SelectWorld extends AppCompatActivity implements BaseSliderView.OnS
             textSliderView
                     .description(name)
                     .image(file_maps.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.CenterCrop)
+                    .setScaleType(BaseSliderView.ScaleType.CenterInside)
                     .setOnSliderClickListener(SelectWorld.this);
 
             //add your extra information

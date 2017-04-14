@@ -33,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -167,6 +168,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         scrollingBackground();
+
+
+
     }
 
     @Override
@@ -276,6 +280,15 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+
+            DatabaseReference myRef41 = database.getReference(auth.getCurrentUser().getUid() + "/totalworld1");
+            myRef41.setValue("0%");
+
+            DatabaseReference myRef42 = database.getReference(auth.getCurrentUser().getUid() + "/totalworld2");
+            myRef42.setValue("0%");
+
+
             DatabaseReference myRef2 = database.getReference(auth.getCurrentUser().getUid() + "/world1");
             myRef2.setValue("0");
             DatabaseReference myRef3 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level1");
@@ -284,7 +297,18 @@ public class MainActivity extends AppCompatActivity {
             myRef4.setValue("0");
             DatabaseReference myRef5 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level3");
             myRef5.setValue("0");
-
+            DatabaseReference myRef21 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level4");
+            myRef21.setValue("0");
+            DatabaseReference myRef22 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level5");
+            myRef22.setValue("0");
+            DatabaseReference myRef23 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level6");
+            myRef23.setValue("0");
+            DatabaseReference myRef24 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level7");
+            myRef24.setValue("0");
+            DatabaseReference myRef25 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level8");
+            myRef25.setValue("0");
+            DatabaseReference myRef26 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level9");
+            myRef26.setValue("0");
             DatabaseReference myRef6 = database.getReference(auth.getCurrentUser().getUid() + "/world2");
             myRef6.setValue("0");
             DatabaseReference myRef7 = database.getReference(auth.getCurrentUser().getUid() + "/world2/level1");
@@ -295,7 +319,18 @@ public class MainActivity extends AppCompatActivity {
             myRef9.setValue("0");
             DatabaseReference myRef13 = database.getReference(auth.getCurrentUser().getUid() + "/world2/level3");
             myRef13.setValue("0");
-
+            DatabaseReference myRef31 = database.getReference(auth.getCurrentUser().getUid() + "/world2/level4");
+            myRef31.setValue("0");
+            DatabaseReference myRef33 = database.getReference(auth.getCurrentUser().getUid() + "/world2/level5");
+            myRef33.setValue("0");
+            DatabaseReference myRef34 = database.getReference(auth.getCurrentUser().getUid() + "/world2/level6");
+            myRef34.setValue("0");
+            DatabaseReference myRef35 = database.getReference(auth.getCurrentUser().getUid() + "/world2/level7");
+            myRef35.setValue("0");
+            DatabaseReference myRef36 = database.getReference(auth.getCurrentUser().getUid() + "/world2/level8");
+            myRef36.setValue("0");
+            DatabaseReference myRef37 = database.getReference(auth.getCurrentUser().getUid() + "/world2/level9");
+            myRef37.setValue("0");
             DatabaseReference myRef10 = database.getReference(auth.getCurrentUser().getUid() + "/lifes");
             myRef10.setValue("5");
             DatabaseReference myRef11 = database.getReference(auth.getCurrentUser().getUid() + "/coins");
@@ -303,9 +338,74 @@ public class MainActivity extends AppCompatActivity {
             DatabaseReference myRef12 = database.getReference(auth.getCurrentUser().getUid() + "/progress");
             myRef12.setValue("0%");
 
+            DatabaseReference myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level1/icon");
+            myRef50.setValue("2130837707");
+            myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level1/stars");
+            myRef50.setValue("2130837768");
+            myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level1/points");
+            myRef50.setValue("0");
+
+            DatabaseReference myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level2/icon");
+            myRef51.setValue("2130837709");
+            myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level2/stars");
+            myRef51.setValue("69");
+            myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level2/points");
+            myRef51.setValue("0");
+
+            DatabaseReference myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level3/icon");
+            myRef52.setValue("2130837711");
+            myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level3/stars");
+            myRef52.setValue("69");
+            myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level3/points");
+            myRef52.setValue("0");
+
+            DatabaseReference myRef53 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level4/icon");
+            myRef53.setValue("2130837713");
+            myRef53 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level4/stars");
+            myRef53.setValue("69");
+            myRef53 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level4/points");
+            myRef53.setValue("0");
+
+            DatabaseReference myRef54 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level5/icon");
+            myRef54.setValue("2130837715");
+            myRef54 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level5/stars");
+            myRef54.setValue("69");
+            myRef54 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level5/points");
+            myRef54.setValue("0");
+
+            DatabaseReference myRef55 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level6/icon");
+            myRef55.setValue("2130837717");
+            myRef55 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level6/stars");
+            myRef55.setValue("69");
+            myRef55 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level6/points");
+            myRef55.setValue("0");
+
+            DatabaseReference myRef56 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level7/icon");
+            myRef56.setValue("2130837719");
+            myRef56 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level7/stars");
+            myRef56.setValue("69");
+            myRef56 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level7/points");
+            myRef56.setValue("0");
+
+
+            DatabaseReference myRef57 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level8/icon");
+            myRef57.setValue("2130837721");
+            myRef57 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level8/stars");
+            myRef57.setValue("69");
+            myRef57 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level8/points");
+            myRef57.setValue("0");
+
+            DatabaseReference myRef58 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level9/icon");
+            myRef58.setValue("2130837723");
+            myRef58 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level9/stars");
+            myRef58.setValue("69");
+            myRef58 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level9/points");
+            myRef58.setValue("0");
+
 
         } catch (Exception e) {
 
         }
+
     }
 }

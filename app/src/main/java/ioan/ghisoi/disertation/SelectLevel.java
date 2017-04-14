@@ -1,9 +1,11 @@
 package ioan.ghisoi.disertation;
 
 import android.animation.ValueAnimator;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -24,86 +26,149 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by jarvis on 11/04/2017.
  */
 
 public class SelectLevel extends AppCompatActivity {
 
-    GridView androidGridView;
-    ImageButton backButton;
-    TextView mUsername, mProgresWorld, mLifes, mCoins;
-    ImageView mProfilePicture;
+
+    ImageView mUserPicture;
+    ImageView lv1, lv2, lv3, lv4, lv5, lv6, lv7, lv8, lv9;
+    ImageView lv1_star, lv2_star, lv3_star, lv4_star, lv5_star, lv6_star, lv7_star, lv8_star, lv9_star;
+    TextView mProgress, mLifes, mCoins, mUserName;
+    String myWorld = "world1";
+    ProgressDialog pd;
+
     FirebaseAuth auth = FirebaseAuth.getInstance();
-
-    int[] gridViewString = {
-            R.drawable.star3, R.drawable.star2, R.drawable.star3, R.drawable.star3, R.drawable.star2, R.drawable.star0,
-            R.drawable.star0, R.drawable.star0, R.drawable.star0,
-
-    } ;
-    int[] gridViewImageId = {
-            R.drawable.lvl1, R.drawable.lvl2block, R.drawable.lvl3block, R.drawable.lvl4, R.drawable.lvl5,
-            R.drawable.lvl6, R.drawable.lvl7, R.drawable.lvl8, R.drawable.lvl9,
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_level);
 
-        mProfilePicture = (ImageView) findViewById(R.id.user_picture);
-        mUsername = (TextView) findViewById(R.id.user_name);
-        mProgresWorld = (TextView) findViewById(R.id.worldProgress);
-        mLifes = (TextView) findViewById(R.id.user_lifes);
-        mCoins = (TextView) findViewById(R.id.user_coins);
+        pd = new ProgressDialog(SelectLevel.this, R.style.TransparentProgressDialog);
+        pd.setMessage("Loading...");
+        pd.show();
 
-        try {
-            if (auth.getCurrentUser() != null) {
-                mProfilePicture.setVisibility(View.VISIBLE);
-                mUsername.setVisibility(View.VISIBLE);
-                mUsername.setText(auth.getCurrentUser().getDisplayName());
-                setImage(mProfilePicture, String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()));
-            }
-        } catch (Exception e) {
-
-        }
-
-
-
-        CustomGridViewActivity adapterViewAndroid = new CustomGridViewActivity(SelectLevel.this, gridViewString, gridViewImageId);
-        androidGridView = (GridView) findViewById(R.id.grid_view_image_text);
-        androidGridView.setVerticalScrollBarEnabled(false);
-        androidGridView.setAdapter(adapterViewAndroid);
+        Intent myIntent= getIntent();
+        Bundle myBundle = myIntent.getExtras();
 
         scrollingBackground();
 
+        lv1 = (ImageView) findViewById(R.id.lvl1_image);
+        lv2 = (ImageView) findViewById(R.id.lvl2_image);
+        lv3 = (ImageView) findViewById(R.id.lvl3_image);
+        lv4 = (ImageView) findViewById(R.id.lvl4_image);
+        lv5 = (ImageView) findViewById(R.id.lvl5_image);
+        lv6 = (ImageView) findViewById(R.id.lvl6_image);
+        lv7 = (ImageView) findViewById(R.id.lvl7_image);
+        lv8 = (ImageView) findViewById(R.id.lvl8_image);
+        lv9 = (ImageView) findViewById(R.id.lvl9_image);
+        lv1_star = (ImageView) findViewById(R.id.lvl1_stars);
+        lv2_star = (ImageView) findViewById(R.id.lvl2_stars);
+        lv3_star = (ImageView) findViewById(R.id.lvl3_stars);
+        lv4_star = (ImageView) findViewById(R.id.lvl4_stars);
+        lv5_star = (ImageView) findViewById(R.id.lvl5_stars);
+        lv6_star = (ImageView) findViewById(R.id.lvl6_stars);
+        lv7_star = (ImageView) findViewById(R.id.lvl7_stars);
+        lv8_star = (ImageView) findViewById(R.id.lvl8_stars);
+        lv9_star = (ImageView) findViewById(R.id.lvl9_stars);
+        mProgress = (TextView) findViewById(R.id.level_progress);
+        mLifes = (TextView) findViewById(R.id.user_lifes);
+        mCoins = (TextView) findViewById(R.id.user_coins);
+        mUserPicture = (ImageView) findViewById(R.id.user_picture);
+        mUserName = (TextView) findViewById(R.id.user_name);
+
+        if(myBundle!=null)
+        {
+            String myWorld =(String) myBundle.get("world");
+            Toast.makeText(SelectLevel.this, "" + myWorld, Toast.LENGTH_LONG).show();
+        }
+
+        try{
+            if(auth.getCurrentUser() != null){
+                setImage(mUserPicture, String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()));
+                mUserName.setText(auth.getCurrentUser().getDisplayName());
+                Toast.makeText(SelectLevel.this, "" + myWorld.equals("world1"), Toast.LENGTH_LONG).show();
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld);
+
+                myRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        try{
+                            Map<String, Object> newPost = (Map<String, Object>) dataSnapshot.getValue();
+                            System.out.println("TTTTTTTTTTTTTTTTTTTTTTTTT: " + R.drawable.star0 +" "+ R.drawable.star3);
+                            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAA: " +Integer.parseInt(String.valueOf(((Map)newPost.get( "level1" )).get( "stars" ))));
 
 
+
+                            int n1 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level1" )).get( "icon" )));
+                            int n2 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level2" )).get( "icon" )));
+                            int n3 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level3" )).get( "icon" )));
+                            int n4 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level4" )).get( "icon" )));
+                            int n5 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level5" )).get( "icon" )));
+                            int n6 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level6" )).get( "icon" )));
+                            int n7 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level7" )).get( "icon" )));
+                            int n8 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level8" )).get( "icon" )));
+                            int n9 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level9" )).get( "icon" )));
+
+                            setImage(n1, lv1);
+                            setImage(n2, lv2);
+                            setImage(n3, lv3);
+                            setImage(n4, lv4);
+                            setImage(n5, lv5);
+                            setImage(n6, lv6);
+                            setImage(n7, lv7);
+                            setImage(n8, lv8);
+                            setImage(n9, lv9);
+
+
+                            int l1 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level1" )).get( "stars" )));
+                            int l2 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level2" )).get( "stars" )));
+                            int l3 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level3" )).get( "stars" )));
+                            int l4 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level4" )).get( "stars" )));
+                            int l5 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level5" )).get( "stars" )));
+                            int l6 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level6" )).get( "stars" )));
+                            int l7 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level7" )).get( "stars" )));
+                            int l8 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level8" )).get( "stars" )));
+                            int l9 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level9" )).get( "stars" )));
+
+                            setImage(l1, lv1_star);
+                            setImage(l2, lv2_star);
+                            setImage(l3, lv3_star);
+                            setImage(l4, lv4_star);
+                            setImage(l5, lv5_star);
+                            setImage(l6, lv6_star);
+                            setImage(l7, lv7_star);
+                            setImage(l8, lv8_star);
+                            setImage(l9, lv9_star);
+
+                            pd.dismiss();
+                        } catch (Exception e) {
+                            System.out.println();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        // Failed to read value
+
+                    }
+                });
+
+            }
+        }catch (Exception e) {
+            System.out.println(e);
+        }
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference(auth.getCurrentUser().getUid() + "/progress");
-
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
-                try{
-                    mProgresWorld.setText(value);
-                    mProfilePicture.setVisibility(View.VISIBLE);
-                    mUsername.setVisibility(View.VISIBLE);
-                    mUsername.setText(auth.getCurrentUser().getDisplayName());
-                    setImage(mProfilePicture, String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()));
-
-                } catch (Exception e) {
-                    System.out.println();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-
-            }
-        });
 
         DatabaseReference lifeWatcher = database.getReference(auth.getCurrentUser().getUid() + "/lifes");
 
@@ -115,10 +180,29 @@ public class SelectLevel extends AppCompatActivity {
                     mLifes.setText(value);
                     try {
                         Typeface mFont = Typeface.createFromAsset(getAssets(), "fonts/johnny.ttf");
-                        mProgresWorld.setTypeface(mFont);
+                        mProgress.setTypeface(mFont);
                     } catch (Exception e) {
 
                     }
+                } catch (Exception e) {
+                    System.out.println();
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+            }
+        });
+
+
+        DatabaseReference progressWatcher = database.getReference(auth.getCurrentUser().getUid() + "/total" + myWorld);
+
+        progressWatcher.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String value = dataSnapshot.getValue(String.class);
+                try{
+                    mProgress.setText(value);
                 } catch (Exception e) {
                     System.out.println();
                 }
@@ -149,27 +233,89 @@ public class SelectLevel extends AppCompatActivity {
 
 
 
-        androidGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+        lv1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int i, long id) {
-                Intent myIntent = new Intent(SelectLevel.this, Game.class);
-                SelectLevel.this.startActivity(myIntent);
-                Toast.makeText(SelectLevel.this, "GridView Item: " + gridViewString[i] + " level " + i , Toast.LENGTH_LONG).show();
+            public void onClick(View v) {
+
             }
         });
 
-        backButton = (ImageButton) findViewById(R.id.backButton);
-
-        backButton.setOnClickListener(new View.OnClickListener() {
+        lv1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent myIntent = new Intent(SelectLevel.this, SelectWorld.class);
-                SelectLevel.this.startActivity(myIntent);
+            public void onClick(View v) {
+
             }
         });
 
+        lv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        lv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        lv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        lv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        lv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        lv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        lv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        lv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+    }
+
+    public void setImage(int resource, ImageView target){
+
+        if(resource == 69) {
+            target.setVisibility(View.INVISIBLE);
+        } else {
+            target.setVisibility(View.VISIBLE);
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                Drawable icon1 = getResources().getDrawable(resource, getTheme());
+                target.setImageDrawable(icon1);
+            }
+        }
     }
     public void scrollingBackground() {
         final ImageView backgroundOne = (ImageView) findViewById(R.id.background_one);
@@ -191,6 +337,7 @@ public class SelectLevel extends AppCompatActivity {
         });
         animator.start();
     }
+
     public void setImage(ImageView im, String url) {
         try {
 
@@ -206,3 +353,4 @@ public class SelectLevel extends AppCompatActivity {
     }
 
 }
+

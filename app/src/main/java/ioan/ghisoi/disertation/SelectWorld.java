@@ -1,6 +1,7 @@
 package ioan.ghisoi.disertation;
 
 import android.animation.ValueAnimator;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
@@ -39,11 +40,16 @@ public class SelectWorld extends AppCompatActivity implements BaseSliderView.OnS
     ImageButton backButton;
     FirebaseAuth auth = FirebaseAuth.getInstance();
     HashMap<String,Integer> file_maps;
+    ProgressDialog pd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_world);
+
+        pd = new ProgressDialog(SelectWorld.this, R.style.TransparentProgressDialog);
+        pd.setMessage("Loading...");
+        pd.show();
 
 
         mProfilePicture = (ImageView) findViewById(R.id.user_picture);
@@ -124,6 +130,7 @@ public class SelectWorld extends AppCompatActivity implements BaseSliderView.OnS
                 String value = dataSnapshot.getValue(String.class);
                 try{
                     mCoins.setText(value);
+                    pd.dismiss();
                 } catch (Exception e) {
                     System.out.println();
                 }
@@ -147,15 +154,17 @@ public class SelectWorld extends AppCompatActivity implements BaseSliderView.OnS
 
 
         file_maps = new HashMap<String, Integer>();
-        file_maps.put("ROCK",R.drawable.rockslider);
-        file_maps.put("RAP",R.drawable.rapslider);
-        file_maps.put("POP",R.drawable.popslider);
+        file_maps.put("world1",R.drawable.rockslider);
+        file_maps.put("world2",R.drawable.rapslider);
+        file_maps.put("world3",R.drawable.popslider);
+
 
         createSlider(file_maps);
 
     }
 
     public void createSlider(HashMap<String,Integer> file_maps) {
+        Toast.makeText(SelectWorld.this, ""+file_maps.size(),Toast.LENGTH_LONG).show();
         for(String name : file_maps.keySet()){
             DefaultSliderView textSliderView = new DefaultSliderView(SelectWorld.this);
             // initialize a SliderLayout
@@ -191,8 +200,9 @@ public class SelectWorld extends AppCompatActivity implements BaseSliderView.OnS
 
     @Override
     public void onSliderClick(BaseSliderView slider) {
-        Toast.makeText(this,slider.getBundle().get("extra") + "" +slider.getBundle().get("jh") + "",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,slider.getBundle().get("extra") + "",Toast.LENGTH_SHORT).show();
         Intent myIntent = new Intent(SelectWorld.this, SelectLevel.class);
+        myIntent.putExtra("world",""+slider.getBundle().get("extra"));
         SelectWorld.this.startActivity(myIntent);
     }
 

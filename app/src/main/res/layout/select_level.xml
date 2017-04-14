@@ -117,34 +117,372 @@
             </RelativeLayout>
 
 
-            <GridView
-                android:id="@+id/grid_view_image_text"
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_marginTop="30dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_height="0dp"
-                android:layout_weight="70"
-                android:layout_gravity="center"
-                android:numColumns="3"
-                android:orientation="horizontal">
-            </GridView>
+                android:layout_marginTop="20dp"
+                android:layout_weight="75"
+                android:orientation="vertical"
+                android:weightSum="3" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:weightSum="3" >
+
+                    <LinearLayout
+                        android:id="@+id/lvl1_layout"
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:weightSum="100"
+                        android:padding="5dp">
+
+
+                        <ImageView
+                            android:id="@+id/lvl1_image"
+                            android:src="@drawable/lvl1"
+                            android:layout_height="0dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_width="fill_parent"
+                            android:layout_weight="75"
+                            android:adjustViewBounds="true"
+                            android:cropToPadding="false"
+                            android:background="#00000000"
+                            android:scaleType="fitXY"
+                            />
+
+                        <ImageView
+                            android:id="@+id/lvl1_stars"
+                            android:src="@drawable/star0"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="-40dp"
+                            android:layout_width="match_parent"
+                            android:layout_weight="25"
+                            />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lvl2_layout"
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:weightSum="100"
+                        android:padding="5dp">
+
+
+                        <ImageView
+                            android:id="@+id/lvl2_image"
+                            android:src="@drawable/lvl2block"
+                            android:layout_height="0dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_width="fill_parent"
+                            android:layout_weight="75"
+                            android:adjustViewBounds="true"
+                            android:cropToPadding="false"
+                            android:background="#00000000"
+                            android:scaleType="fitXY"
+                            />
+
+                        <ImageView
+                            android:id="@+id/lvl2_stars"
+                            android:src="@drawable/star3"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="-40dp"
+                            android:layout_width="match_parent"
+                            android:layout_weight="25"
+                            android:visibility="invisible"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lvl3_layout"
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:weightSum="100"
+                        android:padding="5dp">
+
+
+                        <ImageView
+                            android:id="@+id/lvl3_image"
+                            android:src="@drawable/lvl3block"
+                            android:layout_height="0dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_width="fill_parent"
+                            android:layout_weight="75"
+                            android:adjustViewBounds="true"
+                            android:cropToPadding="false"
+                            android:background="#00000000"
+                            android:scaleType="fitXY"
+                            />
+
+                        <ImageView
+                            android:id="@+id/lvl3_stars"
+                            android:src="@drawable/star3"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="-40dp"
+                            android:layout_width="match_parent"
+                            android:layout_weight="25"
+                            android:visibility="invisible"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:weightSum="3" >
+
+                    <LinearLayout
+                        android:id="@+id/lvl4_layout"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:weightSum="100"
+                        android:padding="5dp">
+
+
+                        <ImageView
+                            android:id="@+id/lvl4_image"
+                            android:src="@drawable/lvl4block"
+                            android:layout_height="0dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_width="fill_parent"
+                            android:layout_weight="75"
+                            android:adjustViewBounds="true"
+                            android:cropToPadding="false"
+                            android:background="#00000000"
+                            android:scaleType="fitXY"
+                            />
+
+                        <ImageView
+                            android:id="@+id/lvl4_stars"
+                            android:src="@drawable/star3"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="-40dp"
+                            android:layout_width="match_parent"
+                            android:layout_weight="25"
+                            android:visibility="invisible"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lvl5_layout"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:weightSum="100"
+                        android:padding="5dp">
+
+
+                        <ImageView
+                            android:id="@+id/lvl5_image"
+                            android:src="@drawable/lvl5block"
+                            android:layout_height="0dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_width="fill_parent"
+                            android:layout_weight="75"
+                            android:adjustViewBounds="true"
+                            android:cropToPadding="false"
+                            android:background="#00000000"
+                            android:scaleType="fitXY"
+                            />
+
+                        <ImageView
+                            android:id="@+id/lvl5_stars"
+                            android:src="@drawable/star3"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="-40dp"
+                            android:layout_width="match_parent"
+                            android:layout_weight="25"
+                            android:visibility="invisible"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lvl6_layout"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:weightSum="100"
+                        android:padding="5dp">
+
+
+                        <ImageView
+                            android:id="@+id/lvl6_image"
+                            android:src="@drawable/lvl6block"
+                            android:layout_height="0dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_width="fill_parent"
+                            android:layout_weight="75"
+                            android:adjustViewBounds="true"
+                            android:cropToPadding="false"
+                            android:background="#00000000"
+                            android:scaleType="fitXY"
+                            />
+
+                        <ImageView
+                            android:id="@+id/lvl6_stars"
+                            android:src="@drawable/star3"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="-40dp"
+                            android:layout_width="match_parent"
+                            android:layout_weight="25"
+                            android:visibility="invisible"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:weightSum="3" >
+
+                    <LinearLayout
+                        android:id="@+id/lvl7_layout"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:weightSum="100"
+                        android:padding="5dp">
+
+
+                        <ImageView
+                            android:id="@+id/lvl7_image"
+                            android:src="@drawable/lvl7block"
+                            android:layout_height="0dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_width="fill_parent"
+                            android:layout_weight="75"
+                            android:adjustViewBounds="true"
+                            android:cropToPadding="false"
+                            android:background="#00000000"
+                            android:scaleType="fitXY"
+                            />
+
+                        <ImageView
+                            android:id="@+id/lvl7_stars"
+                            android:src="@drawable/star3"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="-40dp"
+                            android:layout_width="match_parent"
+                            android:layout_weight="25"
+                            android:visibility="invisible"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lvl8_layout"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:weightSum="100"
+                        android:padding="5dp">
+
+
+                        <ImageView
+                            android:id="@+id/lvl8_image"
+                            android:src="@drawable/lvl8block"
+                            android:layout_height="0dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_width="fill_parent"
+                            android:layout_weight="75"
+                            android:adjustViewBounds="true"
+                            android:cropToPadding="false"
+                            android:background="#00000000"
+                            android:scaleType="fitXY"
+                            />
+
+                        <ImageView
+                            android:id="@+id/lvl8_stars"
+                            android:src="@drawable/star3"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="-40dp"
+                            android:layout_width="match_parent"
+                            android:layout_weight="25"
+                            android:visibility="invisible"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lvl9_layout"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:weightSum="100"
+                        android:padding="5dp">
+
+
+                        <ImageView
+                            android:id="@+id/lvl9_image"
+                            android:src="@drawable/lvl9block"
+                            android:layout_height="0dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_width="fill_parent"
+                            android:layout_weight="75"
+                            android:adjustViewBounds="true"
+                            android:cropToPadding="false"
+                            android:background="#00000000"
+                            android:scaleType="fitXY"
+                            />
+
+                        <ImageView
+                            android:id="@+id/lvl9_stars"
+                            android:src="@drawable/star3"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="-40dp"
+                            android:layout_width="match_parent"
+                            android:layout_weight="25"
+                            android:visibility="invisible"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:layout_weight="10"
+                android:layout_weight="5"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/worldProgress"
+                    android:id="@+id/level_progress"
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
                     android:gravity="center"
                     android:text="0%"
                     android:textAlignment="center"
                     android:textColor="#28b78d"
-                    android:textSize="45dp"/>
+                    android:textSize="25dp"/>
 
             </LinearLayout>
 

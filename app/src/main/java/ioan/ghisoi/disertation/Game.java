@@ -1,24 +1,35 @@
 package ioan.ghisoi.disertation;
 
+import android.animation.ValueAnimator;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.PointF;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.test.suitebuilder.TestMethod;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -38,10 +49,56 @@ public class Game extends AppCompatActivity {
 
     private FrameLayout mContainerView;
     private LinearLayout mSolutionView;
+    CountDownTimer timer;
 
     private MediaPlayer mp;
     private Handler mHandler;
     private Runnable mRunnable;
+    private TextView mTimer;
+
+    void openCustomDialog(String text, int starsId){
+        AlertDialog.Builder customDialog
+                = new AlertDialog.Builder(Game.this,R.style.CustomDialog);
+        customDialog.setTitle("");
+
+        LayoutInflater layoutInflater
+                = (LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view=layoutInflater.inflate(R.layout.game_popup,null);
+
+
+        ImageView  back, forward;
+        TextView score;
+        ImageView stars;
+
+        back = (ImageView) view.findViewById(R.id.level_back);
+        forward= (ImageView) view.findViewById(R.id.level_next);
+
+        score = (TextView) view.findViewById(R.id.level_score);
+        stars= (ImageView) view.findViewById(R.id.level_stars);
+
+        score.setText(text);
+        setImage(starsId, stars);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(Game.this, SelectLevel.class);
+                Game.this.startActivity(myIntent);
+            }
+        });
+
+        forward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(Game.this, SelectLevel.class);
+                Game.this.startActivity(myIntent);
+            }
+        });
+
+        customDialog.setView(view);
+        customDialog.show();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +107,15 @@ public class Game extends AppCompatActivity {
 
         mHandler = new Handler();
 
+        scrollingBackground();
+
         mPlayFullTrack = (ImageView) findViewById(R.id.play_full_track_button);
         mContainerView = (FrameLayout) findViewById(R.id.container_view);
         mSolutionView = (LinearLayout) findViewById(R.id.solution_view);
+        mTimer = (TextView) findViewById(R.id.level_timer);
 
-        mp = MediaPlayer.create(this, R.raw.fur);
+
+                mp = MediaPlayer.create(this, R.raw.tut1);
         mPlayFullTrack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,9 +135,22 @@ public class Game extends AppCompatActivity {
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                mPlayFullTrack.setImageResource(R.drawable.play);
+                mPlayFullTrack.setImageResource(R.drawable.bigplay);
                 mMainPlayerFinished = true;
                 mShoulUseAsPlay = true;
+
+                 timer = new CountDownTimer(30000, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+                        mTimer.setText(""+millisUntilFinished / 1000);
+                        //here you can have your logic to set text to edittext
+                    }
+
+                    public void onFinish() {
+                        finishLevel(1);
+                    }
+
+                }.start();
             }
         });
 
@@ -86,8 +160,8 @@ public class Game extends AppCompatActivity {
                     @Override
                     public void onGlobalLayout() {
                         mPlayFullTrack.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                        addPuzzlePieces(5);
-                        addPuzzlePiecesPlaceholders(5);
+                        addPuzzlePieces(3);
+                        addPuzzlePiecesPlaceholders(3);
                     }
                 });
 
@@ -128,8 +202,7 @@ public class Game extends AppCompatActivity {
                 rotateImage(mPlaceholderArray.get(i).getStepView());
             }
             rotateImage(mPlayFullTrack);
-            Toast.makeText(Game.this, "Correct",
-                    Toast.LENGTH_LONG).show();
+            finishLevel(0);
         } else {
             Toast.makeText(Game.this, "Not Correct",
                     Toast.LENGTH_LONG).show();
@@ -387,5 +460,62 @@ public class Game extends AppCompatActivity {
         rotate.setDuration(1000);
         rotate.setInterpolator(new LinearInterpolator());
         image.startAnimation(rotate);
+    }
+
+    public void setImage(int resource, ImageView target){
+
+        if(resource == 69) {
+            target.setVisibility(View.INVISIBLE);
+        } else {
+            target.setVisibility(View.VISIBLE);
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                Drawable icon1 = getResources().getDrawable(resource, getTheme());
+                target.setImageDrawable(icon1);
+            }
+        }
+    }
+    public void scrollingBackground() {
+        final ImageView backgroundOne = (ImageView) findViewById(R.id.background_one);
+        final ImageView backgroundTwo = (ImageView) findViewById(R.id.background_two);
+
+        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.0f);
+        animator.setRepeatCount(ValueAnimator.INFINITE);
+        animator.setInterpolator(new LinearInterpolator());
+        animator.setDuration(10000L);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                final float progress = (float) animation.getAnimatedValue();
+                final float width = backgroundOne.getWidth();
+                final float translationX = width * progress;
+                backgroundOne.setTranslationX(translationX);
+                backgroundTwo.setTranslationX(translationX - width);
+            }
+        });
+        animator.start();
+    }
+
+    public void finishLevel(int type){
+
+        if(type == 0) {
+            try {
+                mTimer.setVisibility(View.INVISIBLE);
+                timer.cancel();
+                timer = null;
+                int score = 1000 * Integer.parseInt(mTimer.getText().toString());
+
+                openCustomDialog(String.valueOf(score), R.drawable.star1);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        } else {
+            try {
+                mTimer.setVisibility(View.INVISIBLE);
+                int score = 0;
+                openCustomDialog(String.valueOf(score), R.drawable.star0);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
     }
 }

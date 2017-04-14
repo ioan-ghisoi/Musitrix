@@ -63,6 +63,7 @@
                 android:textColor="@color/musitrix_green"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:alpha="0.87"
                 android:layout_weight="12"
                 android:layout_marginBottom="10dp"
                 android:background = "@drawable/roundedbutton" />
@@ -73,6 +74,7 @@
                 android:textColor="@color/musitrix_green"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:alpha="0.87"
                 android:layout_weight="12"
                 android:layout_marginBottom="10dp"
                 android:background = "@drawable/roundedbutton" />
@@ -83,6 +85,7 @@
                 android:textColor="@color/musitrix_green"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:alpha="0.87"
                 android:layout_weight="12"
                 android:layout_marginBottom="10dp"
                 android:background = "@drawable/roundedbutton" />
@@ -102,7 +105,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="160dp"
+                android:layout_marginRight="115dp"
                 android:orientation="vertical">
 
                 <ImageView
@@ -128,8 +131,8 @@
                 android:layout_width="@dimen/main_screen_social_media_width"
                 android:layout_height="@dimen/main_screen_social_media_height"
                 android:layout_gravity="left"
-                android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
+                android:src="@drawable/logoutbutton"
                 android:visibility="invisible"/>
 
             <ImageView
@@ -138,7 +141,14 @@
                 android:layout_height="@dimen/main_screen_social_media_height"
                 android:layout_gravity="left"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/loginbutton" />
+                android:src="@drawable/google" />
+            <ImageView
+                android:id="@+id/login_button2"
+                android:layout_marginRight="50dp"
+                android:layout_width="@dimen/main_screen_social_media_width"
+                android:layout_height="@dimen/main_screen_social_media_height"
+                android:layout_gravity="left"
+                android:src="@drawable/facebook" />
         </LinearLayout>
 
     </FrameLayout>

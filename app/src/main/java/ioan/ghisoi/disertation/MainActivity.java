@@ -25,6 +25,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.api.model.StringList;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 0;
 
-    ImageView mLoginButton, mLogoutButton, mUserPicture, mLogo;
+    ImageView mLoginButton, mLogoutButton, mUserPicture, mLogo, mLogin2;
     Button mNewGame, mContinue, mRank;
     TextView mUsername, tittle;
     MediaPlayer mediaPlayer;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         mUserPicture = (ImageView) findViewById(R.id.user_picture);
         mLogo = (ImageView) findViewById(R.id.main_screen_logo);
         mUsername = (TextView) findViewById(R.id.user_name);
+        mLogin2 = (ImageView) findViewById(R.id.login_button2);
 
         Typeface mFont = Typeface.createFromAsset(getAssets(), "fonts/johnny.ttf");
         tittle.setTypeface(mFont);
@@ -90,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             if (auth.getCurrentUser() != null) {
-                mLoginButton.setImageResource(R.drawable.logoutbutton);
                 mUserPicture.setVisibility(View.VISIBLE);
                 mUsername.setVisibility(View.VISIBLE);
                 mUsername.setText(auth.getCurrentUser().getDisplayName());
@@ -129,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (auth.getCurrentUser() != null) {
                     mLogoutButton.performClick();
-                    mLoginButton.setImageResource(R.drawable.logoutbutton);
                 } else {
                     startActivityForResult(AuthUI.getInstance()
                             .createSignInIntentBuilder().setProviders(
@@ -138,7 +138,23 @@ public class MainActivity extends AppCompatActivity {
                                     AuthUI.EMAIL_PROVIDER
                             )
                             .setTheme(R.style.GreenTheme).build(), RC_SIGN_IN);
-                    mLoginButton.setImageResource(R.drawable.loginbutton);
+                }
+            }
+        });
+
+        mLogin2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (auth.getCurrentUser() != null) {
+                    mLogoutButton.performClick();
+                } else {
+                    startActivityForResult(AuthUI.getInstance()
+                            .createSignInIntentBuilder().setProviders(
+                                    AuthUI.FACEBOOK_PROVIDER,
+                                    AuthUI.GOOGLE_PROVIDER,
+                                    AuthUI.EMAIL_PROVIDER
+                            )
+                            .setTheme(R.style.GreenTheme).build(), RC_SIGN_IN);
                 }
             }
         });
@@ -178,7 +194,6 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
-                mLoginButton.setImageResource(R.drawable.logoutbutton);
                 mUsername.setVisibility(View.VISIBLE);
                 mUsername.setText(auth.getCurrentUser().getDisplayName());
                 mUserPicture.setVisibility(View.VISIBLE);
@@ -208,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onCancelled(DatabaseError error) {
                         // Failed to read value
-                        Toast.makeText(MainActivity.this,error+ "",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this,error+ "",Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -339,49 +354,49 @@ public class MainActivity extends AppCompatActivity {
             myRef12.setValue("0%");
 
             DatabaseReference myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level1/icon");
-            myRef50.setValue("2130837707");
+            myRef50.setValue(String.valueOf(R.drawable.lvl1));
             myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level1/stars");
-            myRef50.setValue("2130837768");
+            myRef50.setValue(String.valueOf(R.drawable.star0));
             myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level1/points");
             myRef50.setValue("0");
 
             DatabaseReference myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level2/icon");
-            myRef51.setValue("2130837709");
+            myRef51.setValue(String.valueOf(R.drawable.lvl2block));
             myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level2/stars");
             myRef51.setValue("69");
             myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level2/points");
             myRef51.setValue("0");
 
             DatabaseReference myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level3/icon");
-            myRef52.setValue("2130837711");
+            myRef52.setValue(String.valueOf(R.drawable.lvl3block));
             myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level3/stars");
             myRef52.setValue("69");
             myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level3/points");
             myRef52.setValue("0");
 
             DatabaseReference myRef53 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level4/icon");
-            myRef53.setValue("2130837713");
+            myRef53.setValue(String.valueOf(R.drawable.lvl4block));
             myRef53 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level4/stars");
             myRef53.setValue("69");
             myRef53 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level4/points");
             myRef53.setValue("0");
 
             DatabaseReference myRef54 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level5/icon");
-            myRef54.setValue("2130837715");
+            myRef54.setValue(String.valueOf(R.drawable.lvl5block));
             myRef54 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level5/stars");
             myRef54.setValue("69");
             myRef54 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level5/points");
             myRef54.setValue("0");
 
             DatabaseReference myRef55 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level6/icon");
-            myRef55.setValue("2130837717");
+            myRef55.setValue(String.valueOf(R.drawable.lvl6block));
             myRef55 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level6/stars");
             myRef55.setValue("69");
             myRef55 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level6/points");
             myRef55.setValue("0");
 
             DatabaseReference myRef56 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level7/icon");
-            myRef56.setValue("2130837719");
+            myRef56.setValue(String.valueOf(R.drawable.lvl7block));
             myRef56 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level7/stars");
             myRef56.setValue("69");
             myRef56 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level7/points");
@@ -389,14 +404,14 @@ public class MainActivity extends AppCompatActivity {
 
 
             DatabaseReference myRef57 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level8/icon");
-            myRef57.setValue("2130837721");
+            myRef57.setValue(String.valueOf(R.drawable.lvl8block));
             myRef57 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level8/stars");
             myRef57.setValue("69");
             myRef57 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level8/points");
             myRef57.setValue("0");
 
             DatabaseReference myRef58 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level9/icon");
-            myRef58.setValue("2130837723");
+            myRef58.setValue(String.valueOf(R.drawable.lvl9block));
             myRef58 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level9/stars");
             myRef58.setValue("69");
             myRef58 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level9/points");

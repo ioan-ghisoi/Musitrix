@@ -68,8 +68,7 @@ public class SelectWorld extends AppCompatActivity implements BaseSliderView.OnS
                 setImage(mProfilePicture, String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()));
             }
         } catch (Exception e) {
-                Toast.makeText(SelectWorld.this,"" + e,Toast.LENGTH_LONG).show();
-
+//                Toast.makeText(SelectWorld.this,"" + e,Toast.LENGTH_LONG).show();
         }
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -164,7 +163,7 @@ public class SelectWorld extends AppCompatActivity implements BaseSliderView.OnS
     }
 
     public void createSlider(HashMap<String,Integer> file_maps) {
-        Toast.makeText(SelectWorld.this, ""+file_maps.size(),Toast.LENGTH_LONG).show();
+
         for(String name : file_maps.keySet()){
             DefaultSliderView textSliderView = new DefaultSliderView(SelectWorld.this);
             // initialize a SliderLayout
@@ -200,7 +199,7 @@ public class SelectWorld extends AppCompatActivity implements BaseSliderView.OnS
 
     @Override
     public void onSliderClick(BaseSliderView slider) {
-        Toast.makeText(this,slider.getBundle().get("extra") + "",Toast.LENGTH_SHORT).show();
+
         Intent myIntent = new Intent(SelectWorld.this, SelectLevel.class);
         myIntent.putExtra("world",""+slider.getBundle().get("extra"));
         SelectWorld.this.startActivity(myIntent);

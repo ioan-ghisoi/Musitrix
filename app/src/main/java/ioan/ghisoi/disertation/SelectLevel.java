@@ -10,14 +10,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
-import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.facebook.login.widget.ProfilePictureView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,10 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -89,14 +79,14 @@ public class SelectLevel extends AppCompatActivity {
         if(myBundle!=null)
         {
             String myWorld =(String) myBundle.get("world");
-            Toast.makeText(SelectLevel.this, "" + myWorld, Toast.LENGTH_LONG).show();
+            //Toast.makeText(SelectLevel.this, "" + myWorld, Toast.LENGTH_LONG).show();
         }
 
         try{
             if(auth.getCurrentUser() != null){
                 setImage(mUserPicture, String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()));
                 mUserName.setText(auth.getCurrentUser().getDisplayName());
-                Toast.makeText(SelectLevel.this, "" + myWorld.equals("world1"), Toast.LENGTH_LONG).show();
+                //Toast.makeText(SelectLevel.this, "" + myWorld.equals("world1"), Toast.LENGTH_LONG).show();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld);
 
@@ -236,70 +226,80 @@ public class SelectLevel extends AppCompatActivity {
         lv1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                SelectLevel.this.startActivity(myIntent);
             }
         });
 
-        lv1.setOnClickListener(new View.OnClickListener() {
+        lv2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                SelectLevel.this.startActivity(myIntent);
             }
         });
 
-        lv1.setOnClickListener(new View.OnClickListener() {
+        lv3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                SelectLevel.this.startActivity(myIntent);
             }
         });
 
-        lv1.setOnClickListener(new View.OnClickListener() {
+        lv4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                SelectLevel.this.startActivity(myIntent);
             }
         });
 
-        lv1.setOnClickListener(new View.OnClickListener() {
+        lv5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                SelectLevel.this.startActivity(myIntent);
             }
         });
 
-        lv1.setOnClickListener(new View.OnClickListener() {
+        lv6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                SelectLevel.this.startActivity(myIntent);
             }
         });
 
-        lv1.setOnClickListener(new View.OnClickListener() {
+        lv7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                SelectLevel.this.startActivity(myIntent);
             }
         });
 
-        lv1.setOnClickListener(new View.OnClickListener() {
+        lv8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                SelectLevel.this.startActivity(myIntent);
             }
         });
 
-        lv1.setOnClickListener(new View.OnClickListener() {
+        lv9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                SelectLevel.this.startActivity(myIntent);
             }
         });
 
-        lv1.setOnClickListener(new View.OnClickListener() {
+        lv1_star.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                SelectLevel.this.startActivity(myIntent);
             }
         });
 
@@ -317,6 +317,7 @@ public class SelectLevel extends AppCompatActivity {
             }
         }
     }
+
     public void scrollingBackground() {
         final ImageView backgroundOne = (ImageView) findViewById(R.id.background_one);
         final ImageView backgroundTwo = (ImageView) findViewById(R.id.background_two);

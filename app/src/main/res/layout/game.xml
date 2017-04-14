@@ -5,8 +5,23 @@
     android:id="@+id/container_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/deptheffect"
     >
+
+    <ImageView
+        android:id="@+id/background_one"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/worldwp"/>
+
+    <ImageView
+        android:id="@+id/background_two"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/worldwp"/>
 
     <LinearLayout
         android:orientation="vertical"
@@ -38,5 +53,14 @@
         </FrameLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/level_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:textColor="@color/musitrix_white"
+        android:text="asdasdas"/>
 
 </FrameLayout>

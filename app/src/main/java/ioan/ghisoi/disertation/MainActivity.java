@@ -24,8 +24,8 @@ import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.api.model.StringList;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     TextView mUsername, tittle;
     MediaPlayer mediaPlayer;
     FirebaseAuth auth = FirebaseAuth.getInstance();
+
 
 
     @Override
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         mNewGame.setTypeface(mFont);
         mContinue.setTypeface(mFont);
         mRank.setTypeface(mFont);
+
 
         AsyncTask.execute(new Runnable() {
             @Override
@@ -104,9 +106,15 @@ public class MainActivity extends AppCompatActivity {
         mNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                stopBackgroundMusic();
-                Intent myIntent = new Intent(MainActivity.this, SelectWorld.class);
-                MainActivity.this.startActivity(myIntent);
+
+                auth.getCurrentUser();
+                    if(auth.getCurrentUser() == null) {
+                        registerAnonymus();
+                    } else {
+                        stopBackgroundMusic();
+                        Intent myIntent = new Intent(MainActivity.this, SelectWorld.class);
+                        MainActivity.this.startActivity(myIntent);
+                    }
             }
         });
 
@@ -359,6 +367,8 @@ public class MainActivity extends AppCompatActivity {
             myRef50.setValue(String.valueOf(R.drawable.star0));
             myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level1/points");
             myRef50.setValue("0");
+            myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level1/status");
+            myRef50.setValue("unlocked");
 
             DatabaseReference myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level2/icon");
             myRef51.setValue(String.valueOf(R.drawable.lvl2block));
@@ -366,6 +376,8 @@ public class MainActivity extends AppCompatActivity {
             myRef51.setValue("69");
             myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level2/points");
             myRef51.setValue("0");
+            myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level2/status");
+            myRef51.setValue("locked");
 
             DatabaseReference myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level3/icon");
             myRef52.setValue(String.valueOf(R.drawable.lvl3block));
@@ -373,6 +385,8 @@ public class MainActivity extends AppCompatActivity {
             myRef52.setValue("69");
             myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level3/points");
             myRef52.setValue("0");
+            myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level3/status");
+            myRef52.setValue("locked");
 
             DatabaseReference myRef53 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level4/icon");
             myRef53.setValue(String.valueOf(R.drawable.lvl4block));
@@ -380,6 +394,8 @@ public class MainActivity extends AppCompatActivity {
             myRef53.setValue("69");
             myRef53 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level4/points");
             myRef53.setValue("0");
+            myRef53 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level4/status");
+            myRef53.setValue("locked");
 
             DatabaseReference myRef54 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level5/icon");
             myRef54.setValue(String.valueOf(R.drawable.lvl5block));
@@ -387,6 +403,8 @@ public class MainActivity extends AppCompatActivity {
             myRef54.setValue("69");
             myRef54 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level5/points");
             myRef54.setValue("0");
+            myRef54 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level5/status");
+            myRef54.setValue("locked");
 
             DatabaseReference myRef55 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level6/icon");
             myRef55.setValue(String.valueOf(R.drawable.lvl6block));
@@ -394,6 +412,8 @@ public class MainActivity extends AppCompatActivity {
             myRef55.setValue("69");
             myRef55 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level6/points");
             myRef55.setValue("0");
+            myRef55 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level6/status");
+            myRef55.setValue("locked");
 
             DatabaseReference myRef56 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level7/icon");
             myRef56.setValue(String.valueOf(R.drawable.lvl7block));
@@ -401,6 +421,8 @@ public class MainActivity extends AppCompatActivity {
             myRef56.setValue("69");
             myRef56 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level7/points");
             myRef56.setValue("0");
+            myRef56 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level7/status");
+            myRef56.setValue("locked");
 
 
             DatabaseReference myRef57 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level8/icon");
@@ -409,6 +431,8 @@ public class MainActivity extends AppCompatActivity {
             myRef57.setValue("69");
             myRef57 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level8/points");
             myRef57.setValue("0");
+            myRef57 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level8/status");
+            myRef57.setValue("locked");
 
             DatabaseReference myRef58 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level9/icon");
             myRef58.setValue(String.valueOf(R.drawable.lvl9block));
@@ -416,11 +440,36 @@ public class MainActivity extends AppCompatActivity {
             myRef58.setValue("69");
             myRef58 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level9/points");
             myRef58.setValue("0");
+            myRef58 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level9/status");
+            myRef58.setValue("locked");
 
 
         } catch (Exception e) {
 
         }
 
+    }
+
+    public void registerAnonymus() {
+        try{
+            auth.signInAnonymously()
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            Log.d("MERGEEE", "signInAnonymously:onComplete:" + task.isSuccessful());
+                            initializeUser();
+                            stopBackgroundMusic();
+                            Intent myIntent = new Intent(MainActivity.this, SelectWorld.class);
+                            MainActivity.this.startActivity(myIntent);
+                            if (!task.isSuccessful()) {
+                                Log.w("NOPE", "signInAnonymously", task.getException());
+                                Toast.makeText(MainActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
 }

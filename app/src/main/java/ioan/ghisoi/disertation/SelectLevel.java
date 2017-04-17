@@ -35,6 +35,7 @@ public class SelectLevel extends AppCompatActivity {
     TextView mProgress, mLifes, mCoins, mUserName;
     String myWorld = "world1";
     ProgressDialog pd;
+    boolean isAccesable = false;
 
     FirebaseAuth auth = FirebaseAuth.getInstance();
 
@@ -130,6 +131,7 @@ public class SelectLevel extends AppCompatActivity {
                             int l7 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level7" )).get( "stars" )));
                             int l8 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level8" )).get( "stars" )));
                             int l9 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level9" )).get( "stars" )));
+
 
                             setImage(l1, lv1_star);
                             setImage(l2, lv2_star);
@@ -227,6 +229,10 @@ public class SelectLevel extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                myIntent.putExtra("level",""+ "1");
+                myIntent.putExtra("world",""+ myWorld);
+                myIntent.putExtra("icon",""+ R.drawable.lvl1);
+                myIntent.putExtra("next",""+ R.drawable.lvl2);
                 SelectLevel.this.startActivity(myIntent);
             }
         });
@@ -235,7 +241,13 @@ public class SelectLevel extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(SelectLevel.this, Game.class);
-                SelectLevel.this.startActivity(myIntent);
+                if(isPlayable("level2")) {
+                    myIntent.putExtra("level",""+ "2");
+                    myIntent.putExtra("world",""+ myWorld);
+                    myIntent.putExtra("icon",""+ R.drawable.lvl2);
+                    myIntent.putExtra("next",""+ R.drawable.lvl3);
+                    SelectLevel.this.startActivity(myIntent);
+                }
             }
         });
 
@@ -243,6 +255,10 @@ public class SelectLevel extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                myIntent.putExtra("level",""+ "3");
+                myIntent.putExtra("world",""+ myWorld);
+                myIntent.putExtra("icon",""+ R.drawable.lvl3);
+                myIntent.putExtra("next",""+ R.drawable.lvl4);
                 SelectLevel.this.startActivity(myIntent);
             }
         });
@@ -251,6 +267,10 @@ public class SelectLevel extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                myIntent.putExtra("level",""+ "4");
+                myIntent.putExtra("world",""+ myWorld);
+                myIntent.putExtra("icon",""+ R.drawable.lvl4);
+                myIntent.putExtra("next",""+ R.drawable.lvl5);
                 SelectLevel.this.startActivity(myIntent);
             }
         });
@@ -259,6 +279,10 @@ public class SelectLevel extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                myIntent.putExtra("level",""+ "5");
+                myIntent.putExtra("world",""+ myWorld);
+                myIntent.putExtra("icon",""+ R.drawable.lvl5);
+                myIntent.putExtra("next",""+ R.drawable.lvl6);
                 SelectLevel.this.startActivity(myIntent);
             }
         });
@@ -267,6 +291,10 @@ public class SelectLevel extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                myIntent.putExtra("level",""+ "6");
+                myIntent.putExtra("world",""+ myWorld);
+                myIntent.putExtra("icon",""+ R.drawable.lvl6);
+                myIntent.putExtra("next",""+ R.drawable.lvl7);
                 SelectLevel.this.startActivity(myIntent);
             }
         });
@@ -275,6 +303,10 @@ public class SelectLevel extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                myIntent.putExtra("level",""+ "7");
+                myIntent.putExtra("world",""+ myWorld);
+                myIntent.putExtra("icon",""+ R.drawable.lvl7);
+                myIntent.putExtra("next",""+ R.drawable.lvl8);
                 SelectLevel.this.startActivity(myIntent);
             }
         });
@@ -283,6 +315,10 @@ public class SelectLevel extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                myIntent.putExtra("level",""+ "8");
+                myIntent.putExtra("world",""+ myWorld);
+                myIntent.putExtra("icon",""+ R.drawable.lvl8);
+                myIntent.putExtra("next",""+ R.drawable.lvl9);
                 SelectLevel.this.startActivity(myIntent);
             }
         });
@@ -291,17 +327,21 @@ public class SelectLevel extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                myIntent.putExtra("level",""+ "9");
+                myIntent.putExtra("world",""+ myWorld);
+                myIntent.putExtra("icon",""+ R.drawable.lvl2);
+                myIntent.putExtra("next",""+ R.drawable.lvl9);
                 SelectLevel.this.startActivity(myIntent);
             }
         });
 
-        lv1_star.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(SelectLevel.this, Game.class);
-                SelectLevel.this.startActivity(myIntent);
-            }
-        });
+//        lv1_star.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent myIntent = new Intent(SelectLevel.this, Game.class);
+//                SelectLevel.this.startActivity(myIntent);
+//            }
+//        });
 
     }
 
@@ -353,5 +393,27 @@ public class SelectLevel extends AppCompatActivity {
         }
     }
 
+    public boolean isPlayable(String level){
+
+        FirebaseDatabase updated = FirebaseDatabase.getInstance();
+        DatabaseReference ref = updated.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/"+level+ "/status");
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                System.out.println(dataSnapshot.getValue());
+                if(dataSnapshot.getValue().toString().equals("unlocked")) {
+                    isAccesable = true;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed
+            }
+        });
+
+        return isAccesable;
+    }
 }
 

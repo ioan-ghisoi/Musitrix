@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +34,7 @@ public class SelectLevel extends AppCompatActivity {
     ImageView lv1, lv2, lv3, lv4, lv5, lv6, lv7, lv8, lv9;
     ImageView lv1_star, lv2_star, lv3_star, lv4_star, lv5_star, lv6_star, lv7_star, lv8_star, lv9_star;
     TextView mProgress, mLifes, mCoins, mUserName;
+    ImageButton back;
     String myWorld = "world1";
     ProgressDialog pd;
     boolean isAccesable = false;
@@ -76,6 +78,15 @@ public class SelectLevel extends AppCompatActivity {
         mCoins = (TextView) findViewById(R.id.user_coins);
         mUserPicture = (ImageView) findViewById(R.id.user_picture);
         mUserName = (TextView) findViewById(R.id.user_name);
+        back = (ImageButton) findViewById(R.id.backButton);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(SelectLevel.this, SelectWorld.class);
+                SelectLevel.this.startActivity(myIntent);
+            }
+        });
 
         if(myBundle!=null)
         {

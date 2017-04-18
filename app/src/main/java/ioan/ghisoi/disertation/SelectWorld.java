@@ -77,9 +77,9 @@ public class SelectWorld extends AppCompatActivity implements BaseSliderView.OnS
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
                 try{
-                    mProgresWorld.setText(value);
+                    String value = dataSnapshot.getValue().toString();
+                    mProgresWorld.setText("Total points: " + value);
                     mProfilePicture.setVisibility(View.VISIBLE);
                     mUsername.setVisibility(View.VISIBLE);
                     mUsername.setText(auth.getCurrentUser().getDisplayName());

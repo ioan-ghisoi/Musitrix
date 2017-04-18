@@ -58,7 +58,7 @@
                         android:id="@+id/imgFirst2"
                         android:layout_width="105dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/life"
+                        android:src="@drawable/lifeprog"
                         android:adjustViewBounds="true"
                         android:cropToPadding="false"
                         android:layout_marginLeft="5dp"
@@ -171,7 +171,7 @@
                     android:text="0%"
                     android:textAlignment="center"
                     android:textColor="#28b78d"
-                    android:textSize="45dp"/>
+                    android:textSize="20dp"/>
 
             </LinearLayout>
 

@@ -55,6 +55,8 @@ public class Game extends AppCompatActivity {
     private List<Step> mPieceOrder = new ArrayList<>();
     public boolean wasDiplayed = false;
     int nextLevelIntent, nextLevelIntentForward;
+    int progress = -1;
+    boolean progressWatched = false;
 
 
     private FrameLayout mContainerView;
@@ -72,6 +74,8 @@ public class Game extends AppCompatActivity {
     FirebaseAuth auth = FirebaseAuth.getInstance();
     int currectLifes;
     boolean changer = false, tutorialPlay = false, wasStep2Show = false, wasStep4Show = false;
+
+    String place = "";
 
     void openCustomDialog(String text, int starsId){
         AlertDialog.Builder customDialog
@@ -101,13 +105,19 @@ public class Game extends AppCompatActivity {
         score = (TextView) view.findViewById(R.id.level_score);
         stars= (ImageView) view.findViewById(R.id.level_stars);
 
+
         score.setText(text);
         setImage(starsId, stars);
+
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                stopBackgroundMusic();
+                try {
+                    stopBackgroundMusic();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
                 Intent myIntent = new Intent(Game.this, SelectLevel.class);
                 Game.this.startActivity(myIntent);
             }
@@ -265,6 +275,7 @@ public class Game extends AppCompatActivity {
         mHandler = new Handler();
 
         scrollingBackground();
+        getProgress();
 
 
         Intent myIntent= getIntent();
@@ -693,6 +704,48 @@ public class Game extends AppCompatActivity {
         animator.start();
     }
 
+    public void getProgress() {
+        final FirebaseDatabase databaseRef = FirebaseDatabase.getInstance();
+        DatabaseReference RFF = databaseRef.getReference(auth.getCurrentUser().getUid()+"/progress");
+
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYmacar intra ");
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        RFF.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                System.out.println(" OMFFFFFFFFGGGGGG" + dataSnapshot.getValue().toString());
+
+                place = dataSnapshot.getValue().toString();
+
+                System.out.println(Integer.parseInt(place));
+
+                progress = Integer.parseInt(place);
+                System.out.println();
+                System.out.println();
+                System.out.println();
+                System.out.println();
+                System.out.println("asta e ce progress aveai " + progress);
+                progressWatched = true;
+                System.out.println();
+                System.out.println();
+                System.out.println();
+                System.out.println();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     public void finishLevel(int type){
         System.out.println("ce pnmmmmmmmmmmm");
 
@@ -707,18 +760,29 @@ public class Game extends AppCompatActivity {
             try {
 
                 if(tutorialPlay) {
-                    openCustomDialog(String.valueOf(30000), R.drawable.star3);
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/points");
-                    myRef50.setValue(String.valueOf(30000));
-                    DatabaseReference myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/icon");
-                    myRef51.setValue(String.valueOf(myIcon));
-                    DatabaseReference myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/stars");
-                    myRef52.setValue(String.valueOf(R.drawable.star3));
-                    myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/status");
-                    myRef51.setValue("unlocked");
-                    myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/icon");
-                    myRef51.setValue(nextLevel);
+                    try{
+                        openCustomDialog(String.valueOf(30000), R.drawable.star3);
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/points");
+                        myRef50.setValue(String.valueOf(30000));
+                        DatabaseReference myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/icon");
+                        myRef51.setValue(String.valueOf(myIcon));
+                        DatabaseReference myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/stars");
+                        myRef52.setValue(String.valueOf(R.drawable.star3));
+                        myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/status");
+                        myRef51.setValue("unlocked");
+                        myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/icon");
+                        myRef51.setValue(nextLevel);
+                        if(progress != -1) {
+                            System.out.println("INTRA PE PROGRESSSSSSS");
+                            int value = progress + 3;
+                            myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/progress");
+                            myRef51.setValue(value);
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+
                 } else {
                     int score = 1000 * Integer.parseInt(mTimer.getText().toString());
                     if(score > 20000) {
@@ -735,6 +799,12 @@ public class Game extends AppCompatActivity {
                         myRef51.setValue("unlocked");
                         myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/icon");
                         myRef51.setValue(nextLevel);
+                        if(progress != -1) {
+                            System.out.println("INTRA PE PROGRESSSSSSS");
+                            int value = progress + 3;
+                            myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/progress");
+                            myRef51.setValue(value);
+                        }
 
 
                     } else if(score >10000 && score < 20000){
@@ -750,6 +820,12 @@ public class Game extends AppCompatActivity {
                         myRef51.setValue("unlocked");
                         myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/icon");
                         myRef51.setValue(nextLevel);
+                        if(progress != -1) {
+                            System.out.println("INTRA PE PROGRESSSSSSS");
+                            int value = progress + 2;
+                            myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/progress");
+                            myRef51.setValue(value);
+                        }
                     } else if (score > 5000 && score < 10000) {
                         openCustomDialog(String.valueOf(score), R.drawable.star1);
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -763,6 +839,12 @@ public class Game extends AppCompatActivity {
                         myRef51.setValue("unlocked");
                         myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/icon");
                         myRef51.setValue(nextLevel);
+                        if(progress != -1) {
+                            System.out.println("INTRA PE PROGRESSSSSSS");
+                            int value = progress + 1;
+                            myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/progress");
+                            myRef51.setValue(value);
+                        }
                     } else {
                         openCustomDialog(String.valueOf(score), R.drawable.star0);
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -776,6 +858,12 @@ public class Game extends AppCompatActivity {
                         myRef51.setValue("unlocked");
                         myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/icon");
                         myRef51.setValue(nextLevel);
+                        if(progress != -1) {
+                            System.out.println("INTRA PE PROGRESSSSSSS");
+                            int value = progress;
+                            myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/progress");
+                            myRef51.setValue(value);
+                        }
                     }
                 }
 

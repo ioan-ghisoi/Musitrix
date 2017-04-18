@@ -128,7 +128,9 @@ public class MainActivity extends AppCompatActivity {
         mRank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                stopBackgroundMusic();
+                Intent myIntent = new Intent(MainActivity.this, Rank.class);
+                MainActivity.this.startActivity(myIntent);
             }
         });
 
@@ -359,7 +361,9 @@ public class MainActivity extends AppCompatActivity {
             DatabaseReference myRef11 = database.getReference(auth.getCurrentUser().getUid() + "/coins");
             myRef11.setValue("100");
             DatabaseReference myRef12 = database.getReference(auth.getCurrentUser().getUid() + "/progress");
-            myRef12.setValue("0%");
+            myRef12.setValue("0");
+            myRef12 = database.getReference(String.valueOf(auth.getCurrentUser().getUid()) + "/playername");
+            myRef12.setValue(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()));
 
             DatabaseReference myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/world1/level1/icon");
             myRef50.setValue(String.valueOf(R.drawable.lvl1));

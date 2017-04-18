@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/transparent"
+    >
+    <Button
+        android:id="@+id/idButton"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:text="Button"
+        />
+
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="300dp"
+        android:layout_marginTop="0dp"
+        android:layout_height="400dp"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+
+        android:layout_alignParentLeft="true">
+
+        <ImageButton
+            android:id="@+id/idButtosdfn"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:src="@drawable/storewp"
+            android:adjustViewBounds="true"
+            android:cropToPadding="false"
+            android:layout_marginLeft="5dp"
+            android:background="#00000000"
+            android:scaleType="fitXY" />
+
+
+
+        <TextView
+            android:layout_width="250dp"
+            android:layout_marginTop="-350dp"
+            android:text=""
+            android:textColor="@color/musitrix_black"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:textAlignment="center"
+            android:layout_height="30dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:id="@+id/addLife"
+                android:layout_marginLeft="15dp"
+                android:layout_width="250dp"
+                android:src="@drawable/thelife"
+                android:layout_gravity="center"
+                android:layout_height="60dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:id="@+id/addTime"
+                android:layout_marginLeft="15dp"
+                android:layout_width="250dp"
+                android:src="@drawable/thetime"
+                android:layout_gravity="center"
+                android:layout_height="60dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:id="@+id/addListen"
+                android:layout_marginLeft="15dp"
+                android:layout_width="250dp"
+                android:src="@drawable/thereplayfinal"
+                android:layout_gravity="center"
+                android:layout_height="60dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"/>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight=".50"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/exit"
+            android:text="right"
+            android:src="@drawable/exitbuttton"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight=".10" />
+
+    </LinearLayout>
+</LinearLayout>

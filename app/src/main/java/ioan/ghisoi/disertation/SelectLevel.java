@@ -73,7 +73,7 @@ public class SelectLevel extends AppCompatActivity {
         lv7_star = (ImageView) findViewById(R.id.lvl7_stars);
         lv8_star = (ImageView) findViewById(R.id.lvl8_stars);
         lv9_star = (ImageView) findViewById(R.id.lvl9_stars);
-        mProgress = (TextView) findViewById(R.id.level_progress);
+        //mProgress = (TextView) findViewById(R.id.level_progress);
         mLifes = (TextView) findViewById(R.id.user_lifes);
         mCoins = (TextView) findViewById(R.id.user_coins);
         mUserPicture = (ImageView) findViewById(R.id.user_picture);
@@ -178,7 +178,7 @@ public class SelectLevel extends AppCompatActivity {
         lifeWatcher.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
+                String value = dataSnapshot.getValue().toString();
                 try{
                     mLifes.setText(value);
                     try {
@@ -203,7 +203,7 @@ public class SelectLevel extends AppCompatActivity {
         progressWatcher.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
+                String value = dataSnapshot.getValue().toString();
                 try{
                     mProgress.setText(value);
                 } catch (Exception e) {
@@ -221,7 +221,7 @@ public class SelectLevel extends AppCompatActivity {
         coinWatcher.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
+                String value = dataSnapshot.getValue().toString();
                 try{
                     mCoins.setText(value);
                 } catch (Exception e) {
@@ -244,6 +244,7 @@ public class SelectLevel extends AppCompatActivity {
                 myIntent.putExtra("world",""+ myWorld);
                 myIntent.putExtra("icon",""+ R.drawable.lvl1);
                 myIntent.putExtra("next",""+ R.drawable.lvl2);
+                myIntent.putExtra("background",""+ "https://firebasestorage.googleapis.com/v0/b/musitrix-disertation.appspot.com/o/paralex2.jpg?alt=media&token=0b66eec2-2496-4023-a653-67d9acbd334d");
                 SelectLevel.this.startActivity(myIntent);
             }
         });

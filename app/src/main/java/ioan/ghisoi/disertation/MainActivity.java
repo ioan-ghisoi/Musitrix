@@ -121,7 +121,9 @@ public class MainActivity extends AppCompatActivity {
         mContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                stopBackgroundMusic();
+                Intent myIntent = new Intent(MainActivity.this, ComunityContributionMaker.class);
+                MainActivity.this.startActivity(myIntent);
             }
         });
 
@@ -358,8 +360,12 @@ public class MainActivity extends AppCompatActivity {
             myRef37.setValue("0");
             DatabaseReference myRef10 = database.getReference(auth.getCurrentUser().getUid() + "/lifes");
             myRef10.setValue("5");
+            myRef10 = database.getReference(auth.getCurrentUser().getUid() + "/time");
+            myRef10.setValue("5");
+            myRef10 = database.getReference(auth.getCurrentUser().getUid() + "/replay");
+            myRef10.setValue("5");
             DatabaseReference myRef11 = database.getReference(auth.getCurrentUser().getUid() + "/coins");
-            myRef11.setValue("100");
+            myRef11.setValue("1000");
             DatabaseReference myRef12 = database.getReference(auth.getCurrentUser().getUid() + "/progress");
             myRef12.setValue("0");
             myRef12 = database.getReference(String.valueOf(auth.getCurrentUser().getUid()) + "/playername");

@@ -19,9 +19,18 @@
         android:scaleType="centerCrop"
         android:src="@drawable/levelwp"/>
 
+    <TextView
+        android:id="@+id/rankTitle"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:text="RANK:"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:layout_height="50dp" />
+
     <LinearLayout
         android:id="@+id/ll_main"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="80dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"

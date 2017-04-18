@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
@@ -39,6 +40,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,7 +59,8 @@ public class Game extends AppCompatActivity {
     int nextLevelIntent, nextLevelIntentForward;
     int progress = -1;
     boolean progressWatched = false;
-
+    ImageView backgroundOne;
+    ImageView backgroundTwo;
 
     private FrameLayout mContainerView;
     private LinearLayout mSolutionView;
@@ -74,6 +77,7 @@ public class Game extends AppCompatActivity {
     FirebaseAuth auth = FirebaseAuth.getInstance();
     int currectLifes;
     boolean changer = false, tutorialPlay = false, wasStep2Show = false, wasStep4Show = false;
+    String backgroundPictureUrl;
 
     String place = "";
 
@@ -272,9 +276,10 @@ public class Game extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game);
 
+         ImageView backgroundOne = (ImageView) findViewById(R.id.background_one);
+         ImageView backgroundTwo = (ImageView) findViewById(R.id.background_two);
         mHandler = new Handler();
 
-        scrollingBackground();
         getProgress();
 
 
@@ -288,35 +293,27 @@ public class Game extends AppCompatActivity {
             myWorld = (String) myBundle.get("world");
             myIcon = (String) myBundle.get("icon");
             nextLevel = (String) myBundle.get("next");
+
             nextLevelIntent = myLevel + 1;
             nextLevelIntentForward = myLevel + 2;
+            try{
+                backgroundPictureUrl =(String) myBundle.get("background");
 
+                System.out.println("asta e url-ul     OOOOOOOOOOO " + backgroundPictureUrl);
 
-            System.out.println("ASA AR TREBUI :");
-
-            System.out.println("myLevel  " + 2);
-            System.out.println("myWorld  " + 1);
-            System.out.println("myIcon  " + R.drawable.lvl2);
-            System.out.println("nextLevel  " + R.drawable.lvl3);
-            System.out.println("nextLevelIntent  " + 3);
-            System.out.println("nextLevelIntentForward  " + 4);
-
-            System.out.println("");
-            System.out.println("");
-
-
-
-            System.out.println("ASA EEEEE :");
-
-            System.out.println("myLevel  " + myLevel);
-            System.out.println("myWorld  " + myWorld);
-            System.out.println("myIcon  " + myIcon);
-            System.out.println("nextLevel  " + nextLevel);
-            System.out.println("nextLevelIntent  " + nextLevelIntent);
-            System.out.println("nextLevelIntentForward  " + nextLevelIntentForward);
-
-            System.out.println("");
-            System.out.println("");
+                if(backgroundPictureUrl != null && backgroundPictureUrl.length() > 1) {
+                    System.out.println("CONDITIA E OK");
+                    setImage(backgroundOne, backgroundPictureUrl);
+                    setImage(backgroundOne, backgroundPictureUrl);
+                } else {
+                    backgroundOne.setImageResource(Integer.parseInt(getResources().getResourceEntryName(R.drawable.paralex2)));
+                    backgroundTwo.setImageResource(Integer.parseInt(getResources().getResourceEntryName(R.drawable.
+                    paralex2)));
+                }
+            }catch (Exception e) {
+                backgroundOne.setImageResource(Integer.parseInt(getResources().getResourceEntryName(R.drawable.worldwp)));
+                backgroundTwo.setImageResource(Integer.parseInt(getResources().getResourceEntryName(R.drawable.worldwp)));
+            }
         } else {
             myLevel = 1;
         }
@@ -326,6 +323,7 @@ public class Game extends AppCompatActivity {
         }
 
 
+//        scrollingBackground();
 
         mPlayFullTrack = (ImageView) findViewById(R.id.play_full_track_button);
         mContainerView = (FrameLayout) findViewById(R.id.container_view);
@@ -683,20 +681,19 @@ public class Game extends AppCompatActivity {
             }
         }
     }
-    public void scrollingBackground() {
-        final ImageView backgroundOne = (ImageView) findViewById(R.id.background_one);
-        final ImageView backgroundTwo = (ImageView) findViewById(R.id.background_two);
 
-        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.0f);
+    public void scrollingBackground() {
+
+        ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.0f);
         animator.setRepeatCount(ValueAnimator.INFINITE);
         animator.setInterpolator(new LinearInterpolator());
         animator.setDuration(10000L);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                final float progress = (float) animation.getAnimatedValue();
-                final float width = backgroundOne.getWidth();
-                final float translationX = width * progress;
+                 float progress = (float) animation.getAnimatedValue();
+                 float width = backgroundOne.getWidth();
+                 float translationX = width * progress;
                 backgroundOne.setTranslationX(translationX);
                 backgroundTwo.setTranslationX(translationX - width);
             }
@@ -966,6 +963,20 @@ public class Game extends AppCompatActivity {
     public void stopBackgroundMusic() {
         try {
             mp.stop();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setImage(ImageView im, String url) {
+        try {
+
+            Picasso.with(Game.this)
+                    .load(url)
+                    .config(Bitmap.Config.RGB_565)
+                    .fit()
+                    .centerInside()
+                    .into(im);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -38,7 +38,6 @@ import java.util.Comparator;
 
 public class Rank extends AppCompatActivity {
 
-    FirebaseAuth auth = FirebaseAuth.getInstance();
     ArrayList<String> myParentArray = new ArrayList<>();
     ArrayList<RankElement> rankObjects = new ArrayList<RankElement>();
     LinearLayout mContainerView;
@@ -46,6 +45,8 @@ public class Rank extends AppCompatActivity {
     LinearLayout ll_main;
     ProgressDialog pd;
     ImageButton back;
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+    TextView rankTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +55,16 @@ public class Rank extends AppCompatActivity {
 
         ll_main = (LinearLayout) findViewById(R.id.ll_main);
         back = (ImageButton) findViewById(R.id.backButton);
+        rankTitle = (TextView) findViewById(R.id.rankTitle);
+
+        Typeface mFont = Typeface.createFromAsset(getAssets(), "fonts/johnny.ttf");
+        rankTitle.setTypeface(mFont);
 
         pd = new ProgressDialog(Rank.this, R.style.TransparentProgressDialog);
         pd.setMessage("Loading...");
         pd.show();
 
         scrollingBackground();
-        addRankTitle();
 
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -77,17 +81,17 @@ public class Rank extends AppCompatActivity {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (final DataSnapshot child: dataSnapshot.getChildren()) {
+                for (final DataSnapshot child : dataSnapshot.getChildren()) {
                     System.out.println("mergea" + child.getKey());
                     final String parent = child.getKey();
 
-                    DatabaseReference myRef = updated.getReference(parent+"/progress");
+                    DatabaseReference myRef = updated.getReference(parent + "/progress");
                     myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             System.out.println("progresss" + dataSnapshot.getValue().toString());
                             String value = dataSnapshot.getValue().toString();
-                            rankObjects.add(new RankElement(parent,value));
+                            rankObjects.add(new RankElement(parent, value));
                             populate2();
                         }
 
@@ -109,13 +113,12 @@ public class Rank extends AppCompatActivity {
         });
 
 
-
     }
 
-    class RankElement{
+    class RankElement {
         String uid, upicture, uscore;
 
-        public RankElement(String uid,String uscore) {
+        public RankElement(String uid, String uscore) {
             this.uid = uid;
             this.upicture = upicture;
             this.uscore = uscore;
@@ -146,40 +149,40 @@ public class Rank extends AppCompatActivity {
         }
     }
 
-    public void  populate2() {
+    public void populate2() {
 
-        if(rankObjects.size() == myParentArray.size()) {
-            Collections.sort(rankObjects, new Comparator<RankElement>(){
+        if (rankObjects.size() == myParentArray.size()) {
+            Collections.sort(rankObjects, new Comparator<RankElement>() {
                 @Override
                 public int compare(RankElement o1, RankElement o2) {
                     return o2.getUscore().compareToIgnoreCase(o1.getUscore());
                 }
             });
 
-            for(int i = 0; i < rankObjects.size(); i++) {
+            for (int i = 0; i < rankObjects.size(); i++) {
                 System.out.println("OBIECTELE MELE" + rankObjects.get(i).getUscore());
             }
 
             FirebaseDatabase updated = FirebaseDatabase.getInstance();
             DatabaseReference ref = updated.getReference();
 
-            for(int i = 0; i< rankObjects.size(); i++ ) {
+            for (int i = 0; i < rankObjects.size(); i++) {
 
                 try {
                     DatabaseReference ref2 = ref.child(rankObjects.get(i).getUid() + "/playername");
                     final int finalI = i;
-                    ref2.addListenerForSingleValueEvent(new ValueEventListener() {
+                    ref2.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            System.out.println("HAI IN PNLLLLLLLLLLL" + dataSnapshot.getValue(String.class));
+                            System.out.println("HAI IN PNLLLLLLLLLLL" + dataSnapshot.getValue().toString());
 
-                            Collections.sort(rankObjects, new Comparator<RankElement>(){
+                            Collections.sort(rankObjects, new Comparator<RankElement>() {
                                 @Override
                                 public int compare(RankElement o1, RankElement o2) {
                                     return o2.getUscore().compareToIgnoreCase(o1.getUscore());
                                 }
                             });
-                            createRank(dataSnapshot.getValue(String.class), rankObjects.get(finalI).getUscore(),finalI, rankObjects.get(finalI).getUid());
+                            createRank(dataSnapshot.getValue(String.class), rankObjects.get(finalI).getUscore(), finalI, rankObjects.get(finalI).getUid());
                             pd.dismiss();
                         }
 
@@ -188,50 +191,17 @@ public class Rank extends AppCompatActivity {
 
                         }
                     });
-                }catch (Exception e) {
+                } catch (Exception e) {
                     System.out.println(e);
                 }
 
             }
         }
 
-        System.out.println("THE SIZEEEEEEEEEE" + rankObjects.size() + " and "+ myParentArray.size());
+        System.out.println("THE SIZEEEEEEEEEE" + rankObjects.size() + " and " + myParentArray.size());
     }
 
-    public void addRankTitle() {
-        Typeface mFont = Typeface.createFromAsset(getAssets(), "fonts/johnny.ttf");
-        LinearLayout parent = new LinearLayout(this);
-        LinearLayout.LayoutParams param= new LinearLayout.LayoutParams(700, LinearLayout.LayoutParams.MATCH_PARENT);
-        param.weight = 1;
-        param.gravity = Gravity.CENTER;
-        param.setMargins(0, 25, 0, 0);
-        parent.setLayoutParams(param);
-        parent.setGravity(Gravity.CENTER);
-        parent.setOrientation(LinearLayout.HORIZONTAL);
-        parent.setBackgroundColor(getResources().getColor(R.color.musitrix_white));
 
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300, 100);
-        layoutParams.topMargin = 12;
-
-
-        TextView tv4 = new TextView(this);
-        tv4.setText("     RANK");
-        tv4.setTextColor(getResources().getColor(R.color.musitrix_green));
-        tv4.setTextSize(30);
-        tv4.setTypeface(mFont);
-        tv4.setLayoutParams(layoutParams);
-
-
-        GradientDrawable shape =  new GradientDrawable();
-        shape.setCornerRadius( 50 );
-
-
-        shape.setColor(getResources().getColor(R.color.musitrix_black));
-
-        parent.addView(tv4);
-        parent.setBackground(shape);
-        ll_main.addView(parent);
-    }
 
     public void createRank(String player, String score, int i, String uid) {
 
@@ -241,90 +211,167 @@ public class Rank extends AppCompatActivity {
 
 
         try {
-            Typeface mFont = Typeface.createFromAsset(getAssets(), "fonts/johnny.ttf");
-            LinearLayout parent = new LinearLayout(this);
-            LinearLayout.LayoutParams param= new LinearLayout.LayoutParams(700, LinearLayout.LayoutParams.MATCH_PARENT);
-            param.weight = 1;
-            param.gravity = Gravity.CENTER;
-            param.setMargins(0, 20, 0, 0);
-            parent.setLayoutParams(param);
-            parent.setGravity(Gravity.CENTER);
-            parent.setOrientation(LinearLayout.HORIZONTAL);
-            parent.setBackgroundColor(getResources().getColor(R.color.musitrix_white));
+            if (!auth.getCurrentUser().getUid().equals(uid)) {
+                Typeface mFont = Typeface.createFromAsset(getAssets(), "fonts/johnny.ttf");
+                LinearLayout parent = new LinearLayout(this);
+                LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(700, LinearLayout.LayoutParams.MATCH_PARENT);
+                param.weight = 1;
+                param.gravity = Gravity.CENTER;
+                param.setMargins(0, 20, 0, 0);
+                parent.setLayoutParams(param);
+                parent.setGravity(Gravity.CENTER);
+                parent.setOrientation(LinearLayout.HORIZONTAL);
+                parent.setBackgroundColor(getResources().getColor(R.color.musitrix_white));
 
-            TextView tv = new TextView(this);
-            tv.setText(player);
-            tv.setTypeface(mFont);
+                TextView tv = new TextView(this);
+                tv.setText(player);
+                tv.setTypeface(mFont);
 
-            TextView tv2 = new TextView(this);
-            tv2.setText(score + " points");
-            tv2.setTypeface(mFont);
+                TextView tv2 = new TextView(this);
+                tv2.setText(score + " points");
+                tv2.setTypeface(mFont);
 
-            TextView tv3 = new TextView(this);
-            tv3.setText("No." + (i + 1) + " ");
-            tv3.setTextColor(getResources().getColor(R.color.musitrix_black));
-            tv3.setTextSize(20);
-            tv3.setTypeface(mFont);
+                TextView tv3 = new TextView(this);
+                tv3.setText("No." + (i + 1) + " ");
+                tv3.setTextColor(getResources().getColor(R.color.musitrix_black));
+                tv3.setTextSize(20);
+                tv3.setTypeface(mFont);
 
-            TextView tv4 = new TextView(this);
-            tv4.setText("  ");
-            tv4.setTextColor(getResources().getColor(R.color.musitrix_black));
-            tv4.setTextSize(30);
-
-
-            GradientDrawable shape =  new GradientDrawable();
-            shape.setCornerRadius( 50 );
+                TextView tv4 = new TextView(this);
+                tv4.setText("  ");
+                tv4.setTextColor(getResources().getColor(R.color.musitrix_black));
+                tv4.setTextSize(30);
 
 
-            ImageView img = new ImageView(this);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(120, 100);
-            img.setLayoutParams(layoutParams);
-            img.setImageResource(R.drawable.rankuser);
+                GradientDrawable shape = new GradientDrawable();
+                shape.setCornerRadius(50);
 
-            final ImageView img2 = new ImageView(this);
-            LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(130, 100);
-            img2.setLayoutParams(layoutParams2);
-            img2.setImageResource(R.drawable.sendlife);
 
-            img2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                ImageView img = new ImageView(this);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(120, 100);
+                img.setLayoutParams(layoutParams);
+                img.setImageResource(R.drawable.rankuser);
 
-                    ref2.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            String lifes = dataSnapshot.getValue().toString();
-                            int increment = Integer.parseInt(lifes) + 1;
-                            ref2.setValue(increment);
-                        }
+                final ImageView img2 = new ImageView(this);
+                LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(130, 100);
+                img2.setLayoutParams(layoutParams2);
+                img2.setImageResource(R.drawable.sendlife);
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
+                img2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                        }
-                    });
-                    System.out.println("ceva");
-                    img2.setImageResource(R.drawable.darklife);
+                        ref2.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String lifes = dataSnapshot.getValue().toString();
+                                int increment = Integer.parseInt(lifes) + 1;
+                                ref2.setValue(increment);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        System.out.println("ceva");
+                        img2.setImageResource(R.drawable.darklife);
+                    }
+                });
+
+
+                shape.setColor(getResources().getColor(R.color.musitrix_green));
+
+
+                parent.addView(tv3);
+                parent.addView(tv4);
+                parent.addView(tv);
+                parent.addView(img);
+                parent.addView(tv2);
+
+                if (!auth.getCurrentUser().getUid().equals(uid)) {
+                    parent.addView(img2);
+                } else {
+                    final ImageView placeholder = new ImageView(this);
+                    LinearLayout.LayoutParams myParams = new LinearLayout.LayoutParams(130, 100);
+                    placeholder.setLayoutParams(layoutParams2);
+                    placeholder.setImageResource(R.drawable.darklife);
+                    parent.addView(placeholder);
                 }
-            });
+                parent.setBackground(shape);
+                ll_main.addView(parent);
+
+            } else {
 
 
-            shape.setColor(getResources().getColor(R.color.musitrix_green));
+                Typeface mFont = Typeface.createFromAsset(getAssets(), "fonts/johnny.ttf");
+                LinearLayout parent = new LinearLayout(this);
+                LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(700, LinearLayout.LayoutParams.MATCH_PARENT);
+                param.weight = 1;
+                param.gravity = Gravity.CENTER;
+                param.setMargins(0, 20, 0, 0);
+                parent.setLayoutParams(param);
+                parent.setGravity(Gravity.CENTER);
+                parent.setOrientation(LinearLayout.HORIZONTAL);
+                parent.setBackgroundColor(getResources().getColor(R.color.musitrix_white));
+
+                TextView tv = new TextView(this);
+                tv.setText(player);
+                tv.setTypeface(mFont);
+                tv.setTextColor(getResources().getColor(R.color.musitrix_white));
+
+                TextView tv2 = new TextView(this);
+                tv2.setText(score + " points");
+                tv2.setTypeface(mFont);
+                tv2.setTextColor(getResources().getColor(R.color.musitrix_white));
+
+                TextView tv3 = new TextView(this);
+                tv3.setText("No." + (i + 1) + " ");
+                tv3.setTextColor(getResources().getColor(R.color.musitrix_green));
+                tv3.setTextSize(20);
+                tv3.setTypeface(mFont);
+
+                TextView tv4 = new TextView(this);
+                tv4.setText("  ");
+                tv4.setTextColor(getResources().getColor(R.color.musitrix_white));
+                tv4.setTextSize(30);
 
 
-            parent.addView(tv3);
-            parent.addView(tv4);
-            parent.addView(tv);
-            parent.addView(img);
-            parent.addView(tv2);
-            parent.addView(img2);
-            parent.setBackground(shape);
-            ll_main.addView(parent);
+                GradientDrawable shape = new GradientDrawable();
+                shape.setCornerRadius(50);
 
-        }catch (Exception e) {
+
+                ImageView img = new ImageView(this);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(120, 100);
+                img.setLayoutParams(layoutParams);
+                img.setImageResource(R.drawable.rankuser);
+
+
+                shape.setColor(getResources().getColor(R.color.musitrix_black));
+
+
+                parent.addView(tv3);
+                parent.addView(tv4);
+                parent.addView(tv);
+                parent.addView(img);
+                parent.addView(tv2);
+
+                final ImageView placeholder = new ImageView(this);
+                LinearLayout.LayoutParams myParams = new LinearLayout.LayoutParams(130, 100);
+                placeholder.setLayoutParams(myParams);
+                placeholder.setImageResource(R.drawable.darklife);
+                placeholder.setVisibility(View.INVISIBLE);
+                parent.addView(placeholder);
+                parent.setBackground(shape);
+
+                ll_main.addView(parent);
+            }
+
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
+
     public void scrollingBackground() {
         final ImageView backgroundOne = (ImageView) findViewById(R.id.background_one);
         final ImageView backgroundTwo = (ImageView) findViewById(R.id.background_two);

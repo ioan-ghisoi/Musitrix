@@ -1,155 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/musitrix_grey">
+    android:layout_height="match_parent">
 
-    <FrameLayout
+    <ImageView
+        android:id="@+id/scrolling_1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/scrollingbg"/>
 
-        <ImageView
-            android:id="@+id/background_one"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/paralex2"/>
+    <ImageView
+        android:id="@+id/scrolling_2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/scrollingbg"/>
 
-        <ImageView
-            android:id="@+id/background_two"
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:weightSum="100">
+
+        <LinearLayout
+            android:layout_height="0dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/paralex2"/>
+            android:layout_weight="40"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/myAppLogo"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/logo"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/main_screen_button_layout_margin_left"
-            android:layout_marginRight="@dimen/main_screen_button_layout_margin_right"
-            android:layout_marginBottom="@dimen/main_screen_button_layout_margin_bottom"
-            android:layout_gravity="center|center"
-            android:orientation="vertical"
-            android:weightSum="100">
-
-            <ImageView
-                android:id="@+id/main_screen_logo"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="50"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_centerInParent="true"
-                android:src="@drawable/logo"/>
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:layout_weight="10">
 
             <TextView
-                android:id="@+id/main_screen_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/main_screen_title_height"
-                android:gravity="center"
-                android:layout_marginBottom="10dp"
+                android:id="@+id/app_title"
+                android:text="MUSITRIX"
+                android:textSize="42dp"
                 android:textColor="@color/musitrix_green"
-                android:text="@string/app_title"/>
-
-            <Button
-                android:id="@+id/main_screen_new_game_button"
-                android:text="@string/bNewGame"
-                android:textSize="@dimen/main_screen_buttons_tet_size"
-                android:textColor="@color/musitrix_green"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:alpha="0.87"
-                android:layout_weight="12"
-                android:layout_marginBottom="10dp"
-                android:background = "@drawable/roundedbutton" />
-            <Button
-                android:id="@+id/main_screen_continue_button"
-                android:text="@string/bContinue"
-                android:textSize="@dimen/main_screen_buttons_tet_size"
-                android:textColor="@color/musitrix_green"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:alpha="0.87"
-                android:layout_weight="12"
-                android:layout_marginBottom="10dp"
-                android:background = "@drawable/roundedbutton" />
-            <Button
-                android:id="@+id/main_screen_rank_button"
-                android:text="@string/bRank"
-                android:textSize="@dimen/main_screen_buttons_tet_size"
-                android:textColor="@color/musitrix_green"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:alpha="0.87"
-                android:layout_weight="12"
-                android:layout_marginBottom="10dp"
-                android:background = "@drawable/roundedbutton" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_gravity="right|bottom"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginBottom="2dp"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content" >
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_weight="35"
+            android:orientation="horizontal">
 
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="115dp"
-                android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="3">
 
-                <ImageView
-                    android:id="@+id/user_picture"
-                    android:layout_width="@dimen/main_screen_social_media_width"
-                    android:layout_height="@dimen/main_screen_social_media_height"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:visibility="invisible" />
+                <Button
+                    android:id="@+id/play_button"
+                    android:text="PLAY"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="30dp"
+                    android:textColor="@color/musitrix_green"
+                    android:alpha="0.87"
+                    android:background = "@drawable/roundedbutton" />
 
-                <TextView
-                    android:id="@+id/user_name"
-                    android:textColor="@color/musitrix_white"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:visibility="invisible" />
+                <Button
+                    android:id="@+id/community_button"
+                    android:text="COMMUNITY"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="30dp"
+                    android:textColor="@color/musitrix_green"
+                    android:alpha="0.87"
+                    android:background = "@drawable/roundedbutton" />
+
+                <Button
+                    android:id="@+id/rank_button"
+                    android:text="RANK"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="30dp"
+                    android:textColor="@color/musitrix_green"
+                    android:alpha="0.87"
+                    android:background = "@drawable/roundedbutton" />
 
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/refresh_button"
-                android:layout_width="@dimen/main_screen_social_media_width"
-                android:layout_height="@dimen/main_screen_social_media_height"
-                android:layout_gravity="left"
-                android:layout_marginBottom="5dp"
-                android:src="@drawable/logoutbutton"
-                android:visibility="invisible"/>
-
-            <ImageView
-                android:id="@+id/login_button"
-                android:layout_width="@dimen/main_screen_social_media_width"
-                android:layout_height="@dimen/main_screen_social_media_height"
-                android:layout_gravity="left"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/google" />
-            <ImageView
-                android:id="@+id/login_button2"
-                android:layout_marginRight="50dp"
-                android:layout_width="@dimen/main_screen_social_media_width"
-                android:layout_height="@dimen/main_screen_social_media_height"
-                android:layout_gravity="left"
-                android:src="@drawable/facebook" />
         </LinearLayout>
 
-    </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="15">
+
+            <LinearLayout
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="30"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/user_picture"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/musiblack"/>
+
+                    <TextView
+                        android:id="@+id/user_name"
+                        android:text="PLAYER"
+                        android:layout_gravity="center"
+                        android:textColor="@color/musitrix_white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="70"
+                    android:layout_marginRight="10dp"
+                    android:orientation="horizontal"
+                    android:gravity="right"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/logout_button"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:visibility="invisible"
+                        android:src="@drawable/musiempty"/>
+
+                    <ImageView
+                        android:layout_marginRight="10dp"
+                        android:id="@+id/facebook_login"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/google"/>
+
+                    <ImageView
+                        android:id="@+id/google_login"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/facebook"/>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 </RelativeLayout>

@@ -1,229 +1,225 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/musitrix_white">
+<?xml version="1.0" encoding="utf-8"?>
 
-    <FrameLayout
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/scrolling_1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/worldwp"/>
 
-        <ImageView
-            android:id="@+id/background_one"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/worldwp"/>
+    <ImageView
+        android:id="@+id/scrolling_2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/worldwp"/>
 
-        <ImageView
-            android:id="@+id/background_two"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/worldwp"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:weightSum="100">
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:layout_gravity="bottom"
-            android:weightSum="100">
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_weight="10"
+            android:background="@color/musitrix_green"
+            android:orientation="horizontal">
 
-            <RelativeLayout
-                android:layout_height="0dp"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_weight="10">
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="3">
 
-                <RelativeLayout
-                    android:orientation="horizontal"
-                    android:background="@color/musitrix_green"
-                    android:layout_width="match_parent"
-                    android:alpha="0.5"
-                    android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_weight="1.2">
 
-
-
-                </RelativeLayout>
-
-                <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="13dp"
-
-                    android:layout_alignParentLeft="true">
-
-                    <ImageButton
-                        android:id="@+id/imgFirst2"
-                        android:layout_width="105dp"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/lifeprog"
-                        android:adjustViewBounds="true"
-                        android:cropToPadding="false"
-                        android:layout_marginLeft="5dp"
-                        android:background="#00000000"
-                        android:scaleType="fitXY" />
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_height="25dp"
+                        android:src="@drawable/lifeprog"/>
 
                     <TextView
                         android:id="@+id/user_lifes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|center"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginLeft="13dp"
-                        android:text="..."
+                        android:layout_marginTop="-20dp"
+                        android:layout_marginLeft="12dp"
+                        android:textSize="12dp"
                         android:textColor="@color/musitrix_white"
-                        android:src="@drawable/back"/>
-                </FrameLayout>
+                        android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_height="20dp"
+                        android:textAlignment="center"
+                        android:text="..."/>
 
+                </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.2">
 
-                <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_centerInParent="true">
-
-                    <ImageButton
-                        android:id="@+id/imgFirst"
+                    <ImageView
                         android:layout_width="105dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="9dp"
+                        android:layout_gravity="center"
+                        android:layout_height="25dp"
                         android:src="@drawable/coins"
                         android:adjustViewBounds="true"
                         android:cropToPadding="false"
                         android:background="#00000000"
-                        android:scaleType="fitXY" />
+                        android:scaleType="fitXY"/>
 
                     <TextView
                         android:id="@+id/user_coins"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|center"
-                        android:layout_marginBottom="14dp"
-                        android:layout_marginLeft="4dp"
-                        android:text="..."
+                        android:layout_marginTop="-19dp"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="12dp"
                         android:textColor="@color/musitrix_white"
-                        android:src="@drawable/back"/>
-                </FrameLayout>
-
-                <LinearLayout
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-
-                    android:orientation="vertical"
-                    android:layout_alignParentRight="true">
-
-                    <ImageView
-                        android:id="@+id/user_picture"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_gravity="center" />
-
-                    <TextView
-                        android:id="@+id/user_name"
-                        android:layout_width="wrap_content"
-                        android:text="User"
+                        android:layout_width="match_parent"
                         android:layout_gravity="center"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="20dp"
+                        android:textAlignment="center"
+                        android:text="..."/>
 
                 </LinearLayout>
 
-            </RelativeLayout>
-
-
-
-            <LinearLayout
-                android:id="@+id/selecWorld"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="70"
-                android:orientation="vertical">
-
-                    <com.daimajia.slider.library.SliderLayout
-                        android:id="@+id/slider"
-                        android:layout_width="300dp"
-                        android:layout_height="fill_parent"
-                        android:layout_centerHorizontal="true"
-                        android:layout_gravity="center"
-                        android:adjustViewBounds="true"
-                        android:cropToPadding="false"
-                        android:background="#00000000"
-                        android:scaleType="fitXY"
-                        />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="10"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/worldProgress"
-                    android:layout_width="match_parent"
-                    android:layout_height="fill_parent"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:gravity="center"
-                    android:text="0%"
-                    android:textAlignment="center"
-                    android:textColor="#28b78d"
-                    android:textSize="20dp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/footer"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="10"
-                android:orientation="horizontal">
-
-                <GridLayout
-                    android:layout_width="fill_parent"
-                    android:layout_gravity="bottom"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:orientation="vertical"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:tileMode="repeat">
+                    android:layout_weight="0.6">
 
+                    <ImageView
+                        android:id="@+id/user_picture"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/musiblack"/>
 
-                    <ImageButton
+                    <TextView
+                        android:id="@+id/user_name"
+                        android:gravity="center"
+                        android:text="PLAYER"
+                        android:layout_gravity="center"
+                        android:textColor="@color/musitrix_black"
                         android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/backButton"
-                        android:src="@drawable/back"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_gravity="left"
-                        android:adjustViewBounds="true"
-                        android:cropToPadding="false"
-                        android:background="#00000000"
-                        android:scaleType="fitXY" />
+                        android:layout_height="wrap_content" />
 
 
+                </LinearLayout>
 
-                    <ImageButton
-                        android:id="@+id/shoppingButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:src="@drawable/store"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginRight="10dp"
-                        android:adjustViewBounds="true"
-                        android:cropToPadding="false"
-                        android:background="#00000000"
-                        android:scaleType="fitXY" />
-
-
-                </GridLayout>
 
             </LinearLayout>
 
         </LinearLayout>
 
-    </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:layout_weight="73">
 
-</LinearLayout>
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/slider"
+                android:layout_width="300dp"
+                android:layout_height="fill_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:cropToPadding="false"
+                android:background="#00000000"
+                android:scaleType="fitXY"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_weight="7"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/world_progress"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:text="0%"
+                android:textAlignment="center"
+                android:textColor="#28b78d"
+                android:textSize="20dp"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="25"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/back"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/back"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="50"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="25"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/shop"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/store"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

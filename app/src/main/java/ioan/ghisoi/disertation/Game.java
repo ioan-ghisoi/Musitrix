@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -884,52 +885,63 @@ public class Game extends AppCompatActivity {
     }
 
     public void createPlayer(int asd) {
-        mp = MediaPlayer.create(this, asd);
-        mPlayFullTrack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mShoulUseAsPlay) {
-                    playSequence();
-                    checkIfCorrectSequance();
-                } else {
-                    if(mMainPlayerFinished || mp.isPlaying()) {
-                        return;
-                    }
-                    mp.seekTo(0);
-                    mp.start();
-                }
-            }
-        });
 
-        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                mPlayFullTrack.setImageResource(R.drawable.play);
-                mMainPlayerFinished = true;
-                mShoulUseAsPlay = true;
+        try {
+            mp = new MediaPlayer();
+            mp.setDataSource(this, Uri.parse("https://firebasestorage.googleapis.com/v0/b/musitrix-disertation.appspot.com/o/songs?alt=media&token=a5303da8-ca8f-4af2-b398-63557766343d"));
+            mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mp.prepare(); //don't use prepareAsync for mp3 playback
 
-                if(tutorialPlay) {
-                    if(wasStep2Show == false) {
-                        tutorialStep2();
-                        wasStep2Show = true;
-                    }
-                } else {
-                    timer = new CountDownTimer(30000, 1000) {
 
-                        public void onTick(long millisUntilFinished) {
-                            mTimer.setText(""+millisUntilFinished / 1000);
-                            //here you can have your logic to set text to edittext
+            mPlayFullTrack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(mShoulUseAsPlay) {
+                        playSequence();
+                        checkIfCorrectSequance();
+                    } else {
+                        if(mMainPlayerFinished || mp.isPlaying()) {
+                            return;
                         }
-
-                        public void onFinish() {
-                            finishLevel(1);
-                        }
-
-                    }.start();
+                        mp.seekTo(0);
+                        mp.start();
+                    }
                 }
+            });
 
-            }
-        });
+            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    mPlayFullTrack.setImageResource(R.drawable.play);
+                    mMainPlayerFinished = true;
+                    mShoulUseAsPlay = true;
+
+                    if(tutorialPlay) {
+                        if(wasStep2Show == false) {
+                            tutorialStep2();
+                            wasStep2Show = true;
+                        }
+                    } else {
+                        timer = new CountDownTimer(30000, 1000) {
+
+                            public void onTick(long millisUntilFinished) {
+                                mTimer.setText(""+millisUntilFinished / 1000);
+                                //here you can have your logic to set text to edittext
+                            }
+
+                            public void onFinish() {
+                                finishLevel(1);
+                            }
+
+                        }.start();
+                    }
+
+                }
+            });
+        }catch (Exception e) {
+            System.out.println(e);
+        }
+
     }
 
     private void substractLife() {

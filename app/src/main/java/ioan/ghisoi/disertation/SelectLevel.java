@@ -13,6 +13,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,7 +25,7 @@ import com.squareup.picasso.Picasso;
 import java.util.Map;
 
 /**
- * Created by jarvis on 11/04/2017.
+ * Created by jarvis on 19/04/2017.
  */
 
 public class SelectLevel extends AppCompatActivity {
@@ -33,8 +34,8 @@ public class SelectLevel extends AppCompatActivity {
     ImageView mUserPicture;
     ImageView lv1, lv2, lv3, lv4, lv5, lv6, lv7, lv8, lv9;
     ImageView lv1_star, lv2_star, lv3_star, lv4_star, lv5_star, lv6_star, lv7_star, lv8_star, lv9_star;
-    TextView mProgress, mLifes, mCoins, mUserName;
-    ImageButton back;
+    TextView mProgress, mLifes, mCoins, mUserName, mTime, mReplay;
+    ImageView back;
     String myWorld = "world1";
     ProgressDialog pd;
     boolean isAccesable = false;
@@ -50,7 +51,7 @@ public class SelectLevel extends AppCompatActivity {
         pd.setMessage("Loading...");
         pd.show();
 
-        Intent myIntent= getIntent();
+        Intent myIntent = getIntent();
         Bundle myBundle = myIntent.getExtras();
 
         scrollingBackground();
@@ -78,7 +79,10 @@ public class SelectLevel extends AppCompatActivity {
         mCoins = (TextView) findViewById(R.id.user_coins);
         mUserPicture = (ImageView) findViewById(R.id.user_picture);
         mUserName = (TextView) findViewById(R.id.user_name);
-        back = (ImageButton) findViewById(R.id.backButton);
+        back = (ImageView) findViewById(R.id.backButton);
+        mTime = (TextView) findViewById(R.id.user_time);
+        mReplay = (TextView) findViewById(R.id.user_replay);
+
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,14 +92,13 @@ public class SelectLevel extends AppCompatActivity {
             }
         });
 
-        if(myBundle!=null)
-        {
-            String myWorld =(String) myBundle.get("world");
+        if (myBundle != null) {
+            String myWorld = (String) myBundle.get("world");
             //Toast.makeText(SelectLevel.this, "" + myWorld, Toast.LENGTH_LONG).show();
         }
 
-        try{
-            if(auth.getCurrentUser() != null){
+        try {
+            if (auth.getCurrentUser() != null) {
                 setImage(mUserPicture, String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()));
                 mUserName.setText(auth.getCurrentUser().getDisplayName());
                 //Toast.makeText(SelectLevel.this, "" + myWorld.equals("world1"), Toast.LENGTH_LONG).show();
@@ -105,22 +108,21 @@ public class SelectLevel extends AppCompatActivity {
                 myRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        try{
+                        try {
                             Map<String, Object> newPost = (Map<String, Object>) dataSnapshot.getValue();
-                            System.out.println("TTTTTTTTTTTTTTTTTTTTTTTTT: " + R.drawable.star0 +" "+ R.drawable.star3);
-                            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAA: " +Integer.parseInt(String.valueOf(((Map)newPost.get( "level1" )).get( "stars" ))));
+                            System.out.println("TTTTTTTTTTTTTTTTTTTTTTTTT: " + R.drawable.star0 + " " + R.drawable.star3);
+                            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAA: " + Integer.parseInt(String.valueOf(((Map) newPost.get("level1")).get("stars"))));
 
 
-
-                            int n1 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level1" )).get( "icon" )));
-                            int n2 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level2" )).get( "icon" )));
-                            int n3 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level3" )).get( "icon" )));
-                            int n4 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level4" )).get( "icon" )));
-                            int n5 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level5" )).get( "icon" )));
-                            int n6 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level6" )).get( "icon" )));
-                            int n7 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level7" )).get( "icon" )));
-                            int n8 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level8" )).get( "icon" )));
-                            int n9 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level9" )).get( "icon" )));
+                            int n1 = Integer.parseInt(String.valueOf(((Map) newPost.get("level1")).get("icon")));
+                            int n2 = Integer.parseInt(String.valueOf(((Map) newPost.get("level2")).get("icon")));
+                            int n3 = Integer.parseInt(String.valueOf(((Map) newPost.get("level3")).get("icon")));
+                            int n4 = Integer.parseInt(String.valueOf(((Map) newPost.get("level4")).get("icon")));
+                            int n5 = Integer.parseInt(String.valueOf(((Map) newPost.get("level5")).get("icon")));
+                            int n6 = Integer.parseInt(String.valueOf(((Map) newPost.get("level6")).get("icon")));
+                            int n7 = Integer.parseInt(String.valueOf(((Map) newPost.get("level7")).get("icon")));
+                            int n8 = Integer.parseInt(String.valueOf(((Map) newPost.get("level8")).get("icon")));
+                            int n9 = Integer.parseInt(String.valueOf(((Map) newPost.get("level9")).get("icon")));
 
                             setImage(n1, lv1);
                             setImage(n2, lv2);
@@ -133,15 +135,15 @@ public class SelectLevel extends AppCompatActivity {
                             setImage(n9, lv9);
 
 
-                            int l1 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level1" )).get( "stars" )));
-                            int l2 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level2" )).get( "stars" )));
-                            int l3 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level3" )).get( "stars" )));
-                            int l4 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level4" )).get( "stars" )));
-                            int l5 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level5" )).get( "stars" )));
-                            int l6 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level6" )).get( "stars" )));
-                            int l7 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level7" )).get( "stars" )));
-                            int l8 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level8" )).get( "stars" )));
-                            int l9 = Integer.parseInt(String.valueOf(((Map)newPost.get( "level9" )).get( "stars" )));
+                            int l1 = Integer.parseInt(String.valueOf(((Map) newPost.get("level1")).get("stars")));
+                            int l2 = Integer.parseInt(String.valueOf(((Map) newPost.get("level2")).get("stars")));
+                            int l3 = Integer.parseInt(String.valueOf(((Map) newPost.get("level3")).get("stars")));
+                            int l4 = Integer.parseInt(String.valueOf(((Map) newPost.get("level4")).get("stars")));
+                            int l5 = Integer.parseInt(String.valueOf(((Map) newPost.get("level5")).get("stars")));
+                            int l6 = Integer.parseInt(String.valueOf(((Map) newPost.get("level6")).get("stars")));
+                            int l7 = Integer.parseInt(String.valueOf(((Map) newPost.get("level7")).get("stars")));
+                            int l8 = Integer.parseInt(String.valueOf(((Map) newPost.get("level8")).get("stars")));
+                            int l9 = Integer.parseInt(String.valueOf(((Map) newPost.get("level9")).get("stars")));
 
 
                             setImage(l1, lv1_star);
@@ -168,7 +170,7 @@ public class SelectLevel extends AppCompatActivity {
                 });
 
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -179,7 +181,7 @@ public class SelectLevel extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String value = dataSnapshot.getValue().toString();
-                try{
+                try {
                     mLifes.setText(value);
                     try {
                         Typeface mFont = Typeface.createFromAsset(getAssets(), "fonts/johnny.ttf");
@@ -191,30 +193,13 @@ public class SelectLevel extends AppCompatActivity {
                     System.out.println();
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
             }
         });
 
-
-        DatabaseReference progressWatcher = database.getReference(auth.getCurrentUser().getUid() + "/total" + myWorld);
-
-        progressWatcher.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue().toString();
-                try{
-                    mProgress.setText(value);
-                } catch (Exception e) {
-                    System.out.println();
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-            }
-        });
 
         DatabaseReference coinWatcher = database.getReference(auth.getCurrentUser().getUid() + "/coins");
 
@@ -222,12 +207,51 @@ public class SelectLevel extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String value = dataSnapshot.getValue().toString();
-                try{
+                try {
                     mCoins.setText(value);
                 } catch (Exception e) {
                     System.out.println();
                 }
             }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+            }
+        });
+
+        DatabaseReference replayWatcher = database.getReference(auth.getCurrentUser().getUid() + "/replay");
+
+        coinWatcher.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String value = dataSnapshot.getValue().toString();
+                try {
+                    mReplay.setText(value);
+                } catch (Exception e) {
+                    System.out.println();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+            }
+        });
+
+        DatabaseReference timeBoostWatcher = database.getReference(auth.getCurrentUser().getUid() + "/time");
+
+        timeBoostWatcher.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String value = dataSnapshot.getValue().toString();
+                try {
+                    mTime.setText(value);
+                } catch (Exception e) {
+                    System.out.println();
+                }
+            }
+
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
@@ -347,19 +371,19 @@ public class SelectLevel extends AppCompatActivity {
             }
         });
 
-//        lv1_star.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent myIntent = new Intent(SelectLevel.this, Game.class);
-//                SelectLevel.this.startActivity(myIntent);
-//            }
-//        });
+        lv1_star.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                SelectLevel.this.startActivity(myIntent);
+            }
+        });
 
     }
 
-    public void setImage(int resource, ImageView target){
+    public void setImage(int resource, ImageView target) {
 
-        if(resource == 69) {
+        if (resource == 69) {
             target.setVisibility(View.INVISIBLE);
         } else {
             target.setVisibility(View.VISIBLE);
@@ -371,8 +395,8 @@ public class SelectLevel extends AppCompatActivity {
     }
 
     public void scrollingBackground() {
-        final ImageView backgroundOne = (ImageView) findViewById(R.id.background_one);
-        final ImageView backgroundTwo = (ImageView) findViewById(R.id.background_two);
+        final ImageView backgroundOne = (ImageView) findViewById(R.id.scrolling_1);
+        final ImageView backgroundTwo = (ImageView) findViewById(R.id.scrolling_2);
 
         final ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.0f);
         animator.setRepeatCount(ValueAnimator.INFINITE);
@@ -405,16 +429,16 @@ public class SelectLevel extends AppCompatActivity {
         }
     }
 
-    public boolean isPlayable(String level){
+    public boolean isPlayable(String level) {
 
         FirebaseDatabase updated = FirebaseDatabase.getInstance();
-        DatabaseReference ref = updated.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/"+level+ "/status");
+        DatabaseReference ref = updated.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/" + level + "/status");
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 System.out.println(dataSnapshot.getValue());
-                if(dataSnapshot.getValue().toString().equals("unlocked")) {
+                if (dataSnapshot.getValue().toString().equals("unlocked")) {
                     isAccesable = true;
                 }
             }
@@ -428,4 +452,3 @@ public class SelectLevel extends AppCompatActivity {
         return isAccesable;
     }
 }
-

@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ArrayAdapter;
@@ -19,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -54,6 +57,9 @@ public class ComunityContributionContributor extends AppCompatActivity {
     FirebaseAuth auth = FirebaseAuth.getInstance();
     ImageButton backk;
     EditText userDetails;
+    String mSelectedPieces;
+
+    private Button buttonDrop;
 
     private String instantiateSong, instantiatePiece, instantiateName;
 
@@ -70,6 +76,36 @@ public class ComunityContributionContributor extends AppCompatActivity {
         mPreview = (Button) findViewById(R.id.mPreview);
         backk = (ImageButton) findViewById(R.id.back_button);
         userDetails = (EditText) findViewById(R.id.user_description);
+        buttonDrop = (Button) findViewById(R.id.dropButton);
+
+
+        buttonDrop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(ComunityContributionContributor.this, buttonDrop);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater()
+                        .inflate(R.menu.poupup_menu, popup.getMenu());
+
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        mSelectedPieces = "" + item.getTitle();
+                        Toast.makeText(
+                                ComunityContributionContributor.this,
+                                "You selected " + item.getTitle() + " pieces",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                        buttonDrop.setTextColor(getResources().getColor(R.color.musitrix_green));
+                        return true;
+                    }
+                });
+
+                popup.show(); //showing popup menu
+            }
+        }); //closing the setOnClickListener method
+
         mStorageReference = FirebaseStorage.getInstance().getReference();
 
 
@@ -87,11 +123,7 @@ public class ComunityContributionContributor extends AppCompatActivity {
             }
         });
 
-        dropdown = (Spinner)findViewById(R.id.spinner1);
-        String[] items = new String[]{"Number of pieces", "3", "4", "5", "6"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
-        dropdown.setBackgroundColor(getResources().getColor(R.color.musitrix_black));
-        dropdown.setAdapter(adapter);
+
 
         mBrowse.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,7 +161,7 @@ public class ComunityContributionContributor extends AppCompatActivity {
                         // Got the download URL for 'users/me/profile.png'
                         System.out.println("asta    " + uri);
                         instantiateSong = ""+uri;
-                        instantiatePiece = "" + dropdown.getSelectedItem().toString();
+                        instantiatePiece = "" + mSelectedPieces;
 
                         instantiateName = auth.getCurrentUser().getDisplayName();
 
@@ -152,6 +184,8 @@ public class ComunityContributionContributor extends AppCompatActivity {
             if ((data != null) && (data.getData() != null)){
                 mFilePath= data.getData();
                 System.out.println("ASTA E FILEPATHUL BOSSSSSSS" + mFilePath);
+                mBrowse.setText("Browse Done");
+                mBrowse.setTextColor(getResources().getColor(R.color.musitrix_green));
                 // Now you can use that Uri to get the file path, or upload it, ...
             }
         }
@@ -188,6 +222,8 @@ public class ComunityContributionContributor extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             System.out.println("MERGE BOSS !!!!!!!!!!!!!!!!!!!!!!");
+                            mUpload.setText("Upload Done");
+                            mUpload.setTextColor(getResources().getColor(R.color.musitrix_green));
                             progressDialog.dismiss();
                         }
                     })
@@ -225,6 +261,7 @@ public class ComunityContributionContributor extends AppCompatActivity {
         }catch (Exception e) {
 
         }
+        mDownload.setText("Submitted");
     }
 
     public void createPlayerFromUrl(String url) {

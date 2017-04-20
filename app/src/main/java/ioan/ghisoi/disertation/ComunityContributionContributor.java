@@ -1,19 +1,31 @@
 package ioan.ghisoi.disertation;
 
+import android.animation.ValueAnimator;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Spinner;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -29,13 +41,21 @@ import java.io.IOException;
 public class ComunityContributionContributor extends AppCompatActivity {
 
     private static final int FIND_MUSIC = 345;
+    private static final int FIND_IMAGE = 123;;
     private Button mUpload;
     private Button mDownload;
     private Button mBrowse;
+    private Button mPreview;
     private Uri mFilePath;
     private StorageReference mStorageReference;
-    MediaPlayer mediaPlayer;
     FirebaseDatabase database;
+    Spinner dropdown;
+    MediaPlayer mp;
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+    ImageButton backk;
+    EditText userDetails;
+
+    private String instantiateSong, instantiatePiece, instantiateName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +67,31 @@ public class ComunityContributionContributor extends AppCompatActivity {
         mUpload = (Button) findViewById(R.id.mUpload);
         mDownload = (Button) findViewById(R.id.mDownload);
         mBrowse = (Button) findViewById(R.id.mBrowse);
+        mPreview = (Button) findViewById(R.id.mPreview);
+        backk = (ImageButton) findViewById(R.id.back_button);
+        userDetails = (EditText) findViewById(R.id.user_description);
         mStorageReference = FirebaseStorage.getInstance().getReference();
+
+
+        backk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    mp.stop();
+                    mp = null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Intent myIntent = new Intent(ComunityContributionContributor.this, ComunityChose.class);
+                ComunityContributionContributor.this.startActivity(myIntent);
+            }
+        });
+
+        dropdown = (Spinner)findViewById(R.id.spinner1);
+        String[] items = new String[]{"Number of pieces", "3", "4", "5", "6"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        dropdown.setBackgroundColor(getResources().getColor(R.color.musitrix_black));
+        dropdown.setAdapter(adapter);
 
         mBrowse.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +101,7 @@ public class ComunityContributionContributor extends AppCompatActivity {
             }
         });
 
+
         mUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,31 +110,37 @@ public class ComunityContributionContributor extends AppCompatActivity {
             }
         });
 
+        mPreview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createPlayerFromUrl(instantiateSong);
+            }
+        });
+
+
+
         mDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
-                AsyncTask.execute(new Runnable() {
+                mStorageReference.child("songs/"+"song_"+auth.getCurrentUser().getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
-                    public void run() {
-                        //magic
-                        Uri audioFileUri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-78d72.appspot.com/o/songs?alt=media&token=832ca7cb-277c-481e-bf58-d7120c44cac2");
-                        mediaPlayer = getMediaPlayerInstance();
-                        try {
-                            mediaPlayer.reset();
-                            mediaPlayer.setDataSource(ComunityContributionContributor.this, audioFileUri);
-                            mediaPlayer.prepare();
-                            mediaPlayer.getDuration();
-                            mediaPlayer.start();
-                            mediaPlayer.setLooping(true);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                    public void onSuccess(Uri uri) {
+                        // Got the download URL for 'users/me/profile.png'
+                        System.out.println("asta    " + uri);
+                        instantiateSong = ""+uri;
+                        instantiatePiece = "" + dropdown.getSelectedItem().toString();
+
+                        instantiateName = auth.getCurrentUser().getDisplayName();
+
+                        createEntity();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
                     }
                 });
-
-
             }
         });
     }
@@ -122,7 +173,7 @@ public class ComunityContributionContributor extends AppCompatActivity {
 
             System.out.println("THIS IS THE FILEPATHHHHHH" + mFilePath);
 
-            StorageReference riversRef = mStorageReference.child("songs");
+            StorageReference riversRef = mStorageReference.child("songs/"+"song_"+auth.getCurrentUser().getUid());
 
 
 
@@ -159,5 +210,38 @@ public class ComunityContributionContributor extends AppCompatActivity {
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         return mMediaPlayer;
     }
+
+    private void createEntity() {
+        DatabaseReference reference;
+        reference = database.getReference("Contributors/" + auth.getCurrentUser().getUid() + "/name");
+        reference.setValue(instantiateName);
+        reference = database.getReference("Contributors/" + auth.getCurrentUser().getUid() + "/piece");
+        reference.setValue(instantiatePiece);
+        reference = database.getReference("Contributors/" + auth.getCurrentUser().getUid() + "/song");
+        reference.setValue(instantiateSong);
+        try{
+            reference = database.getReference("Contributors/" + auth.getCurrentUser().getUid() + "/details");
+            reference.setValue(userDetails.getText().toString());
+        }catch (Exception e) {
+
+        }
+    }
+
+    public void createPlayerFromUrl(String url) {
+        try {
+            mp = new MediaPlayer();
+            mp.setDataSource(this, Uri.parse(url));
+            mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mp.prepare(); //don't use prepareAsync for mp3 playback
+
+            mp.seekTo(0);
+            mp.start();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
 
 }

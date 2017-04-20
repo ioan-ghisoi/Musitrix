@@ -135,9 +135,6 @@ public class Game extends AppCompatActivity {
 
                 stopBackgroundMusic();
 
-
-
-
                 int resID1 = getResources().getIdentifier("lvl"+nextLevelIntent, "drawable", getPackageName());
                 int resID2 = getResources().getIdentifier("lvl"+nextLevelIntentForward , "drawable", getPackageName());
                 myIntent.putExtra("level",""+ nextLevelIntent);
@@ -277,8 +274,8 @@ public class Game extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game);
 
-         ImageView backgroundOne = (ImageView) findViewById(R.id.background_one);
-         ImageView backgroundTwo = (ImageView) findViewById(R.id.background_two);
+         backgroundOne = (ImageView) findViewById(R.id.background_one);
+         backgroundTwo = (ImageView) findViewById(R.id.background_two);
         mHandler = new Handler();
 
         getProgress();
@@ -297,24 +294,6 @@ public class Game extends AppCompatActivity {
 
             nextLevelIntent = myLevel + 1;
             nextLevelIntentForward = myLevel + 2;
-            try{
-                backgroundPictureUrl =(String) myBundle.get("background");
-
-                System.out.println("asta e url-ul     OOOOOOOOOOO " + backgroundPictureUrl);
-
-                if(backgroundPictureUrl != null && backgroundPictureUrl.length() > 1) {
-                    System.out.println("CONDITIA E OK");
-                    setImage(backgroundOne, backgroundPictureUrl);
-                    setImage(backgroundOne, backgroundPictureUrl);
-                } else {
-                    backgroundOne.setImageResource(Integer.parseInt(getResources().getResourceEntryName(R.drawable.paralex2)));
-                    backgroundTwo.setImageResource(Integer.parseInt(getResources().getResourceEntryName(R.drawable.
-                    paralex2)));
-                }
-            }catch (Exception e) {
-                backgroundOne.setImageResource(Integer.parseInt(getResources().getResourceEntryName(R.drawable.worldwp)));
-                backgroundTwo.setImageResource(Integer.parseInt(getResources().getResourceEntryName(R.drawable.worldwp)));
-            }
         } else {
             myLevel = 1;
         }
@@ -324,7 +303,7 @@ public class Game extends AppCompatActivity {
         }
 
 
-//        scrollingBackground();
+        scrollingBackground();
 
         mPlayFullTrack = (ImageView) findViewById(R.id.play_full_track_button);
         mContainerView = (FrameLayout) findViewById(R.id.container_view);
@@ -340,15 +319,15 @@ public class Game extends AppCompatActivity {
                 mPieceCount = 3;
                 break;
             case 2:
-                createPlayer(R.raw.fur);
+                createPlayer(R.raw.eminem1);
                 mPieceCount = 4;
                 break;
             case 3:
                 createPlayer(R.raw.dree);
-                mPieceCount = 5;
+                mPieceCount = 4;
                 break;
             case 4:
-                createPlayer(R.raw.backgroundmusic);
+                createPlayer(R.raw.eminem2);
                 mPieceCount = 6;
                 break;
         }
@@ -360,8 +339,8 @@ public class Game extends AppCompatActivity {
                     @Override
                     public void onGlobalLayout() {
                         mPlayFullTrack.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                                addPuzzlePieces(mPieceCount);
-                                addPuzzlePiecesPlaceholders(mPieceCount);
+                        addPuzzlePieces(mPieceCount);
+                        addPuzzlePiecesPlaceholders(mPieceCount);
                     }
                 });
 
@@ -404,8 +383,8 @@ public class Game extends AppCompatActivity {
             rotateImage(mPlayFullTrack);
             finishLevel(0);
         } else {
-            Toast.makeText(Game.this, "Not Correct",
-                    Toast.LENGTH_LONG).show();
+//            Toast.makeText(Game.this, "Not Correct",
+//                    Toast.LENGTH_LONG).show();
         }
     }
 
@@ -692,9 +671,9 @@ public class Game extends AppCompatActivity {
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                 float progress = (float) animation.getAnimatedValue();
-                 float width = backgroundOne.getWidth();
-                 float translationX = width * progress;
+                float progress = (float) animation.getAnimatedValue();
+                float width = backgroundOne.getWidth();
+                float translationX = width * progress;
                 backgroundOne.setTranslationX(translationX);
                 backgroundTwo.setTranslationX(translationX - width);
             }
@@ -758,29 +737,18 @@ public class Game extends AppCompatActivity {
             try {
 
                 if(tutorialPlay) {
-                    try{
-                        openCustomDialog(String.valueOf(30000), R.drawable.star3);
-                        FirebaseDatabase database = FirebaseDatabase.getInstance();
-                        DatabaseReference myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/points");
-                        myRef50.setValue(String.valueOf(30000));
-                        DatabaseReference myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/icon");
-                        myRef51.setValue(String.valueOf(myIcon));
-                        DatabaseReference myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/stars");
-                        myRef52.setValue(String.valueOf(R.drawable.star3));
-                        myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/status");
-                        myRef51.setValue("unlocked");
-                        myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/icon");
-                        myRef51.setValue(nextLevel);
-                        if(progress != -1) {
-                            System.out.println("INTRA PE PROGRESSSSSSS");
-                            int value = progress + 3;
-                            myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/progress");
-                            myRef51.setValue(value);
-                        }
-                    } catch (Exception e) {
-                        System.out.println(e);
-                    }
-
+                    openCustomDialog(String.valueOf(30000), R.drawable.star3);
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/points");
+                    myRef50.setValue(String.valueOf(30000));
+                    DatabaseReference myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/icon");
+                    myRef51.setValue(String.valueOf(myIcon));
+                    DatabaseReference myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/stars");
+                    myRef52.setValue(String.valueOf(R.drawable.star3));
+                    myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/status");
+                    myRef51.setValue("unlocked");
+                    myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/icon");
+                    myRef51.setValue(nextLevel);
                 } else {
                     int score = 1000 * Integer.parseInt(mTimer.getText().toString());
                     if(score > 20000) {
@@ -797,12 +765,6 @@ public class Game extends AppCompatActivity {
                         myRef51.setValue("unlocked");
                         myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/icon");
                         myRef51.setValue(nextLevel);
-                        if(progress != -1) {
-                            System.out.println("INTRA PE PROGRESSSSSSS");
-                            int value = progress + 3;
-                            myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/progress");
-                            myRef51.setValue(value);
-                        }
 
 
                     } else if(score >10000 && score < 20000){
@@ -818,12 +780,6 @@ public class Game extends AppCompatActivity {
                         myRef51.setValue("unlocked");
                         myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/icon");
                         myRef51.setValue(nextLevel);
-                        if(progress != -1) {
-                            System.out.println("INTRA PE PROGRESSSSSSS");
-                            int value = progress + 2;
-                            myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/progress");
-                            myRef51.setValue(value);
-                        }
                     } else if (score > 5000 && score < 10000) {
                         openCustomDialog(String.valueOf(score), R.drawable.star1);
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -837,12 +793,6 @@ public class Game extends AppCompatActivity {
                         myRef51.setValue("unlocked");
                         myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/icon");
                         myRef51.setValue(nextLevel);
-                        if(progress != -1) {
-                            System.out.println("INTRA PE PROGRESSSSSSS");
-                            int value = progress + 1;
-                            myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/progress");
-                            myRef51.setValue(value);
-                        }
                     } else {
                         openCustomDialog(String.valueOf(score), R.drawable.star0);
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -856,12 +806,6 @@ public class Game extends AppCompatActivity {
                         myRef51.setValue("unlocked");
                         myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/icon");
                         myRef51.setValue(nextLevel);
-                        if(progress != -1) {
-                            System.out.println("INTRA PE PROGRESSSSSSS");
-                            int value = progress;
-                            myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/progress");
-                            myRef51.setValue(value);
-                        }
                     }
                 }
 
@@ -887,10 +831,7 @@ public class Game extends AppCompatActivity {
     public void createPlayer(int asd) {
 
         try {
-            mp = new MediaPlayer();
-            mp.setDataSource(this, Uri.parse("https://firebasestorage.googleapis.com/v0/b/musitrix-disertation.appspot.com/o/songs?alt=media&token=a5303da8-ca8f-4af2-b398-63557766343d"));
-            mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mp.prepare(); //don't use prepareAsync for mp3 playback
+            mp = MediaPlayer.create(this,asd);
 
 
             mPlayFullTrack.setOnClickListener(new View.OnClickListener() {

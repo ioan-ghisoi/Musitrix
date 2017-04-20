@@ -149,6 +149,7 @@ public class SelectWorld extends AppCompatActivity implements BaseSliderView.OnS
             });
 
             DatabaseReference lifeWatcher = mDatabase.getReference(mAuth.getCurrentUser().getUid() + "/lifes");
+
             lifeWatcher.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {

@@ -222,7 +222,7 @@ public class SelectLevel extends AppCompatActivity {
 
         DatabaseReference replayWatcher = database.getReference(auth.getCurrentUser().getUid() + "/replay");
 
-        coinWatcher.addValueEventListener(new ValueEventListener() {
+        replayWatcher.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String value = dataSnapshot.getValue().toString();
@@ -295,6 +295,10 @@ public class SelectLevel extends AppCompatActivity {
                 myIntent.putExtra("world",""+ myWorld);
                 myIntent.putExtra("icon",""+ R.drawable.lvl3);
                 myIntent.putExtra("next",""+ R.drawable.lvl4);
+                myIntent.putExtra("custome_url",""+ "https://firebasestorage.googleapis.com/v0/b/musitrix-disertation.appspot.com/o/test_song.mp3?alt=media&token=c9791c3d-822e-412f-aa22-568c7b6492ab");
+                myIntent.putExtra("custome_piece",""+ "4");
+                myIntent.putExtra("custome_background",""+ "https://firebasestorage.googleapis.com/v0/b/musitrix-disertation.appspot.com/o/paralex2.jpg?alt=media&token=0b66eec2-2496-4023-a653-67d9acbd334d");
+
                 SelectLevel.this.startActivity(myIntent);
             }
         });

@@ -82,24 +82,34 @@ public class Rank extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (final DataSnapshot child : dataSnapshot.getChildren()) {
+                    if(child.getKey().toString().equals("Contributors")) {
+                        continue;
+                    }
                     System.out.println("mergea" + child.getKey());
                     final String parent = child.getKey();
 
-                    DatabaseReference myRef = updated.getReference(parent + "/progress");
-                    myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            System.out.println("progresss" + dataSnapshot.getValue().toString());
-                            String value = dataSnapshot.getValue().toString();
-                            rankObjects.add(new RankElement(parent, value));
-                            populate2();
-                        }
+                    if(!child.getKey().toString().equals("Contributors")) {
+                        DatabaseReference myRef = updated.getReference(parent + "/progress");
+                        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                try{
+                                    System.out.println("progresss" + dataSnapshot.getValue().toString());
+                                    String value = dataSnapshot.getValue().toString();
+                                    rankObjects.add(new RankElement(parent, value));
+                                    System.out.println("ooooooommmgojdsidjnfjlwndinf" + dataSnapshot.getKey());
+                                    populate2();
+                                }catch (Exception e) {
+                                    System.out.println(e);
+                                }
+                            }
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
 
-                        }
-                    });
+                            }
+                        });
+                    }
 
                     myParentArray.add(parent);
                 }

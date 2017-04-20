@@ -67,6 +67,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mCommunityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mAuth.getCurrentUser() == null) {
+                    registerAnonymus();
+                } else {
+                    Intent myIntent = new Intent(MainActivity.this, ComunityChose.class);
+                    MainActivity.this.startActivity(myIntent);
+                }
+            }
+        });
+
+        mRankButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mAuth.getCurrentUser() == null) {
+                    registerAnonymus();
+                } else {
+                    Intent myIntent = new Intent(MainActivity.this, Rank.class);
+                    MainActivity.this.startActivity(myIntent);
+                }
+            }
+        });
+
 
         scrollingBackground();
 

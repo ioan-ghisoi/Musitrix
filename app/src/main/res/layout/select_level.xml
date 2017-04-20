@@ -592,7 +592,7 @@
                         android:id="@+id/user_name"
                         android:layout_width="wrap_content"
                         android:text="User"
-                        android:textColor="@color/musitrix_white"
+                        android:textColor="@color/musitrix_black"
                         android:layout_gravity="center"
                         android:layout_height="wrap_content" />
 

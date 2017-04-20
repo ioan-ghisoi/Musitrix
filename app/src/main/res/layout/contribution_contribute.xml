@@ -1,26 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:gravity="center"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/mBrowse"
+    <ImageView
+        android:id="@+id/scrolling_1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Browse" />
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/levelwp"/>
 
-    <Button
-        android:id="@+id/mUpload"
+    <ImageView
+        android:id="@+id/scrolling_2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Upload" />
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/levelwp"/>
+
+    <LinearLayout
+        android:layout_width="340dp"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/mBrowse"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textColor="@color/musitrix_green"
+            android:background="@color/musitrix_black"
+            android:layout_marginBottom="30dp"
+            android:text="Browse Songs" />
 
 
-    <Button
-        android:id="@+id/mDownload"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="PLAY" />
+        <Button
+            android:id="@+id/mUpload"
+            android:textColor="@color/musitrix_green"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="30dp"
+            android:background="@color/musitrix_black"
+            android:text="Upload Song" />
 
-</LinearLayout>
+
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textColor="@color/musitrix_green"
+            android:layout_marginBottom="30dp"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown" />
+
+        <EditText
+            android:id="@+id/user_description"
+            android:layout_width="match_parent"
+            android:text="Ente text to be displayed after level"
+            android:layout_marginBottom="30dp"
+            android:layout_height="60dp" />
+
+        <Button
+            android:id="@+id/mDownload"
+            android:textColor="@color/musitrix_green"
+            android:background="@color/musitrix_black"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="30dp"
+            android:layout_height="50dp"
+            android:text="Submit" />
+
+        <Button
+            android:id="@+id/mPreview"
+            android:textColor="@color/musitrix_green"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="30dp"
+            android:background="@color/musitrix_black"
+            android:text="Preview" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/footer"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_weight="10"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal">
+
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:id="@+id/back_button"
+            android:src="@drawable/back"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_gravity="left"
+            android:adjustViewBounds="true"
+            android:cropToPadding="false"
+            android:background="#00000000"
+            android:scaleType="fitXY" />
+
+    </LinearLayout>
+
+
+</FrameLayout>

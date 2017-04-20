@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
+        android:src="@drawable/worldwp"
         android:scaleType="centerCrop" />
 
     <ImageView
@@ -19,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
+        android:src="@drawable/worldwp"
         android:scaleType="centerCrop" />
 
     <LinearLayout

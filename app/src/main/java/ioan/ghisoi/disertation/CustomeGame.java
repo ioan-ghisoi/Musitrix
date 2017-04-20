@@ -110,10 +110,6 @@ public class CustomeGame extends AppCompatActivity {
             mySongUrl = (String) myBundle.get("song");
             myPieces = Integer.parseInt((String) myBundle.get("pieces"));
             mDetails = (String) myBundle.get("details");
-
-            System.out.println("DETALIIIIIIIIIIIIIIIII" + mDetails);
-            System.out.println(mySongUrl);
-            System.out.println(myPieces);
         }
 
 
@@ -173,8 +169,6 @@ public class CustomeGame extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
             promptUserSucces(mDetails);
         } else {
-//            Toast.makeText(CustomeGame.this, "Not Correct",
-//                    Toast.LENGTH_LONG).show();
         }
     }
 

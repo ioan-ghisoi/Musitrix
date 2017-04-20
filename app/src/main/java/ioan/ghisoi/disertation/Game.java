@@ -7,10 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -18,8 +15,6 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.test.suitebuilder.TestMethod;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -28,12 +23,10 @@ import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -43,7 +36,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +46,7 @@ public class Game extends AppCompatActivity {
     private boolean mShoulUseAsPlay = false;
     private List<Step> mPieceArray = new ArrayList<>();
     private List<Placeholder> mPlaceholderArray = new ArrayList<>();
-    private String[] mDefaultColors = {"musired","musigreen","musiblue","musiyellow","musipink","musiblack"};
+    private String[] mDefaultColors = {"musired", "musigreen", "musiblue", "musiyellow", "musipink", "musiblack"};
     private List<Step> mPieceOrder = new ArrayList<>();
     public boolean wasDiplayed = false;
     int nextLevelIntent, nextLevelIntentForward;
@@ -82,9 +74,9 @@ public class Game extends AppCompatActivity {
 
     String place = "";
 
-    void openCustomDialog(String text, int starsId){
+    void openCustomDialog(String text, int starsId) {
         AlertDialog.Builder customDialog
-                = new AlertDialog.Builder(Game.this,R.style.CustomDialog);
+                = new AlertDialog.Builder(Game.this, R.style.CustomDialog);
         customDialog.setTitle("");
 
         customDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -96,19 +88,19 @@ public class Game extends AppCompatActivity {
         });
 
         LayoutInflater layoutInflater
-                = (LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view=layoutInflater.inflate(R.layout.game_popup,null);
+                = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(R.layout.game_popup, null);
 
 
-        ImageView  back, forward;
+        ImageView back, forward;
         TextView score;
         ImageView stars;
 
         back = (ImageView) view.findViewById(R.id.level_back);
-        forward= (ImageView) view.findViewById(R.id.level_next);
+        forward = (ImageView) view.findViewById(R.id.level_next);
 
         score = (TextView) view.findViewById(R.id.level_score);
-        stars= (ImageView) view.findViewById(R.id.level_stars);
+        stars = (ImageView) view.findViewById(R.id.level_stars);
 
 
         score.setText(text);
@@ -135,12 +127,12 @@ public class Game extends AppCompatActivity {
 
                 stopBackgroundMusic();
 
-                int resID1 = getResources().getIdentifier("lvl"+nextLevelIntent, "drawable", getPackageName());
-                int resID2 = getResources().getIdentifier("lvl"+nextLevelIntentForward , "drawable", getPackageName());
-                myIntent.putExtra("level",""+ nextLevelIntent);
-                myIntent.putExtra("world",""+ myWorld);
-                myIntent.putExtra("icon",""+ resID1); ///////////
-                myIntent.putExtra("next",""+ resID2); ///////////
+                int resID1 = getResources().getIdentifier("lvl" + nextLevelIntent, "drawable", getPackageName());
+                int resID2 = getResources().getIdentifier("lvl" + nextLevelIntentForward, "drawable", getPackageName());
+                myIntent.putExtra("level", "" + nextLevelIntent);
+                myIntent.putExtra("world", "" + myWorld);
+                myIntent.putExtra("icon", "" + resID1); ///////////
+                myIntent.putExtra("next", "" + resID2); ///////////
                 Game.this.startActivity(myIntent);
             }
         });
@@ -150,17 +142,17 @@ public class Game extends AppCompatActivity {
     }
 
 
-    void tutorialStep1(){
+    void tutorialStep1() {
         final AlertDialog.Builder customDialog
-                = new AlertDialog.Builder(Game.this,R.style.CustomDialog);
+                = new AlertDialog.Builder(Game.this, R.style.CustomDialog);
         customDialog.setTitle("");
 
         LayoutInflater layoutInflater
-                = (LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view=layoutInflater.inflate(R.layout.tutorial_step1,null);
+                = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(R.layout.tutorial_step1, null);
 
 
-        ImageView forward= (ImageView) view.findViewById(R.id.level_next);
+        ImageView forward = (ImageView) view.findViewById(R.id.level_next);
 
         customDialog.setView(view);
         final AlertDialog show = customDialog.show();
@@ -173,17 +165,17 @@ public class Game extends AppCompatActivity {
         });
     }
 
-    void tutorialStep2(){
+    void tutorialStep2() {
         final AlertDialog.Builder customDialog
-                = new AlertDialog.Builder(Game.this,R.style.CustomDialog);
+                = new AlertDialog.Builder(Game.this, R.style.CustomDialog);
         customDialog.setTitle("");
 
         LayoutInflater layoutInflater
-                = (LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view=layoutInflater.inflate(R.layout.tutorial_step2,null);
+                = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(R.layout.tutorial_step2, null);
 
 
-        ImageView forward= (ImageView) view.findViewById(R.id.level_next);
+        ImageView forward = (ImageView) view.findViewById(R.id.level_next);
 
         customDialog.setView(view);
         final AlertDialog show = customDialog.show();
@@ -197,17 +189,17 @@ public class Game extends AppCompatActivity {
         });
     }
 
-    void tutorialStep3(){
+    void tutorialStep3() {
         final AlertDialog.Builder customDialog
-                = new AlertDialog.Builder(Game.this,R.style.CustomDialog);
+                = new AlertDialog.Builder(Game.this, R.style.CustomDialog);
         customDialog.setTitle("");
 
         LayoutInflater layoutInflater
-                = (LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view=layoutInflater.inflate(R.layout.tutorial_step3,null);
+                = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(R.layout.tutorial_step3, null);
 
 
-        ImageView forward= (ImageView) view.findViewById(R.id.level_next);
+        ImageView forward = (ImageView) view.findViewById(R.id.level_next);
 
         customDialog.setView(view);
         final AlertDialog show = customDialog.show();
@@ -220,17 +212,17 @@ public class Game extends AppCompatActivity {
         });
     }
 
-    void tutorialStep4(){
+    void tutorialStep4() {
         final AlertDialog.Builder customDialog
-                = new AlertDialog.Builder(Game.this,R.style.CustomDialog);
+                = new AlertDialog.Builder(Game.this, R.style.CustomDialog);
         customDialog.setTitle("");
 
         LayoutInflater layoutInflater
-                = (LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view=layoutInflater.inflate(R.layout.tutorial_step4,null);
+                = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(R.layout.tutorial_step4, null);
 
 
-        ImageView forward= (ImageView) view.findViewById(R.id.level_next);
+        ImageView forward = (ImageView) view.findViewById(R.id.level_next);
 
         customDialog.setView(view);
         final AlertDialog show = customDialog.show();
@@ -244,17 +236,17 @@ public class Game extends AppCompatActivity {
         });
     }
 
-    void tutorialStep5(){
+    void tutorialStep5() {
         final AlertDialog.Builder customDialog
-                = new AlertDialog.Builder(Game.this,R.style.CustomDialog);
+                = new AlertDialog.Builder(Game.this, R.style.CustomDialog);
         customDialog.setTitle("");
 
         LayoutInflater layoutInflater
-                = (LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view=layoutInflater.inflate(R.layout.tutorial_step5,null);
+                = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(R.layout.tutorial_step5, null);
 
 
-        ImageView forward= (ImageView) view.findViewById(R.id.level_next);
+        ImageView forward = (ImageView) view.findViewById(R.id.level_next);
 
         customDialog.setView(view);
         final AlertDialog show = customDialog.show();
@@ -268,26 +260,24 @@ public class Game extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game);
 
-         backgroundOne = (ImageView) findViewById(R.id.background_one);
-         backgroundTwo = (ImageView) findViewById(R.id.background_two);
+        backgroundOne = (ImageView) findViewById(R.id.background_one);
+        backgroundTwo = (ImageView) findViewById(R.id.background_two);
         mHandler = new Handler();
 
         getProgress();
 
 
-        Intent myIntent= getIntent();
+        Intent myIntent = getIntent();
         Bundle myBundle = myIntent.getExtras();
 
-        if(myBundle!=null)
-        {
+
+        if (myBundle != null) {
             myLevel = Integer.parseInt((String) myBundle.get("level"));
-            Toast.makeText(Game.this, "" + myLevel, Toast.LENGTH_LONG).show();
             myWorld = (String) myBundle.get("world");
             myIcon = (String) myBundle.get("icon");
             nextLevel = (String) myBundle.get("next");
@@ -298,7 +288,7 @@ public class Game extends AppCompatActivity {
             myLevel = 1;
         }
 
-        if(myLevel == 1) {
+        if (myLevel == 1 && myWorld.equals("world1")) {
             tutorialPlay = true;
         }
 
@@ -310,26 +300,106 @@ public class Game extends AppCompatActivity {
         mSolutionView = (LinearLayout) findViewById(R.id.solution_view);
         mTimer = (TextView) findViewById(R.id.level_timer);
 
-
-        switch (myLevel) {
-            case 1:
+        try {
+            if (myWorld.equals("world1")) {
+                switch (myLevel) {
+                    case 1:
+                        tutorialStep1();
+                        createPlayer(R.raw.tut1);
+                        mTimer.setVisibility(View.INVISIBLE);
+                        mPieceCount = 3;
+                        break;
+                    case 2:
+                        createPlayer(R.raw.pop1);
+                        mPieceCount = 4;
+                        break;
+                    case 3:
+                        createPlayer(R.raw.pop2);
+                        mPieceCount = 4;
+                        break;
+                    case 4:
+                        createPlayer(R.raw.pop3);
+                        mPieceCount = 6;
+                        break;
+                }
+            } else if (myWorld.equals("world2")) {
+                switch (myLevel) {
+                    case 1:
+                        createPlayer(R.raw.eminem1);
+                        mTimer.setVisibility(View.INVISIBLE);
+                        mPieceCount = 3;
+                        break;
+                    case 2:
+                        createPlayer(R.raw.eminem2);
+                        mPieceCount = 4;
+                        break;
+                    case 3:
+                        createPlayer(R.raw.dree);
+                        mPieceCount = 4;
+                        break;
+                    case 4:
+//                        createPlayer(R.raw.eminem2);
+//                        mPieceCount = 6;
+                        break;
+                }
+            } else if(myWorld.equals("world3")) {
+                switch (myLevel) {
+                    case 1:
+                        createPlayer(R.raw.pop1);
+                        mTimer.setVisibility(View.INVISIBLE);
+                        mPieceCount = 3;
+                        break;
+                    case 2:
+                        createPlayer(R.raw.pop1);
+                        mPieceCount = 4;
+                        break;
+                    case 3:
+                        createPlayer(R.raw.pop3);
+                        mPieceCount = 4;
+                        break;
+                    case 4:
+                        createPlayer(R.raw.eminem2);
+                        mPieceCount = 6;
+                        break;
+                }
+            } else {
+                try {
+                    switch (myLevel) {
+                        case 1:
+                            tutorialStep1();
+                            createPlayer(R.raw.tut1);
+                            mTimer.setVisibility(View.INVISIBLE);
+                            mPieceCount = 3;
+                            break;
+                        case 2:
+                            createPlayer(R.raw.eminem1);
+                            mPieceCount = 4;
+                            break;
+                        case 3:
+                            createPlayer(R.raw.dree);
+                            mPieceCount = 4;
+                            break;
+                        case 4:
+                            createPlayer(R.raw.eminem2);
+                            mPieceCount = 6;
+                            break;
+                    }
+                } catch (Exception e) {
+                    tutorialStep1();
+                    createPlayer(R.raw.tut1);
+                    mTimer.setVisibility(View.INVISIBLE);
+                    mPieceCount = 3;
+                }
+            }
+        } catch (Exception e) {
+            try{
                 tutorialStep1();
                 createPlayer(R.raw.tut1);
                 mTimer.setVisibility(View.INVISIBLE);
                 mPieceCount = 3;
-                break;
-            case 2:
-                createPlayer(R.raw.eminem1);
-                mPieceCount = 4;
-                break;
-            case 3:
-                createPlayer(R.raw.dree);
-                mPieceCount = 4;
-                break;
-            case 4:
-                createPlayer(R.raw.eminem2);
-                mPieceCount = 6;
-                break;
+            }catch (Exception ex) {
+                System.out.println(ex);
+            }
         }
 
 
@@ -376,15 +446,14 @@ public class Game extends AppCompatActivity {
             }
         }
 
-        if(isCorrect) {
+        if (isCorrect) {
             for (int i = 0; i < mPlaceholderArray.size(); i++) {
                 rotateImage(mPlaceholderArray.get(i).getStepView());
             }
             rotateImage(mPlayFullTrack);
             finishLevel(0);
         } else {
-//            Toast.makeText(Game.this, "Not Correct",
-//                    Toast.LENGTH_LONG).show();
+
         }
     }
 
@@ -395,7 +464,7 @@ public class Game extends AppCompatActivity {
 
         int size = getResources().getDimensionPixelSize(R.dimen.placeholder_size);
 
-        for(int i = 0; i < number; i ++) {
+        for (int i = 0; i < number; i++) {
             ImageView placeholder = new ImageView(this);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(size, size);
             lp.gravity = Gravity.CENTER;
@@ -413,20 +482,20 @@ public class Game extends AppCompatActivity {
             return;
         }
 
-        final int step = 360/number;
+        final int step = 360 / number;
         int r = getResources().getDimensionPixelSize(R.dimen.radius);
-        float x = mPlayFullTrack.getX() + mPlayFullTrack.getWidth()  / 2;
-        float y = mPlayFullTrack.getY() + mPlayFullTrack.getHeight()  / 2;
+        float x = mPlayFullTrack.getX() + mPlayFullTrack.getWidth() / 2;
+        float y = mPlayFullTrack.getY() + mPlayFullTrack.getHeight() / 2;
         final int size = getResources().getDimensionPixelSize(R.dimen.piece_size);
         int counter = 0;
 
-        for(int i = 0; i < 360; i += step) {
+        for (int i = 0; i < 360; i += step) {
             final ImageView pieceInitialPlacePlaceholder = new ImageView(this);
             pieceInitialPlacePlaceholder.setImageResource(R.drawable.inactivepiece);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(size, size);
             pieceInitialPlacePlaceholder.setLayoutParams(lp);
-            pieceInitialPlacePlaceholder.setX(x + r * (float)Math.cos(Math.toRadians(i)) - size/2);
-            pieceInitialPlacePlaceholder.setY(y + r * (float)Math.sin(Math.toRadians(i)) - size/2 +
+            pieceInitialPlacePlaceholder.setX(x + r * (float) Math.cos(Math.toRadians(i)) - size / 2);
+            pieceInitialPlacePlaceholder.setY(y + r * (float) Math.sin(Math.toRadians(i)) - size / 2 +
                     getResources().getDimensionPixelSize(R.dimen.solver_height));
             mContainerView.addView(pieceInitialPlacePlaceholder);
         }
@@ -434,11 +503,11 @@ public class Game extends AppCompatActivity {
         int pieceSizeMs = mp.getDuration() / number;
 
         int positions[] = new int[number + 1];
-        for (int i = 0; i < 360; i+=step) {
+        for (int i = 0; i < 360; i += step) {
             positions[++positions[0]] = i;
         }
 
-        for(int i = 0; i < 360; i += step) {
+        for (int i = 0; i < 360; i += step) {
             final ImageView stepView = new ImageView(this);
 
             int resourceId = this.getResources().getIdentifier(mDefaultColors[counter],
@@ -457,8 +526,8 @@ public class Game extends AppCompatActivity {
                 positions[position] = -1;
             }
 
-            stepView.setX(x + r * (float)Math.cos(Math.toRadians(value)) - size/2);
-            stepView.setY(y + r * (float)Math.sin(Math.toRadians(value)) - size/2 +
+            stepView.setX(x + r * (float) Math.cos(Math.toRadians(value)) - size / 2);
+            stepView.setY(y + r * (float) Math.sin(Math.toRadians(value)) - size / 2 +
                     getResources().getDimensionPixelSize(R.dimen.solver_height));
             mContainerView.addView(stepView);
 
@@ -475,13 +544,14 @@ public class Game extends AppCompatActivity {
             stepView.setOnTouchListener(new View.OnTouchListener() {
                 PointF DownPT = new PointF(); // Record Mouse Position When Pressed Down
                 PointF StartPT = new PointF(); // Record Start Position of 'img'
+
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     switch (event.getAction()) {
-                        case MotionEvent.ACTION_MOVE :
-                            PointF mv = new PointF( event.getX() - DownPT.x, event.getY() - DownPT.y);
-                            int x = (int)(StartPT.x+mv.x);
-                            int y = (int)(StartPT.y+mv.y);
+                        case MotionEvent.ACTION_MOVE:
+                            PointF mv = new PointF(event.getX() - DownPT.x, event.getY() - DownPT.y);
+                            int x = (int) (StartPT.x + mv.x);
+                            int y = (int) (StartPT.y + mv.y);
                             stepView.setX(x);
                             stepView.setY(y);
 
@@ -495,12 +565,12 @@ public class Game extends AppCompatActivity {
                                 }
                             }
 
-                            StartPT = new PointF( stepView.getX(), stepView.getY() );
+                            StartPT = new PointF(stepView.getX(), stepView.getY());
                             break;
-                        case MotionEvent.ACTION_DOWN :
+                        case MotionEvent.ACTION_DOWN:
                             DownPT.x = event.getX();
                             DownPT.y = event.getY();
-                            StartPT = new PointF( stepView.getX(), stepView.getY());
+                            StartPT = new PointF(stepView.getX(), stepView.getY());
 
                             for (Step step : mPieceArray) {
                                 if (step.getStepView() == stepView) {
@@ -510,7 +580,7 @@ public class Game extends AppCompatActivity {
                             }
 
                             break;
-                        case MotionEvent.ACTION_UP :
+                        case MotionEvent.ACTION_UP:
                             // if crossing the placeholder line
                             if (stepView.getY() < mSolutionView.getHeight()) {
                                 // find closest placeholder and center inside
@@ -552,7 +622,7 @@ public class Game extends AppCompatActivity {
                             }
 
                             break;
-                        default :
+                        default:
                             break;
                     }
                     return false;
@@ -566,8 +636,8 @@ public class Game extends AppCompatActivity {
 
     private void play(int fromMs, int toMs) {
 
-        if(tutorialPlay) {
-            if(wasStep4Show == false) {
+        if (tutorialPlay) {
+            if (wasStep4Show == false) {
                 tutorialStep4();
                 wasStep4Show = true;
             }
@@ -642,6 +712,7 @@ public class Game extends AppCompatActivity {
         }
 
     }
+
     public void rotateImage(ImageView image) {
         RotateAnimation rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_PARENT, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setDuration(1000);
@@ -649,9 +720,9 @@ public class Game extends AppCompatActivity {
         image.startAnimation(rotate);
     }
 
-    public void setImage(int resource, ImageView target){
+    public void setImage(int resource, ImageView target) {
 
-        if(resource == 69) {
+        if (resource == 69) {
             target.setVisibility(View.INVISIBLE);
         } else {
             target.setVisibility(View.VISIBLE);
@@ -683,37 +754,14 @@ public class Game extends AppCompatActivity {
 
     public void getProgress() {
         final FirebaseDatabase databaseRef = FirebaseDatabase.getInstance();
-        DatabaseReference RFF = databaseRef.getReference(auth.getCurrentUser().getUid()+"/progress");
+        DatabaseReference RFF = databaseRef.getReference(auth.getCurrentUser().getUid() + "/progress");
 
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.println("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYmacar intra ");
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.println();
         RFF.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                System.out.println(" OMFFFFFFFFGGGGGG" + dataSnapshot.getValue().toString());
-
                 place = dataSnapshot.getValue().toString();
-
-                System.out.println(Integer.parseInt(place));
-
                 progress = Integer.parseInt(place);
-                System.out.println();
-                System.out.println();
-                System.out.println();
-                System.out.println();
-                System.out.println("asta e ce progress aveai " + progress);
                 progressWatched = true;
-                System.out.println();
-                System.out.println();
-                System.out.println();
-                System.out.println();
             }
 
             @Override
@@ -723,89 +771,117 @@ public class Game extends AppCompatActivity {
         });
     }
 
-    public void finishLevel(int type){
-        System.out.println("ce pnmmmmmmmmmmm");
+    public void finishLevel(int type) {
 
-        if(type == 0) {
+        if (type == 0) {
             wasDiplayed = true;
 
-            if(tutorialPlay == true){
+            if (tutorialPlay == true) {
 
             } else {
                 mTimer.setVisibility(View.INVISIBLE);
             }
             try {
 
-                if(tutorialPlay) {
-                    openCustomDialog(String.valueOf(30000), R.drawable.star3);
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/points");
-                    myRef50.setValue(String.valueOf(30000));
-                    DatabaseReference myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/icon");
-                    myRef51.setValue(String.valueOf(myIcon));
-                    DatabaseReference myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/stars");
-                    myRef52.setValue(String.valueOf(R.drawable.star3));
-                    myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/status");
-                    myRef51.setValue("unlocked");
-                    myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/icon");
-                    myRef51.setValue(nextLevel);
+                if (tutorialPlay) {
+                    try {
+                        openCustomDialog(String.valueOf(30000), R.drawable.star3);
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/points");
+                        myRef50.setValue(String.valueOf(30000));
+                        DatabaseReference myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/icon");
+                        myRef51.setValue(String.valueOf(myIcon));
+                        DatabaseReference myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/stars");
+                        myRef52.setValue(String.valueOf(R.drawable.star3));
+                        myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + (myLevel + 1) + "/status");
+                        myRef51.setValue("unlocked");
+                        myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + (myLevel + 1) + "/icon");
+                        myRef51.setValue(nextLevel);
+                        if (progress != -1) {
+                            int value = progress + 3;
+                            myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/progress");
+                            myRef51.setValue(value);
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+
                 } else {
                     int score = 1000 * Integer.parseInt(mTimer.getText().toString());
-                    if(score > 20000) {
-                        System.out.println("wooooooooo" + myWorld);
+                    if (score > 20000) {
                         openCustomDialog(String.valueOf(score), R.drawable.star3);
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
-                        DatabaseReference myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/points");
+                        DatabaseReference myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/points");
                         myRef50.setValue(String.valueOf(score));
-                        DatabaseReference myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/icon");
+                        DatabaseReference myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/icon");
                         myRef51.setValue(String.valueOf(myIcon));
-                        DatabaseReference myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/stars");
+                        DatabaseReference myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/stars");
                         myRef52.setValue(String.valueOf(R.drawable.star3));
-                        myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/status");
+                        myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + (myLevel + 1) + "/status");
                         myRef51.setValue("unlocked");
-                        myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/icon");
+                        myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + (myLevel + 1) + "/icon");
                         myRef51.setValue(nextLevel);
+                        if (progress != -1) {
+                            int value = progress + 3;
+                            myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/progress");
+                            myRef51.setValue(value);
+                        }
 
 
-                    } else if(score >10000 && score < 20000){
+                    } else if (score > 10000 && score < 20000) {
                         openCustomDialog(String.valueOf(score), R.drawable.star2);
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
-                        DatabaseReference myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/points");
+                        DatabaseReference myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/points");
                         myRef50.setValue(String.valueOf(score));
-                        DatabaseReference myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/icon");
+                        DatabaseReference myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/icon");
                         myRef51.setValue(String.valueOf(myIcon));
-                        DatabaseReference myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/stars");
+                        DatabaseReference myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/stars");
                         myRef52.setValue(String.valueOf(R.drawable.star2));
-                        myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/status");
+                        myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + (myLevel + 1) + "/status");
                         myRef51.setValue("unlocked");
-                        myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/icon");
+                        myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + (myLevel + 1) + "/icon");
                         myRef51.setValue(nextLevel);
+                        if (progress != -1) {
+                            int value = progress + 2;
+                            myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/progress");
+                            myRef51.setValue(value);
+                        }
                     } else if (score > 5000 && score < 10000) {
                         openCustomDialog(String.valueOf(score), R.drawable.star1);
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
-                        DatabaseReference myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/points");
+                        DatabaseReference myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/points");
                         myRef50.setValue(String.valueOf(score));
-                        DatabaseReference myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/icon");
+                        DatabaseReference myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/icon");
                         myRef51.setValue(String.valueOf(myIcon));
-                        DatabaseReference myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/stars");
+                        DatabaseReference myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/stars");
                         myRef52.setValue(String.valueOf(R.drawable.star1));
-                        myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/status");
+                        myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + (myLevel + 1) + "/status");
                         myRef51.setValue("unlocked");
-                        myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/icon");
+                        myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + (myLevel + 1) + "/icon");
                         myRef51.setValue(nextLevel);
+                        if (progress != -1) {
+                            int value = progress + 1;
+                            myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/progress");
+                            myRef51.setValue(value);
+                        }
                     } else {
                         openCustomDialog(String.valueOf(score), R.drawable.star0);
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
-                        DatabaseReference myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/points");
+                        DatabaseReference myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/points");
                         myRef50.setValue(String.valueOf(score));
-                        DatabaseReference myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/icon");
+                        DatabaseReference myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/icon");
                         myRef51.setValue(String.valueOf(myIcon));
-                        DatabaseReference myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/"+myWorld+"/level"+myLevel+"/stars");
+                        DatabaseReference myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/stars");
                         myRef52.setValue(String.valueOf(R.drawable.star0));
-                        myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/status");
+                        myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + (myLevel + 1) + "/status");
                         myRef51.setValue("unlocked");
-                        myRef51 = database.getReference(auth.getCurrentUser().getUid()+"/"+myWorld+"/level"+(myLevel + 1) +"/icon");
+                        myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + (myLevel + 1) + "/icon");
                         myRef51.setValue(nextLevel);
+                        if (progress != -1) {
+                            int value = progress;
+                            myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/progress");
+                            myRef51.setValue(value);
+                        }
                     }
                 }
 
@@ -814,7 +890,7 @@ public class Game extends AppCompatActivity {
             }
         } else {
             try {
-                if(!wasDiplayed) {
+                if (!wasDiplayed) {
                     mTimer.setVisibility(View.INVISIBLE);
                     int score = 0;
                     substractLife();
@@ -831,17 +907,17 @@ public class Game extends AppCompatActivity {
     public void createPlayer(int asd) {
 
         try {
-            mp = MediaPlayer.create(this,asd);
+            mp = MediaPlayer.create(this, asd);
 
 
             mPlayFullTrack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(mShoulUseAsPlay) {
+                    if (mShoulUseAsPlay) {
                         playSequence();
                         checkIfCorrectSequance();
                     } else {
-                        if(mMainPlayerFinished || mp.isPlaying()) {
+                        if (mMainPlayerFinished || mp.isPlaying()) {
                             return;
                         }
                         mp.seekTo(0);
@@ -857,8 +933,8 @@ public class Game extends AppCompatActivity {
                     mMainPlayerFinished = true;
                     mShoulUseAsPlay = true;
 
-                    if(tutorialPlay) {
-                        if(wasStep2Show == false) {
+                    if (tutorialPlay) {
+                        if (wasStep2Show == false) {
                             tutorialStep2();
                             wasStep2Show = true;
                         }
@@ -866,7 +942,7 @@ public class Game extends AppCompatActivity {
                         timer = new CountDownTimer(30000, 1000) {
 
                             public void onTick(long millisUntilFinished) {
-                                mTimer.setText(""+millisUntilFinished / 1000);
+                                mTimer.setText("" + millisUntilFinished / 1000);
                                 //here you can have your logic to set text to edittext
                             }
 
@@ -879,7 +955,7 @@ public class Game extends AppCompatActivity {
 
                 }
             });
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
 
@@ -892,12 +968,9 @@ public class Game extends AppCompatActivity {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                System.out.println("asta e valuarea" + dataSnapshot.getValue());
                 currectLifes = Integer.parseInt(dataSnapshot.getValue().toString());
-                System.out.println("aici o preiau " + currectLifes);
-                if(currectLifes > 1 && changer == false) {
-                    System.out.println("inta aici");
-                    currectLifes --;
+                if (currectLifes > 1 && changer == false) {
+                    currectLifes--;
                     FirebaseDatabase asd = FirebaseDatabase.getInstance();
                     DatabaseReference qwe = asd.getReference(auth.getCurrentUser().getUid() + "/lifes");
 

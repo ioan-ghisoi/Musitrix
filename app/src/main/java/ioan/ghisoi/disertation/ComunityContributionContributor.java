@@ -15,18 +15,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -35,7 +31,6 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.IOException;
 
 /**
  * Created by jarvis on 18/04/2017.
@@ -158,8 +153,6 @@ public class ComunityContributionContributor extends AppCompatActivity {
                 mStorageReference.child("songs/"+"song_"+auth.getCurrentUser().getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        // Got the download URL for 'users/me/profile.png'
-                        System.out.println("asta    " + uri);
                         instantiateSong = ""+uri;
                         instantiatePiece = "" + mSelectedPieces;
 
@@ -183,7 +176,6 @@ public class ComunityContributionContributor extends AppCompatActivity {
         if (requestCode == FIND_MUSIC && resultCode == RESULT_OK){
             if ((data != null) && (data.getData() != null)){
                 mFilePath= data.getData();
-                System.out.println("ASTA E FILEPATHUL BOSSSSSSS" + mFilePath);
                 mBrowse.setText("Browse Done");
                 mBrowse.setTextColor(getResources().getColor(R.color.musitrix_green));
                 // Now you can use that Uri to get the file path, or upload it, ...
@@ -205,8 +197,6 @@ public class ComunityContributionContributor extends AppCompatActivity {
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            System.out.println("THIS IS THE FILEPATHHHHHH" + mFilePath);
-
             StorageReference riversRef = mStorageReference.child("songs/"+"song_"+auth.getCurrentUser().getUid());
 
 
@@ -215,13 +205,12 @@ public class ComunityContributionContributor extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            System.out.println("NU MERGE BOSS !!!!!!!!!!!!!!!!!!!!!!");
                         }
                     })
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            System.out.println("MERGE BOSS !!!!!!!!!!!!!!!!!!!!!!");
+                            System.out.println("Well Done!");
                             mUpload.setText("Upload Done");
                             mUpload.setTextColor(getResources().getColor(R.color.musitrix_green));
                             progressDialog.dismiss();

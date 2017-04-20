@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,7 +35,7 @@ public class SelectLevel extends AppCompatActivity {
     ImageView lv1_star, lv2_star, lv3_star, lv4_star, lv5_star, lv6_star, lv7_star, lv8_star, lv9_star;
     TextView mProgress, mLifes, mCoins, mUserName, mTime, mReplay;
     ImageView back;
-    String myWorld = "world1";
+    String myWorld;
     ProgressDialog pd;
     boolean isAccesable = false;
 
@@ -55,6 +54,13 @@ public class SelectLevel extends AppCompatActivity {
         Bundle myBundle = myIntent.getExtras();
 
         scrollingBackground();
+
+
+        if (myBundle != null) {
+            myWorld = (String) myBundle.get("world");
+        } else {
+            myWorld = "world1";
+        }
 
         lv1 = (ImageView) findViewById(R.id.lvl1_image);
         lv2 = (ImageView) findViewById(R.id.lvl2_image);
@@ -94,14 +100,11 @@ public class SelectLevel extends AppCompatActivity {
 
         if (myBundle != null) {
             String myWorld = (String) myBundle.get("world");
-            //Toast.makeText(SelectLevel.this, "" + myWorld, Toast.LENGTH_LONG).show();
         }
-
         try {
             if (auth.getCurrentUser() != null) {
                 setImage(mUserPicture, String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()));
                 mUserName.setText(auth.getCurrentUser().getDisplayName());
-                //Toast.makeText(SelectLevel.this, "" + myWorld.equals("world1"), Toast.LENGTH_LONG).show();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld);
 
@@ -109,11 +112,10 @@ public class SelectLevel extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         try {
+
+                            System.out.println(dataSnapshot);
+                            System.out.println(" myWorld " + myWorld);
                             Map<String, Object> newPost = (Map<String, Object>) dataSnapshot.getValue();
-                            System.out.println("TTTTTTTTTTTTTTTTTTTTTTTTT: " + R.drawable.star0 + " " + R.drawable.star3);
-                            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAA: " + Integer.parseInt(String.valueOf(((Map) newPost.get("level1")).get("stars"))));
-
-
                             int n1 = Integer.parseInt(String.valueOf(((Map) newPost.get("level1")).get("icon")));
                             int n2 = Integer.parseInt(String.valueOf(((Map) newPost.get("level2")).get("icon")));
                             int n3 = Integer.parseInt(String.valueOf(((Map) newPost.get("level3")).get("icon")));
@@ -158,7 +160,7 @@ public class SelectLevel extends AppCompatActivity {
 
                             pd.dismiss();
                         } catch (Exception e) {
-                            System.out.println();
+                            System.out.println(e);
                         }
                     }
 
@@ -190,7 +192,7 @@ public class SelectLevel extends AppCompatActivity {
 
                     }
                 } catch (Exception e) {
-                    System.out.println();
+                    System.out.println(e);
                 }
             }
 
@@ -210,7 +212,7 @@ public class SelectLevel extends AppCompatActivity {
                 try {
                     mCoins.setText(value);
                 } catch (Exception e) {
-                    System.out.println();
+                    System.out.println(e);
                 }
             }
 
@@ -229,7 +231,7 @@ public class SelectLevel extends AppCompatActivity {
                 try {
                     mReplay.setText(value);
                 } catch (Exception e) {
-                    System.out.println();
+                    System.out.println(e);
                 }
             }
 
@@ -248,7 +250,7 @@ public class SelectLevel extends AppCompatActivity {
                 try {
                     mTime.setText(value);
                 } catch (Exception e) {
-                    System.out.println();
+                    System.out.println(e);
                 }
             }
 
@@ -291,95 +293,109 @@ public class SelectLevel extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(SelectLevel.this, Game.class);
-                myIntent.putExtra("level",""+ "3");
-                myIntent.putExtra("world",""+ myWorld);
-                myIntent.putExtra("icon",""+ R.drawable.lvl3);
-                myIntent.putExtra("next",""+ R.drawable.lvl4);
-                myIntent.putExtra("custome_url",""+ "https://firebasestorage.googleapis.com/v0/b/musitrix-disertation.appspot.com/o/test_song.mp3?alt=media&token=c9791c3d-822e-412f-aa22-568c7b6492ab");
-                myIntent.putExtra("custome_piece",""+ "4");
-                myIntent.putExtra("custome_background",""+ "https://firebasestorage.googleapis.com/v0/b/musitrix-disertation.appspot.com/o/paralex2.jpg?alt=media&token=0b66eec2-2496-4023-a653-67d9acbd334d");
+                if(isPlayable("level3")) {
+                    myIntent.putExtra("level", "" + "3");
+                    myIntent.putExtra("world", "" + myWorld);
+                    myIntent.putExtra("icon", "" + R.drawable.lvl3);
+                    myIntent.putExtra("next", "" + R.drawable.lvl4);
+                    myIntent.putExtra("custome_url", "" + "https://firebasestorage.googleapis.com/v0/b/musitrix-disertation.appspot.com/o/test_song.mp3?alt=media&token=c9791c3d-822e-412f-aa22-568c7b6492ab");
+                    myIntent.putExtra("custome_piece", "" + "4");
+                    myIntent.putExtra("custome_background", "" + "https://firebasestorage.googleapis.com/v0/b/musitrix-disertation.appspot.com/o/paralex2.jpg?alt=media&token=0b66eec2-2496-4023-a653-67d9acbd334d");
 
-                SelectLevel.this.startActivity(myIntent);
+                    SelectLevel.this.startActivity(myIntent);
+                }
             }
         });
 
         lv4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(SelectLevel.this, Game.class);
-                myIntent.putExtra("level",""+ "4");
-                myIntent.putExtra("world",""+ myWorld);
-                myIntent.putExtra("icon",""+ R.drawable.lvl4);
-                myIntent.putExtra("next",""+ R.drawable.lvl5);
-                SelectLevel.this.startActivity(myIntent);
+                if(isPlayable("level4")) {
+                    Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                    myIntent.putExtra("level", "" + "4");
+                    myIntent.putExtra("world", "" + myWorld);
+                    myIntent.putExtra("icon", "" + R.drawable.lvl4);
+                    myIntent.putExtra("next", "" + R.drawable.lvl5);
+                    SelectLevel.this.startActivity(myIntent);
+                }
             }
         });
 
         lv5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(SelectLevel.this, Game.class);
-                myIntent.putExtra("level",""+ "5");
-                myIntent.putExtra("world",""+ myWorld);
-                myIntent.putExtra("icon",""+ R.drawable.lvl5);
-                myIntent.putExtra("next",""+ R.drawable.lvl6);
-                SelectLevel.this.startActivity(myIntent);
+                if(isPlayable("level5")) {
+                    Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                    myIntent.putExtra("level", "" + "5");
+                    myIntent.putExtra("world", "" + myWorld);
+                    myIntent.putExtra("icon", "" + R.drawable.lvl5);
+                    myIntent.putExtra("next", "" + R.drawable.lvl6);
+                    SelectLevel.this.startActivity(myIntent);
+                }
             }
         });
 
         lv6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(SelectLevel.this, Game.class);
-                myIntent.putExtra("level",""+ "6");
-                myIntent.putExtra("world",""+ myWorld);
-                myIntent.putExtra("icon",""+ R.drawable.lvl6);
-                myIntent.putExtra("next",""+ R.drawable.lvl7);
-                SelectLevel.this.startActivity(myIntent);
+                if(isPlayable("level6")) {
+                    Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                    myIntent.putExtra("level", "" + "6");
+                    myIntent.putExtra("world", "" + myWorld);
+                    myIntent.putExtra("icon", "" + R.drawable.lvl6);
+                    myIntent.putExtra("next", "" + R.drawable.lvl7);
+                    SelectLevel.this.startActivity(myIntent);
+                }
             }
         });
 
         lv7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(SelectLevel.this, Game.class);
-                myIntent.putExtra("level",""+ "7");
-                myIntent.putExtra("world",""+ myWorld);
-                myIntent.putExtra("icon",""+ R.drawable.lvl7);
-                myIntent.putExtra("next",""+ R.drawable.lvl8);
-                SelectLevel.this.startActivity(myIntent);
+                if(isPlayable("level7")) {
+                    Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                    myIntent.putExtra("level", "" + "7");
+                    myIntent.putExtra("world", "" + myWorld);
+                    myIntent.putExtra("icon", "" + R.drawable.lvl7);
+                    myIntent.putExtra("next", "" + R.drawable.lvl8);
+                    SelectLevel.this.startActivity(myIntent);
+                }
             }
         });
 
         lv8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(SelectLevel.this, Game.class);
-                myIntent.putExtra("level",""+ "8");
-                myIntent.putExtra("world",""+ myWorld);
-                myIntent.putExtra("icon",""+ R.drawable.lvl8);
-                myIntent.putExtra("next",""+ R.drawable.lvl9);
-                SelectLevel.this.startActivity(myIntent);
+                if(isPlayable("level8")) {
+                    Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                    myIntent.putExtra("level", "" + "8");
+                    myIntent.putExtra("world", "" + myWorld);
+                    myIntent.putExtra("icon", "" + R.drawable.lvl8);
+                    myIntent.putExtra("next", "" + R.drawable.lvl9);
+                    SelectLevel.this.startActivity(myIntent);
+                }
             }
         });
 
         lv9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(SelectLevel.this, Game.class);
-                myIntent.putExtra("level",""+ "9");
-                myIntent.putExtra("world",""+ myWorld);
-                myIntent.putExtra("icon",""+ R.drawable.lvl2);
-                myIntent.putExtra("next",""+ R.drawable.lvl9);
-                SelectLevel.this.startActivity(myIntent);
+                if(isPlayable("level9")) {
+                    Intent myIntent = new Intent(SelectLevel.this, Game.class);
+                    myIntent.putExtra("level", "" + "9");
+                    myIntent.putExtra("world", "" + myWorld);
+                    myIntent.putExtra("icon", "" + R.drawable.lvl2);
+                    myIntent.putExtra("next", "" + R.drawable.lvl9);
+                    SelectLevel.this.startActivity(myIntent);
+                }
             }
         });
 
         lv1_star.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(SelectLevel.this, Game.class);
-                SelectLevel.this.startActivity(myIntent);
+//                Intent myIntent = new Intent(SelectLevel.this, Game.class);
+//                SelectLevel.this.startActivity(myIntent);
             }
         });
 
@@ -441,7 +457,6 @@ public class SelectLevel extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                System.out.println(dataSnapshot.getValue());
                 if (dataSnapshot.getValue().toString().equals("unlocked")) {
                     isAccesable = true;
                 }

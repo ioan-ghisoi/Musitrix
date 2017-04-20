@@ -76,12 +76,6 @@ public class ComunityContributionView extends AppCompatActivity {
                             "" + childDataSnapshot.child("image").getValue(),
                             "" + childDataSnapshot.child("piece").getValue(),
                             "" + childDataSnapshot.child("details").getValue());
-
-                    Log.v("AasdasdasdasD",""+ childDataSnapshot.getKey()); //displays the key for the node
-                    Log.v("AasdasdasdasD",""+ childDataSnapshot.child("name").getValue());   //gives the value for given keyname
-                    Log.v("AasdasdasdasD",""+ childDataSnapshot.child("image").getValue());   //gives the value for given keyname
-                    Log.v("AasdasdasdasD",""+ childDataSnapshot.child("piece").getValue());   //gives the value for given keyname
-                    Log.v("AasdasdasdasD",""+ childDataSnapshot.child("song").getValue());   //gives the value for given keyname
                 }
             }
 

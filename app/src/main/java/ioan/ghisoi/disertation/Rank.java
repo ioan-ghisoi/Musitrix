@@ -85,7 +85,6 @@ public class Rank extends AppCompatActivity {
                     if(child.getKey().toString().equals("Contributors")) {
                         continue;
                     }
-                    System.out.println("mergea" + child.getKey());
                     final String parent = child.getKey();
 
                     if(!child.getKey().toString().equals("Contributors")) {
@@ -94,10 +93,8 @@ public class Rank extends AppCompatActivity {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 try{
-                                    System.out.println("progresss" + dataSnapshot.getValue().toString());
                                     String value = dataSnapshot.getValue().toString();
                                     rankObjects.add(new RankElement(parent, value));
-                                    System.out.println("ooooooommmgojdsidjnfjlwndinf" + dataSnapshot.getKey());
                                     populate2();
                                 }catch (Exception e) {
                                     System.out.println(e);
@@ -169,9 +166,6 @@ public class Rank extends AppCompatActivity {
                 }
             });
 
-            for (int i = 0; i < rankObjects.size(); i++) {
-                System.out.println("OBIECTELE MELE" + rankObjects.get(i).getUscore());
-            }
 
             FirebaseDatabase updated = FirebaseDatabase.getInstance();
             DatabaseReference ref = updated.getReference();
@@ -184,8 +178,6 @@ public class Rank extends AppCompatActivity {
                     ref2.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            System.out.println("HAI IN PNLLLLLLLLLLL" + dataSnapshot.getValue().toString());
-
                             Collections.sort(rankObjects, new Comparator<RankElement>() {
                                 @Override
                                 public int compare(RankElement o1, RankElement o2) {
@@ -207,8 +199,6 @@ public class Rank extends AppCompatActivity {
 
             }
         }
-
-        System.out.println("THE SIZEEEEEEEEEE" + rankObjects.size() + " and " + myParentArray.size());
     }
 
 
@@ -284,7 +274,6 @@ public class Rank extends AppCompatActivity {
 
                             }
                         });
-                        System.out.println("ceva");
                         img2.setImageResource(R.drawable.darklife);
                     }
                 });

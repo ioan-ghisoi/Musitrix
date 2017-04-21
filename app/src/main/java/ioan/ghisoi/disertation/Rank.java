@@ -214,7 +214,7 @@ public class Rank extends AppCompatActivity {
             if (!auth.getCurrentUser().getUid().equals(uid)) {
                 Typeface mFont = Typeface.createFromAsset(getAssets(), "fonts/johnny.ttf");
                 LinearLayout parent = new LinearLayout(this);
-                LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(700, LinearLayout.LayoutParams.MATCH_PARENT);
+                LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
                 param.weight = 1;
                 param.gravity = Gravity.CENTER;
                 param.setMargins(0, 20, 0, 0);
@@ -305,7 +305,7 @@ public class Rank extends AppCompatActivity {
 
                 Typeface mFont = Typeface.createFromAsset(getAssets(), "fonts/johnny.ttf");
                 LinearLayout parent = new LinearLayout(this);
-                LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(700, LinearLayout.LayoutParams.MATCH_PARENT);
+                LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
                 param.weight = 1;
                 param.gravity = Gravity.CENTER;
                 param.setMargins(0, 20, 0, 0);

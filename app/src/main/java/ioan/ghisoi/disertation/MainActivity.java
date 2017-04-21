@@ -1,6 +1,7 @@
 package ioan.ghisoi.disertation;
 
 import android.animation.ValueAnimator;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;

@@ -83,6 +83,11 @@ public class ComunityContributionContributor extends AppCompatActivity {
         mUrl = (EditText) findViewById(R.id.user_url);
 
 
+        userDetails.setHint("Enter text to be displayed after level");
+        userDetails.setHintTextColor(getResources().getColor(R.color.musitrix_white));
+        mUrl.setHint("Enter your website or a profile link");
+        mUrl.setHintTextColor(getResources().getColor(R.color.musitrix_white));
+
         buttonDrop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

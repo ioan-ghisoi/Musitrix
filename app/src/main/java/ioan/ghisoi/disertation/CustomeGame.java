@@ -71,7 +71,7 @@ public class CustomeGame extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(CustomeGame.this,"Good job!",Toast.LENGTH_LONG).show();
+        Toast.makeText(CustomeGame.this,"I hope you had fun!",Toast.LENGTH_LONG).show();
         stopBackgroundMusic();
         finish();
         return;

@@ -88,8 +88,6 @@ public class SelectWorld extends AppCompatActivity implements BaseSliderView.OnS
 
     @Override
     public void onSliderClick(BaseSliderView slider) {
-
-        Toast.makeText(SelectWorld.this, "" + slider.getBundle().get("extra"), Toast.LENGTH_LONG).show();
         Intent myIntent = new Intent(SelectWorld.this, SelectLevel.class);
         myIntent.putExtra("world",""+slider.getBundle().get("extra"));
         SelectWorld.this.startActivity(myIntent);

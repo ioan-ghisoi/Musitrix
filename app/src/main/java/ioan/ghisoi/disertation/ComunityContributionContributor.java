@@ -51,12 +51,20 @@ public class ComunityContributionContributor extends AppCompatActivity {
     MediaPlayer mp;
     FirebaseAuth auth = FirebaseAuth.getInstance();
     ImageButton backk;
-    EditText userDetails;
+    EditText userDetails, mUrl;
     String mSelectedPieces;
 
     private Button buttonDrop;
 
     private String instantiateSong, instantiatePiece, instantiateName;
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(ComunityContributionContributor.this,"Thank you by the way!",Toast.LENGTH_LONG).show();
+        stopBackgroundMusic();
+        finish();
+        return;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +80,7 @@ public class ComunityContributionContributor extends AppCompatActivity {
         backk = (ImageButton) findViewById(R.id.back_button);
         userDetails = (EditText) findViewById(R.id.user_description);
         buttonDrop = (Button) findViewById(R.id.dropButton);
+        mUrl = (EditText) findViewById(R.id.user_url);
 
 
         buttonDrop.setOnClickListener(new View.OnClickListener() {
@@ -247,6 +256,12 @@ public class ComunityContributionContributor extends AppCompatActivity {
         try{
             reference = database.getReference("Contributors/" + auth.getCurrentUser().getUid() + "/details");
             reference.setValue(userDetails.getText().toString());
+            reference = database.getReference("Contributors/" + auth.getCurrentUser().getUid() + "/url");
+            reference.setValue(mUrl.getText().toString());
+            reference = database.getReference("Contributors/" + auth.getCurrentUser().getUid() + "/likes");
+            reference.setValue("0");
+            reference = database.getReference("Contributors/" + auth.getCurrentUser().getUid() + "/uid");
+            reference.setValue(auth.getCurrentUser().getUid());
         }catch (Exception e) {
 
         }
@@ -267,6 +282,14 @@ public class ComunityContributionContributor extends AppCompatActivity {
             System.out.println(e);
         }
 
+    }
+
+    public void stopBackgroundMusic() {
+        try {
+            mp.stop();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

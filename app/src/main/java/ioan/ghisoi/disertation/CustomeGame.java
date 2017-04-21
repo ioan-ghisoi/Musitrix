@@ -54,7 +54,7 @@ public class CustomeGame extends AppCompatActivity {
 
     ImageButton back;
 
-    String mDetails;
+    String mDetails, mUrl;
 
 
     private FrameLayout mContainerView;
@@ -68,6 +68,14 @@ public class CustomeGame extends AppCompatActivity {
 
     private String mySongUrl, myImageUrl;
     private int myPieces;
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(CustomeGame.this,"Good job!",Toast.LENGTH_LONG).show();
+        stopBackgroundMusic();
+        finish();
+        return;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +118,7 @@ public class CustomeGame extends AppCompatActivity {
             mySongUrl = (String) myBundle.get("song");
             myPieces = Integer.parseInt((String) myBundle.get("pieces"));
             mDetails = (String) myBundle.get("details");
+            mUrl = (String) myBundle.get("url");
         }
 
 
@@ -167,7 +176,7 @@ public class CustomeGame extends AppCompatActivity {
             rotateImage(mPlayFullTrack);
             Toast.makeText(CustomeGame.this, "Correct",
                     Toast.LENGTH_LONG).show();
-            promptUserSucces(mDetails);
+            promptUserSucces(mDetails, mUrl);
         } else {
         }
     }
@@ -467,7 +476,7 @@ public class CustomeGame extends AppCompatActivity {
 
     }
 
-    void promptUserSucces(String details){
+    void promptUserSucces(String details, final String url){
         final AlertDialog.Builder customDialog
                 = new AlertDialog.Builder(CustomeGame.this,R.style.CustomDialog);
         customDialog.setTitle("");
@@ -481,6 +490,14 @@ public class CustomeGame extends AppCompatActivity {
         TextView userText = (TextView) view.findViewById(R.id.user_custom_text);
 
         userText.setText(details);
+
+        userText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www." + url + "+ "));
+                startActivity(browserIntent);
+            }
+        });
 
         customDialog.setView(view);
         final AlertDialog show = customDialog.show();
@@ -510,6 +527,13 @@ public class CustomeGame extends AppCompatActivity {
             }
         });
         animator.start();
+    }
+    public void stopBackgroundMusic() {
+        try {
+            mp.stop();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

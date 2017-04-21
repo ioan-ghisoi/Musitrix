@@ -278,8 +278,8 @@ public class SelectLevel extends AppCompatActivity {
         lv2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(SelectLevel.this, Game.class);
                 if(isPlayable("level2")) {
+                    Intent myIntent = new Intent(SelectLevel.this, Game.class);
                     myIntent.putExtra("level",""+ "2");
                     myIntent.putExtra("world",""+ myWorld);
                     myIntent.putExtra("icon",""+ R.drawable.lvl2);
@@ -292,8 +292,8 @@ public class SelectLevel extends AppCompatActivity {
         lv3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(SelectLevel.this, Game.class);
                 if(isPlayable("level3")) {
+                    Intent myIntent = new Intent(SelectLevel.this, Game.class);
                     myIntent.putExtra("level", "" + "3");
                     myIntent.putExtra("world", "" + myWorld);
                     myIntent.putExtra("icon", "" + R.drawable.lvl3);
@@ -450,6 +450,11 @@ public class SelectLevel extends AppCompatActivity {
     }
 
     public boolean isPlayable(String level) {
+        checkAvailability(level);
+        return isAccesable;
+    }
+
+    public void checkAvailability(String level) {
 
         FirebaseDatabase updated = FirebaseDatabase.getInstance();
         DatabaseReference ref = updated.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/" + level + "/status");
@@ -467,7 +472,5 @@ public class SelectLevel extends AppCompatActivity {
                 // Failed
             }
         });
-
-        return isAccesable;
     }
 }

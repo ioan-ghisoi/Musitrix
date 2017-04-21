@@ -27,6 +27,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -54,6 +55,7 @@ public class Game extends AppCompatActivity {
     boolean progressWatched = false;
     ImageView backgroundOne;
     ImageView backgroundTwo;
+    int scoreAdd;
 
     private FrameLayout mContainerView;
     private LinearLayout mSolutionView;
@@ -73,6 +75,14 @@ public class Game extends AppCompatActivity {
     String backgroundPictureUrl;
 
     String place = "";
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(Game.this,"Good job!",Toast.LENGTH_LONG).show();
+        stopBackgroundMusic();
+        finish();
+        return;
+    }
 
     void openCustomDialog(String text, int starsId) {
         AlertDialog.Builder customDialog
@@ -116,6 +126,7 @@ public class Game extends AppCompatActivity {
                     System.out.println(e);
                 }
                 Intent myIntent = new Intent(Game.this, SelectLevel.class);
+                myIntent.putExtra("world", myWorld);
                 Game.this.startActivity(myIntent);
             }
         });
@@ -402,6 +413,12 @@ public class Game extends AppCompatActivity {
             }
         }
 
+        try{
+            scoreAdd = 2 * mPieceCount * 42 ;
+        } catch (Exception e) {
+            scoreAdd = 42 * 3;
+        }
+
 
         mPlayFullTrack.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -636,6 +653,8 @@ public class Game extends AppCompatActivity {
 
     private void play(int fromMs, int toMs) {
 
+//        scoreAdd -= 42;
+
         if (tutorialPlay) {
             if (wasStep4Show == false) {
                 tutorialStep4();
@@ -773,6 +792,8 @@ public class Game extends AppCompatActivity {
 
     public void finishLevel(int type) {
 
+        System.out.println("this shiiiiii9t" + scoreAdd);
+
         if (type == 0) {
             wasDiplayed = true;
 
@@ -807,12 +828,12 @@ public class Game extends AppCompatActivity {
                     }
 
                 } else {
-                    int score = 1000 * Integer.parseInt(mTimer.getText().toString());
-                    if (score > 20000) {
-                        openCustomDialog(String.valueOf(score), R.drawable.star3);
+                    int finalScore = scoreAdd + 1000 * Integer.parseInt(mTimer.getText().toString());
+                    if (finalScore > 20000) {
+                        openCustomDialog(String.valueOf(finalScore), R.drawable.star3);
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/points");
-                        myRef50.setValue(String.valueOf(score));
+                        myRef50.setValue(String.valueOf(finalScore));
                         DatabaseReference myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/icon");
                         myRef51.setValue(String.valueOf(myIcon));
                         DatabaseReference myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/stars");
@@ -828,11 +849,11 @@ public class Game extends AppCompatActivity {
                         }
 
 
-                    } else if (score > 10000 && score < 20000) {
-                        openCustomDialog(String.valueOf(score), R.drawable.star2);
+                    } else if (finalScore > 10000 && finalScore <= 20000) {
+                        openCustomDialog(String.valueOf(finalScore), R.drawable.star2);
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/points");
-                        myRef50.setValue(String.valueOf(score));
+                        myRef50.setValue(String.valueOf(finalScore));
                         DatabaseReference myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/icon");
                         myRef51.setValue(String.valueOf(myIcon));
                         DatabaseReference myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/stars");
@@ -846,11 +867,11 @@ public class Game extends AppCompatActivity {
                             myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/progress");
                             myRef51.setValue(value);
                         }
-                    } else if (score > 5000 && score < 10000) {
-                        openCustomDialog(String.valueOf(score), R.drawable.star1);
+                    } else if (finalScore > 5000 && finalScore < 10000) {
+                        openCustomDialog(String.valueOf(finalScore), R.drawable.star1);
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/points");
-                        myRef50.setValue(String.valueOf(score));
+                        myRef50.setValue(String.valueOf(finalScore));
                         DatabaseReference myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/icon");
                         myRef51.setValue(String.valueOf(myIcon));
                         DatabaseReference myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/stars");
@@ -865,10 +886,10 @@ public class Game extends AppCompatActivity {
                             myRef51.setValue(value);
                         }
                     } else {
-                        openCustomDialog(String.valueOf(score), R.drawable.star0);
+                        openCustomDialog(String.valueOf(finalScore), R.drawable.star0);
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference myRef50 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/points");
-                        myRef50.setValue(String.valueOf(score));
+                        myRef50.setValue(String.valueOf(finalScore));
                         DatabaseReference myRef51 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/icon");
                         myRef51.setValue(String.valueOf(myIcon));
                         DatabaseReference myRef52 = database.getReference(auth.getCurrentUser().getUid() + "/" + myWorld + "/level" + myLevel + "/stars");
@@ -892,9 +913,9 @@ public class Game extends AppCompatActivity {
             try {
                 if (!wasDiplayed) {
                     mTimer.setVisibility(View.INVISIBLE);
-                    int score = 0;
+                    scoreAdd = 0;
                     substractLife();
-                    openCustomDialog(String.valueOf(score), R.drawable.star0);
+                    openCustomDialog(String.valueOf(scoreAdd), R.drawable.star0);
                     wasDiplayed = true;
 
                 }
@@ -984,6 +1005,7 @@ public class Game extends AppCompatActivity {
 
             }
         });
+
     }
 
     public void stopBackgroundMusic() {

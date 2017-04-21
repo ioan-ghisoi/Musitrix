@@ -54,6 +54,45 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/footer"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_weight="10"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:id="@+id/replayBoost"
+            android:src="@drawable/replaytrackbutton"
+            android:layout_marginBottom="5dp"
+            android:layout_gravity="right"
+            android:adjustViewBounds="true"
+            android:cropToPadding="false"
+            android:background="#00000000"
+            android:scaleType="fitXY" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:id="@+id/timeBoost"
+            android:src="@drawable/timebutton"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="5dp"
+            android:layout_gravity="right"
+            android:adjustViewBounds="true"
+            android:cropToPadding="false"
+            android:background="#00000000"
+            android:scaleType="fitXY" />
+
+
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/level_timer"
         android:layout_width="wrap_content"
@@ -61,6 +100,6 @@
         android:layout_gravity="bottom"
         android:gravity="center"
         android:textColor="@color/musitrix_white"
-        android:text="The timer will start after you listen to the full track"/>
+        android:text="Timer"/>
 
 </FrameLayout>

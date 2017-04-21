@@ -24,6 +24,7 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -60,6 +61,12 @@ public class Game extends AppCompatActivity {
     private FrameLayout mContainerView;
     private LinearLayout mSolutionView;
     CountDownTimer timer;
+    Integer timeRemaining = 30000;
+    Integer startingTime = 30000;
+    Integer countDownInterval = 1000;
+
+    ImageButton replayBoost, timeBoost;
+
 
     private MediaPlayer mp;
     private Handler mHandler;
@@ -278,6 +285,8 @@ public class Game extends AppCompatActivity {
 
         backgroundOne = (ImageView) findViewById(R.id.background_one);
         backgroundTwo = (ImageView) findViewById(R.id.background_two);
+        replayBoost = (ImageButton) findViewById(R.id.replayBoost);
+        timeBoost = (ImageButton) findViewById(R.id.timeBoost);
         mHandler = new Handler();
 
         getProgress();
@@ -418,6 +427,35 @@ public class Game extends AppCompatActivity {
         } catch (Exception e) {
             scoreAdd = 42 * 3;
         }
+
+        replayBoost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMainPlayerFinished = false;
+                mShoulUseAsPlay = false;
+            }
+        });
+
+        timeBoost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timeRemaining += 20000;
+                startingTime = timeRemaining;
+                timer.cancel();
+                timer = null;
+                timer = new CountDownTimer(startingTime, countDownInterval) {
+
+                    public void onTick(long millisUntilFinished) {
+                        timeRemaining -= countDownInterval;
+                        mTimer.setText("" + timeRemaining/1000);
+                    }
+
+                    public void onFinish() {
+                        finishLevel(1);
+                    }
+                }.start();
+            }
+        });
 
 
         mPlayFullTrack.getViewTreeObserver().addOnGlobalLayoutListener(
@@ -960,17 +998,17 @@ public class Game extends AppCompatActivity {
                             wasStep2Show = true;
                         }
                     } else {
-                        timer = new CountDownTimer(30000, 1000) {
+
+                        timer = new CountDownTimer(startingTime, countDownInterval) {
 
                             public void onTick(long millisUntilFinished) {
-                                mTimer.setText("" + millisUntilFinished / 1000);
-                                //here you can have your logic to set text to edittext
+                                timeRemaining -= countDownInterval;
+                                mTimer.setText("" + timeRemaining/1000);
                             }
 
                             public void onFinish() {
                                 finishLevel(1);
                             }
-
                         }.start();
                     }
 
